@@ -1,5 +1,5 @@
-set(SDL_TEST OFF)
 add_subdirectory(SDL)
+
 add_subdirectory(SDL_image)
 
 add_library(vendor INTERFACE)
