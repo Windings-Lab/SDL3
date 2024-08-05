@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 project(WINDINGS_SDL3 
-        VERSION 1.0 
+        VERSION 0.1.0 
         LANGUAGES C CXX)
 
 set(CMAKE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -10,5 +10,8 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_executable(${PROJECT_NAME})
+
+# Vendor libraries to SDL and SDL_image
 add_subdirectory(vendor)
 add_subdirectory(src)
