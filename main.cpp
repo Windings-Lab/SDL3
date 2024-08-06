@@ -1,4 +1,4 @@
-#include <SDL3/SDL.h>
+#include "SDL3/SDL.h"
 
 constexpr int   WIDTH = 800;
 constexpr int   HEIGHT = 600;
@@ -46,12 +46,16 @@ bool InitializeSDL()
     return true;
 }
 
+inline bool IsEventDetected(SDL_Event& e)
+{
+    return SDL_PollEvent(&e) == SDL_TRUE;
+}
+
 void Handler()
 {
     SDL_Event e;
-
-    bool bEventDetected = SDL_PollEvent(&e) == SDL_TRUE;
-    while (bEventDetected)
+    
+    while (IsEventDetected(e))
     {
         switch (e.type)
         {
@@ -61,8 +65,6 @@ void Handler()
             break;
         default: ;
         }
-
-        bEventDetected = SDL_PollEvent(&e) == SDL_TRUE;
     }
 }
 
