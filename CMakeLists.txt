@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(WINDINGS_SDL3 
-        VERSION 0.1.0 
+project(WINDINGS_SDL3
         LANGUAGES C CXX)
 
 set(CMAKE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
