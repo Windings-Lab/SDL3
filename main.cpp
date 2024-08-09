@@ -2,11 +2,7 @@
 #include <SDL3/SDL_main.h>
 #include "SDL3/SDL.h"
 
-constexpr int   WIDTH = 800;
-constexpr int   HEIGHT = 600;
-SDL_Window*     WINDOW = nullptr;
-
-SDL_GLContext   OPENGL_CONTEXT = nullptr;
+#include "WD_engine.h"
 
 int SDL_AppInit(void **appstate, int argc, char **argv)
 {
@@ -26,28 +22,36 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-    WINDOW = SDL_CreateWindow("Hello SDL and OpenGL", WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
-    if(!WINDOW)
-    {
-        SDL_Log("Window failed to create!");
+    constexpr int Width = 800;
+    constexpr int Height = 600;
 
+    auto* Window = SDL_CreateWindow("Hello SDL and OpenGL", Width, Height, SDL_WINDOW_OPENGL);
+    if (!Window)
+    {
+        SDL_SetError("SDL failed to initialize!");
+        SDL_Log(SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    // OpenGL Context is a OpenGL state machine
-    OPENGL_CONTEXT = SDL_GL_CreateContext(WINDOW);
-    if(!OPENGL_CONTEXT)
+    auto* Context = SDL_GL_CreateContext(Window);
+    if (!Context)
     {
-        SDL_Log("OpenGL Context failed to create!");
-
+        SDL_DestroyWindow(Window);
+        SDL_SetError("OpenGL Context failed to create!");
+        SDL_Log(SDL_GetError());
         return SDL_APP_FAILURE;
     }
+
+    auto* Engine = new WD::Engine(Window, Context);
+    *appstate = static_cast<void*>(Engine);
 
     return SDL_APP_CONTINUE;
 }
 
 int SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
+    auto* Engine = static_cast<WD::Engine*>(appstate);
+    
     switch (event->type)
     {
     case SDL_EVENT_QUIT:
@@ -61,14 +65,14 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
 
 int SDL_AppIterate(void *appstate)
 {
-    SDL_GL_SwapWindow(WINDOW);
+    const WD::Engine* Engine = static_cast<WD::Engine*>(appstate);
+    
+    SDL_GL_SwapWindow(&Engine->GetWindow());
+    
     return SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void *appstate)
 {
-    if(WINDOW)
-    {
-        SDL_DestroyWindow(WINDOW);
-    }
+    delete static_cast<WD::Engine*>(appstate);
 }
