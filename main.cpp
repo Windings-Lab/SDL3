@@ -8,7 +8,8 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        SDL_Log("SDL failed to initialize!");
+        SDL_SetError("SDL failed to initialize!");
+        SDL_LogError(0, SDL_GetError());
 
         return SDL_APP_FAILURE;
     }
@@ -29,7 +30,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     if (!Window)
     {
         SDL_SetError("SDL failed to initialize!");
-        SDL_Log(SDL_GetError());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", SDL_GetError(), nullptr);
         return SDL_APP_FAILURE;
     }
 
@@ -38,7 +39,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     {
         SDL_DestroyWindow(Window);
         SDL_SetError("OpenGL Context failed to create!");
-        SDL_Log(SDL_GetError());
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", SDL_GetError(), nullptr);
         return SDL_APP_FAILURE;
     }
 

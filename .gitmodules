@@ -2,7 +2,19 @@
 	path = vendor/SDL
 	url = https://github.com/libsdl-org/SDL.git
 	ignore = all
+	branch = main
 [submodule "vendor/SDL_image"]
 	path = vendor/SDL_image
 	url = https://github.com/libsdl-org/SDL_image
+	ignore = all
+	branch = main
+[submodule "vendor/zlib"]
+	path = vendor/zlib
+	url = https://github.com/libsdl-org/zlib.git
+	branch = v1.3.1-SDL
+	ignore = all
+[submodule "vendor/libpng"]
+	path = vendor/libpng
+	url = https://github.com/libsdl-org/libpng.git
+	branch = v1.6.43-SDL
 	ignore = all
