@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "default-variables",
-      "hidden": false,
+      "hidden": true,
       "cacheVariables": 
       {
         "SDL_HIDAPI_LIBUSB": "OFF",
@@ -60,6 +60,14 @@
         "SDL3IMAGE_TGA": "OFF",
         "SDL_RENDER": "OFF",
         "SDL_DIALOG": "OFF"
+      }
+    },
+	{
+      "name": "WD_debug",
+      "inherits": "default-variables",
+      "cacheVariables":
+      {
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     }
   ]
