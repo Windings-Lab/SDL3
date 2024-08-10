@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utillity/WD_constructors.h"
+#include "utility/WD_constructors.h"
 
 class SDL_Window;
 typedef struct SDL_GLContextState *SDL_GLContext;

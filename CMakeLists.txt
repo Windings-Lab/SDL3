@@ -9,23 +9,33 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-list(APPEND CMAKE_MODULE_PATH "${WD_SDL_SOURCE_DIR}/cmake")
-include("${WD_SDL_SOURCE_DIR}/cmake/wdtargets.cmake")
-
-add_executable(WD_SDL main.cpp)
-
-wd_include_directories(
-        PUBLIC
-        "${WD_SDL_BINARY_DIR}/include"
-        "${WD_SDL_SOURCE_DIR}/include"
+set(SOURCES
+        main.cpp
+        src/WD_engine.cpp
 )
 
-target_include_directories(WD_SDL PRIVATE "$<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>")
+set(HEADERS
+        include/WD_engine.h
+        src/utility/WD_constructors.h
+)
 
-wd_glob_sources(
-        "${WD_SDL_SOURCE_DIR}/src/*.cpp"
+set(GLAD_SOURCES
+        src/glad/gl.c
+)
+
+set(GLAD_HEADERS
+        src/glad/gl.h
+        src/glad/khrplatform.h
+)
+
+add_executable(WD_SDL ${SOURCES} ${GLAD_SOURCES} ${HEADERS} ${GLAD_HEADERS})
+
+target_include_directories(WD_SDL
+        PUBLIC
+        $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/include>
+        PRIVATE
+        $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
 )
 
 add_subdirectory(vendor)
-
 target_link_libraries(WD_SDL PRIVATE vendor)
