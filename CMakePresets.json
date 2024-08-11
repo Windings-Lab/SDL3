@@ -1,78 +1,100 @@
 {
-  "version": 6,
-  "configurePresets": 
-  [
-    {
-      "name": "default-variables",
-      "hidden": true,
-      "cacheVariables": 
-      {
-        "SDL_HIDAPI_LIBUSB": "OFF",
-        "SDL_DUMMYVIDEO": "OFF",
-        "SDL3IMAGE_BACKEND_STB": "OFF",
-        "SDL3IMAGE_TIF": "OFF",
-        "SDL3IMAGE_JPG_SAVE": "OFF",
-        "SDL_HIDAPI_LIBUSB_SHARED": "OFF",
-        "SDL_DIRECTX": "OFF",
-        "SDL_VULKAN": "OFF",
-        "SDL3IMAGE_BMP": "OFF",
-        "SDL_HIDAPI": "OFF",
-        "PNG_TESTS": "OFF",
-        "SDL3IMAGE_AVIF": "OFF",
-        "SDL_AVX": "OFF",
-        "SDL3IMAGE_JPG": "OFF",
-        "SDL3IMAGE_AVIF_SAVE": "OFF",
-        "SDL3IMAGE_SVG": "OFF",
-        "SDL_ASSEMBLY": "OFF",
-        "SDL_POWER": "OFF",
-        "SDL3IMAGE_LBM": "OFF",
-        "SDL3IMAGE_PCX": "OFF",
-        "SDL_LIBUDEV": "OFF",
-        "SDL_VIRTUAL_JOYSTICK": "OFF",
-        "SDL3IMAGE_DEPS_SHARED": "OFF",
-        "SDL3IMAGE_PNM": "OFF",
-        "SDL_OFFSCREEN": "OFF",
-        "SDL_XINPUT": "OFF",
-        "SDL_VIDEO": "ON",
-        "SDL_GCC_ATOMICS": "OFF",
-        "SDL_CAMERA": "OFF",
-        "SDL_HAPTIC": "OFF",
-        "SDL_JOYSTICK": "OFF",
-        "PNG_SHARED": "OFF",
-        "SDL_TEST_LIBRARY": "OFF",
-        "SDL_HIDAPI_JOYSTICK": "OFF",
-        "SDL_SENSOR": "OFF",
-        "SDL_DISABLE_INSTALL": "ON",
-        "SDL_AVX2": "OFF",
-        "SDL_AUDIO": "OFF",
-        "SDL3IMAGE_QOI": "OFF",
-        "SDL3IMAGE_WEBP_SHARED": "OFF",
-        "SDL_AVX512F": "OFF",
-        "ZLIB_BUILD_EXAMPLES": "OFF",
-        "SDL3IMAGE_TIF_SHARED": "OFF",
-        "SDL3IMAGE_GIF": "OFF",
-        "SDL_LIBC": "OFF",
-        "SDL3IMAGE_XPM": "OFF",
-        "SDL3IMAGE_XV": "OFF",
-        "SDL_RENDER_METAL": "OFF",
-        "SDL3IMAGE_AVIF_SHARED": "OFF",
-        "SDL3IMAGE_WEBP": "OFF",
-        "SDL3IMAGE_XCF": "OFF",
-        "SDL3IMAGE_TGA": "OFF",
-        "SDL_RENDER": "OFF",
-        "SDL_DIALOG": "OFF"
-      }
-    },
-	{
-      "name": "WD_debug_clang",
-      "inherits": "default-variables",
-      "cacheVariables":
-      {
-        "CMAKE_BUILD_TYPE": "Debug",
-		    "CMAKE_MAKE_PROGRAM": "ninja",
-		    "CMAKE_C_COMPILER": "clang",
-		    "CMAKE_CXX_COMPILER": "clang++"
-      }
-    }
-  ]
+    "version": 5,
+    "configurePresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "generator": "Ninja",
+            "installDir": "${sourceDir}/.out/install/${presetName}",
+            "binaryDir": "${sourceDir}/.out/build/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "environment": {
+                "NINJA_STATUS": "%p [%es] (%f/%t)  -"
+            },
+            "cacheVariables": {
+                "CMAKE_COMMAND": "C:/tools/msys64/clang64/bin/cmake.exe"
+            }
+        },
+        {
+            "name": "default-verbose",
+            "inherits": "default",
+            "hidden": true,
+            "environment": {
+                "VERBOSE": "true"
+            }
+        },
+        {
+            "name": "gcc",
+            "inherits": "default",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "C:/tools/msys64/clang64/bin/gcc.exe",
+                "CMAKE_CXX_COMPILER": "C:/tools/msys64/clang64/bin/g++.exe"
+            }
+        },
+        {
+            "displayName": "GCC Debug",
+            "name": "gcc-debug",
+            "inherits": "gcc",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "displayName": "GCC Release",
+            "name": "gcc-release",
+            "inherits": "gcc",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "displayName": "GCC RelWithDebInfo",
+            "name": "gcc-relwdebinfo",
+            "inherits": "gcc",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
+        },
+        {
+            "name": "clang",
+            "inherits": "default",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "C:/tools/msys64/clang64/bin/clang.exe",
+                "CMAKE_CXX_COMPILER": "C:/tools/msys64/clang64/bin/clang++.exe"
+            }
+        },
+        {
+            "displayName": "Clang Debug",
+            "name": "clang-debug",
+            "inherits": "clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "displayName": "Clang Release",
+            "name": "clang-release",
+            "inherits": "clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "displayName": "Clang RelWithDebInfo",
+            "name": "clang-relwdebinfo",
+            "inherits": "clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
+        }
+    ]
 }

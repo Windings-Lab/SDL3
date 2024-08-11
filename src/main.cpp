@@ -1,10 +1,9 @@
-#define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
 
 #include "WD_engine.h"
 
-int SDL_AppInit(void **appstate, int argc, char **argv)
+int SDL_AppInit(void** appstate, int argc, char** argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -49,7 +48,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     return SDL_APP_CONTINUE;
 }
 
-int SDL_AppEvent(void *appstate, const SDL_Event *event)
+int SDL_AppEvent(void* appstate, const SDL_Event* event)
 {
     auto* Engine = static_cast<WD::Engine*>(appstate);
     
@@ -58,22 +57,23 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
     case SDL_EVENT_QUIT:
         SDL_Log("Quiting!");
         return SDL_APP_SUCCESS;
-    default: ;
+    default:
+        break;
     }
 
     return SDL_APP_CONTINUE;
 }
 
-int SDL_AppIterate(void *appstate)
+int SDL_AppIterate(void* appstate)
 {
     const WD::Engine* Engine = static_cast<WD::Engine*>(appstate);
-    
+
     SDL_GL_SwapWindow(&Engine->GetWindow());
-    
+
     return SDL_APP_CONTINUE;
 }
 
-void SDL_AppQuit(void *appstate)
+void SDL_AppQuit(void* appstate)
 {
     delete static_cast<WD::Engine*>(appstate);
 }
