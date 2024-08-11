@@ -8,33 +8,45 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-if(CMAKE_C_COMPILER_ID MATCHES "Clang|IntelLLVM")
-    message("Setting clang debug flags")
-    #set(CLANG_OPTIONS "-g3 -ggdb3 -ggdb -gcolumn-info -gfull")
-    set(CLANG_OPTIONS "-O0 -g -gdwarf-3")
-    set(CMAKE_CXX_FLAGS_DEBUG ${CLANG_OPTIONS})
-    set(CMAKE_C_FLAGS_DEBUG ${CLANG_OPTIONS})
-    unset(CLANG_OPTIONS)
-endif()
+set(BUILD_SHARED_LIBS OFF)
 
 set(SOURCES
-        main.cpp
-        src/WD_engine.cpp
+    main.cpp
+    src/WD_engine.cpp
 )
 
 set(HEADERS
-        include/WD_engine.h
-        src/utility/WD_constructors.h
+    include/WD_engine.h
+    src/utility/WD_constructors.h
 )
 
 add_executable(WD_SDL ${SOURCES} ${HEADERS})
 
+target_compile_features(WD_SDL PRIVATE cxx_std_23)
+
+target_compile_options(WD_SDL PRIVATE
+    $<$<CXX_COMPILER_ID:Clang>:
+        $<$<CONFIG:Debug>:
+            -march=native
+            -DNDEBUG
+            -O0
+            -g
+            -gdwarf-4
+            -fstandalone-debug
+        >
+    >
+)
+
+target_link_options(WD_SDL PRIVATE
+    -static-libgcc
+    -static-libstdc++
+)
+
 target_include_directories(WD_SDL
-        PUBLIC
-        $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/include>
-        PRIVATE
-        $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
+    PUBLIC
+    $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/include>
+    PRIVATE
+    $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
 )
 
 add_subdirectory(vendor)
