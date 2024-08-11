@@ -9,6 +9,15 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(CMAKE_C_COMPILER_ID MATCHES "Clang|IntelLLVM")
+    message("Setting clang debug flags")
+    #set(CLANG_OPTIONS "-g3 -ggdb3 -ggdb -gcolumn-info -gfull")
+    set(CLANG_OPTIONS "-O0 -g -gdwarf-3")
+    set(CMAKE_CXX_FLAGS_DEBUG ${CLANG_OPTIONS})
+    set(CMAKE_C_FLAGS_DEBUG ${CLANG_OPTIONS})
+    unset(CLANG_OPTIONS)
+endif()
+
 set(SOURCES
         main.cpp
         src/WD_engine.cpp
@@ -19,16 +28,7 @@ set(HEADERS
         src/utility/WD_constructors.h
 )
 
-set(GLAD_SOURCES
-        src/glad/gl.c
-)
-
-set(GLAD_HEADERS
-        src/glad/gl.h
-        src/glad/khrplatform.h
-)
-
-add_executable(WD_SDL ${SOURCES} ${GLAD_SOURCES} ${HEADERS} ${GLAD_HEADERS})
+add_executable(WD_SDL ${SOURCES} ${HEADERS})
 
 target_include_directories(WD_SDL
         PUBLIC

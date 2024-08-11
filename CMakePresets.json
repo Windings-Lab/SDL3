@@ -1,6 +1,7 @@
 {
   "version": 6,
-  "configurePresets": [
+  "configurePresets": 
+  [
     {
       "name": "default-variables",
       "hidden": true,
@@ -63,11 +64,14 @@
       }
     },
 	{
-      "name": "WD_debug",
+      "name": "WD_debug_clang",
       "inherits": "default-variables",
       "cacheVariables":
       {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+		    "CMAKE_MAKE_PROGRAM": "ninja",
+		    "CMAKE_C_COMPILER": "clang",
+		    "CMAKE_CXX_COMPILER": "clang++"
       }
     }
   ]
