@@ -16,10 +16,11 @@
                 "strategy": "external"
             },
             "environment": {
-                "NINJA_STATUS": "%p [%es] (%f/%t)  -"
+                "NINJA_STATUS": "%p [%es] (%f/%t)  -",
+                "PATH": "D:/ImpPrograms/msys64/clang64/bin"
             },
             "cacheVariables": {
-                "CMAKE_COMMAND": "C:/tools/msys64/clang64/bin/cmake.exe"
+                "CMAKE_COMMAND": "$env{PATH}/cmake.exe"
             }
         },
         {
@@ -35,8 +36,8 @@
             "inherits": "default",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "C:/tools/msys64/clang64/bin/gcc.exe",
-                "CMAKE_CXX_COMPILER": "C:/tools/msys64/clang64/bin/g++.exe"
+                "CMAKE_C_COMPILER": "$env{PATH}/gcc.exe",
+                "CMAKE_CXX_COMPILER": "$env{PATH}/g++.exe"
             }
         },
         {
@@ -68,8 +69,8 @@
             "inherits": "default",
             "hidden": true,
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "C:/tools/msys64/clang64/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "C:/tools/msys64/clang64/bin/clang++.exe"
+                "CMAKE_C_COMPILER": "$env{PATH}/clang.exe",
+                "CMAKE_CXX_COMPILER": "$env{PATH}/clang++.exe"
             }
         },
         {

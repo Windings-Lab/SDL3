@@ -77,6 +77,7 @@ target_compile_options(${PROJECT_NAME}
     $<${compiler_is_clang}:
         -march=native
         -DNDEBUG
+		-fstandalone-debug
     >
 
     $<${compiler_is_gnu}:
