@@ -8,7 +8,6 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(BUILD_SHARED_LIBS OFF)
 
 set(SOURCES
     main.cpp
@@ -50,4 +49,4 @@ target_include_directories(WD_SDL
 )
 
 add_subdirectory(vendor)
-target_link_libraries(WD_SDL PRIVATE vendor)
+target_link_libraries(WD_SDL PUBLIC vendor)

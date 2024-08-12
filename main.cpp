@@ -1,6 +1,7 @@
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
-#include "SDL3/SDL.h"
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengles2.h>
 
 #include "WD_engine.h"
 
@@ -9,7 +10,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         SDL_SetError("SDL failed to initialize!");
-        SDL_LogError(0, SDL_GetError());
+        SDL_LogError(0, "%s", SDL_GetError());
 
         return SDL_APP_FAILURE;
     }
