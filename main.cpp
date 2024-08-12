@@ -28,7 +28,6 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 
     constexpr int Width = 800;
     constexpr int Height = 600;
-
     auto* Window = SDL_CreateWindow("Hello SDL and OpenGL", Width, Height, SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
     if (!Window)
     {
@@ -45,7 +44,8 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", SDL_GetError(), nullptr);
         return SDL_APP_FAILURE;
     }
-    
+
+    // GLAD initialization
     if(!gladLoadGL(SDL_GL_GetProcAddress))
     {
         SDL_DestroyWindow(Window);
@@ -54,7 +54,10 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
         return SDL_APP_FAILURE;
     }
 
+    // OpenGL Viewport dimensions
     glViewport(0, 0, Width, Height);
+
+    // Creating an instance for an SDL appstate
     auto* Engine = new WD::Engine(Window, Context);
     *appstate = static_cast<void*>(Engine);
 
@@ -68,7 +71,9 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
     switch (event->type)
     {
     case SDL_EVENT_KEY_DOWN:
-        return WD::Keyboard::Handle_Input(event->key.key);
+        {
+            return WD::Keyboard::Handle_Input(event->key.key);
+        }
     case SDL_EVENT_QUIT:
         {
             SDL_Log("Quiting!");
@@ -85,7 +90,9 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
             break;
         }
     default:
-        break;
+        {
+            break;
+        }
     }
 
     return SDL_APP_CONTINUE;

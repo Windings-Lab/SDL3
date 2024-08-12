@@ -7,7 +7,7 @@ typedef struct SDL_GLContextState *SDL_GLContext;
 
 namespace WD
 {
-    // Class for handling and creating Window and Context
+    // Class for handling Window and OpenGL Context
     class Engine : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
