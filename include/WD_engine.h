@@ -18,7 +18,7 @@ namespace WD
         Engine(Engine&& other) = delete;
         Engine& operator=(Engine&& other) = delete;
 
-        SDL_Window& GetWindow() const;
+        SDL_Window* GetWindow() const;
     private:
         SDL_Window*     mWindow = nullptr;
         SDL_GLContext   mContext = nullptr;

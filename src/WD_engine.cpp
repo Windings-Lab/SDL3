@@ -15,7 +15,7 @@ WD::Engine::~Engine()
     SDL_DestroyWindow(mWindow);
 }
 
-SDL_Window& WD::Engine::GetWindow() const
+SDL_Window* WD::Engine::GetWindow() const
 {
-    return *mWindow;
+    return mWindow;
 }
