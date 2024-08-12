@@ -11,11 +11,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
     main.cpp
+    src/glad/gl.c
     src/WD_engine.cpp
 )
 
 set(HEADERS
     include/WD_engine.h
+    include/glad/gl.h
+    include/KHR/khrplatform.h
     src/utility/WD_constructors.h
 )
 
