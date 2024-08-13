@@ -16,6 +16,7 @@ set(SOURCES
     main.cpp
     src/WD_engine.cpp
     include/WD_engine.h
+    include/WD_gl_pipeline.h
     
     # KEYBOARD
     include/keyboard/WD_keyboard.h

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "WD_gl_pipeline.h"
 #include "utility/WD_constructors.h"
 
 class SDL_Window;
@@ -19,8 +20,13 @@ namespace WD
         Engine& operator=(Engine&& other) = delete;
 
         SDL_Window* GetWindow() const;
+        
+    public:
+        ShaderProgram ShaderProgram = WD::ShaderProgram();
+        
     private:
         SDL_Window*     mWindow = nullptr;
         SDL_GLContext   mContext = nullptr;
+
     };
 }

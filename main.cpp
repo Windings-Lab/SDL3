@@ -4,6 +4,7 @@
 #include "glad/gl.h"
 
 #include "WD_engine.h"
+#include "WD_gl_pipeline.h"
 #include "keyboard/WD_keyboard.h"
 
 int SDL_AppInit(void **appstate, int argc, char **argv)
@@ -60,6 +61,10 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     // Creating an instance for an SDL appstate
     auto* Engine = new WD::Engine(Window, Context);
     *appstate = static_cast<void*>(Engine);
+    
+    Engine->ShaderProgram = WD::CreateShaderProgram();
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    glPointSize(5.f);
 
     return SDL_APP_CONTINUE;
 }
@@ -101,6 +106,14 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
 int SDL_AppIterate(void *appstate)
 {
     const WD::Engine* Engine = static_cast<WD::Engine*>(appstate);
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(Engine->ShaderProgram.ID);
+    glBindVertexArray(Engine->ShaderProgram.VAO);
+    glDrawElements(GL_POINTS, 6, GL_UNSIGNED_INT, 0);
+    //glBindVertexArray(0);
     
     SDL_GL_SwapWindow(Engine->GetWindow());
     return SDL_APP_CONTINUE;
