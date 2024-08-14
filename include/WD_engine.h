@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "WD_gl_pipeline.h"
 #include "utility/WD_constructors.h"
 
@@ -22,7 +24,7 @@ namespace WD
         SDL_Window* GetWindow() const;
         
     public:
-        ShaderProgram ShaderProgram = WD::ShaderProgram();
+        std::vector<Shader> Shader;
         
     private:
         SDL_Window*     mWindow = nullptr;

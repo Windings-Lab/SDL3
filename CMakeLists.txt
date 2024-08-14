@@ -38,7 +38,6 @@ target_compile_options(WD_SDL PRIVATE
     $<$<CXX_COMPILER_ID:Clang>:
         $<$<CONFIG:Debug>:
             -march=native
-            -DNDEBUG
             -O0
             -g
             -gdwarf-4

@@ -26,6 +26,9 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     // Double buffer for window swap
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+#ifndef NDEBUG
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+#endif
 
     constexpr int Width = 800;
     constexpr int Height = 600;
@@ -62,7 +65,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     auto* Engine = new WD::Engine(Window, Context);
     *appstate = static_cast<void*>(Engine);
     
-    Engine->ShaderProgram = WD::CreateShaderProgram();
+    Engine->Shader.emplace_back(WD::CreateShaderProgram());
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
 
@@ -110,9 +113,9 @@ int SDL_AppIterate(void *appstate)
     glClearColor(0.2f, 0.3f, 0.3f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(Engine->ShaderProgram.ID);
-    glBindVertexArray(Engine->ShaderProgram.VAO);
-    glDrawElements(GL_POINTS, 6, GL_UNSIGNED_INT, 0);
+    glUseProgram(Engine->Shader[0].ID);
+    glBindVertexArray(Engine->Shader[0].VAO);
+    glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
     //glBindVertexArray(0);
     
     SDL_GL_SwapWindow(Engine->GetWindow());

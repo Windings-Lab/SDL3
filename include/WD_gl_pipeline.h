@@ -5,7 +5,7 @@
 
 namespace WD
 {
-    struct ShaderProgram
+    struct Shader
     {
         GLuint ID;
         GLuint VAO; // Vertex Array Object ID
@@ -36,7 +36,7 @@ namespace WD
         return GL_ShaderCompileSuccess(ID);
     }
 
-    static ShaderProgram CreateShaderProgram()
+    static Shader CreateShaderProgram()
     {
         // Vertex Shader Creation
         GLuint vertexShader = 0;
