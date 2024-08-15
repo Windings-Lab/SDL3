@@ -24,13 +24,14 @@ namespace WD
             constexpr int bufSize = 512;
             char infolog[bufSize];
             glGetShaderInfoLog(shader, bufSize, nullptr, infolog);
-            SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infolog);
+            SDL_SetError("ERROR::SHADER::VERTEX::COMPILATION_FAILED: %s");
+            SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, SDL_GetError(), infolog);
         }
 
         return success;
     }
 
-    static bool GL_CreateCompileShader(GLuint& ID, const GLenum type, const GLchar* shaderPath)
+    static GLuint GL_CreateCompileShader(const GLenum type, const GLchar* shaderPath)
     {
         if(SDL_GetPathInfo(shaderPath, nullptr) == -1)
         {
@@ -40,21 +41,20 @@ namespace WD
 
         const void* codeptr = SDL_LoadFile(shaderPath, nullptr);
         const char* code = static_cast<const char*>(codeptr);
-        ID = glCreateShader(type);
+        GLuint ID = glCreateShader(type);
         glShaderSource(ID, 1, &code, nullptr);
         glCompileShader(ID);
-        return GL_ShaderCompileSuccess(ID);
+        
+        return GL_ShaderCompileSuccess(ID) ? ID : 0;
     }
 
     static Shader CreateShaderProgram()
     {
         // Vertex Shader Creation
-        GLuint vertexShader = 0;
-        GL_CreateCompileShader(vertexShader, GL_VERTEX_SHADER, "assets/shaders/vertex.vert");
+        GLuint vertexShader = GL_CreateCompileShader(GL_VERTEX_SHADER, "assets/shaders/vertex.vert");
     
         // Fragment Shader Creation
-        GLuint fragmentShader = 0;
-        GL_CreateCompileShader(fragmentShader, GL_FRAGMENT_SHADER, "assets/shaders/fragment.frag");
+        GLuint fragmentShader = GL_CreateCompileShader(GL_FRAGMENT_SHADER, "assets/shaders/fragment.frag");
 
         // Creating shader program and linking shaders
         const GLuint shaderProgram = glCreateProgram();
