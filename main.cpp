@@ -1,10 +1,12 @@
 #define SDL_MAIN_USE_CALLBACKS
-#include <SDL3/SDL_main.h>
-#include <SDL3/SDL.h>
+#include "SDL3/SDL_main.h"
+#include "SDL3/SDL.h"
 #include "glad/gl.h"
 
-#include "WD_engine.h"
-#include "WD_gl_pipeline.h"
+#include <filesystem>
+
+#include "engine/WD_engine.h"
+#include "engine/WD_gl_pipeline.h"
 #include "keyboard/WD_keyboard.h"
 
 int SDL_AppInit(void **appstate, int argc, char **argv)
@@ -16,7 +18,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 
         return SDL_APP_FAILURE;
     }
-
+    
     // OpenGL Version 4.6
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);

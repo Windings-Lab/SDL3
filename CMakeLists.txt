@@ -14,9 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCES
     # DEFAULT sources
     main.cpp
-    src/WD_engine.cpp
-    include/WD_engine.h
-    include/WD_gl_pipeline.h
+    src/engine/WD_engine.cpp
+    include/engine/WD_engine.h
+    include/engine/WD_gl_pipeline.h
     
     # KEYBOARD
     include/keyboard/WD_keyboard.h
@@ -60,3 +60,11 @@ target_include_directories(WD_SDL
 
 add_subdirectory(vendor)
 target_link_libraries(WD_SDL PUBLIC vendor)
+
+add_custom_command(
+    TARGET WD_SDL
+    POST_BUILD COMMAND ${CMAKE_COMMAND}
+        -E create_symlink "${WD_SDL_SOURCE_DIR}/assets/" "${CMAKE_OUTPUT_DIRECTORY}/assets/"
+    DEPENDS "${CMAKE_OUTPUT_DIRECTORY}/assets/"
+    COMMENT "symbolic link ${WD_SDL_SOURCE_DIR}/assets/ => ${CMAKE_OUTPUT_DIRECTORY}/assets/"
+)

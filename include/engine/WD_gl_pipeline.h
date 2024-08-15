@@ -1,5 +1,7 @@
 #pragma once
-#include <SDL3/SDL_log.h>
+#include "SDL3/SDL_log.h"
+#include "SDL3/SDL_filesystem.h"
+#include "SDL3/SDL_iostream.h"
 
 #include "glad/gl.h"
 
@@ -9,7 +11,7 @@ namespace WD
     {
         GLuint ID;
         GLuint VAO; // Vertex Array Object ID
-        GLuint EBO;
+        GLuint EBO; // Element Buffer Object ID
     };
     
     static bool GL_ShaderCompileSuccess(const GLuint& shader)
@@ -28,8 +30,16 @@ namespace WD
         return success;
     }
 
-    static bool GL_CreateCompileShader(GLuint& ID, const GLchar* code, GLenum type)
+    static bool GL_CreateCompileShader(GLuint& ID, const GLenum type, const GLchar* shaderPath)
     {
+        if(SDL_GetPathInfo(shaderPath, nullptr) == -1)
+        {
+            SDL_LogError(0, "%s", SDL_GetError());
+            return false;
+        }
+
+        const void* codeptr = SDL_LoadFile(shaderPath, nullptr);
+        const char* code = static_cast<const char*>(codeptr);
         ID = glCreateShader(type);
         glShaderSource(ID, 1, &code, nullptr);
         glCompileShader(ID);
@@ -40,25 +50,11 @@ namespace WD
     {
         // Vertex Shader Creation
         GLuint vertexShader = 0;
-        const GLchar* vertexShaderSource =
-            "#version 460 core\n"
-            "layout (location = 0) in vec3 aPos;\n"
-            "void main()\n"
-            "{\n"
-                "\tgl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-            "}\0";
-        GL_CreateCompileShader(vertexShader, vertexShaderSource, GL_VERTEX_SHADER);
+        GL_CreateCompileShader(vertexShader, GL_VERTEX_SHADER, "assets/shaders/vertex.vert");
     
         // Fragment Shader Creation
         GLuint fragmentShader = 0;
-        const GLchar* fragmentShaderSource =
-            "#version 460 core\n"
-            "out vec4 FragColor;\n"
-            "void main()\n"
-            "{\n"
-                "\tFragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-            "}\0";
-        GL_CreateCompileShader(fragmentShader, fragmentShaderSource, GL_FRAGMENT_SHADER);
+        GL_CreateCompileShader(fragmentShader, GL_FRAGMENT_SHADER, "assets/shaders/fragment.frag");
 
         // Creating shader program and linking shaders
         const GLuint shaderProgram = glCreateProgram();
