@@ -5,3 +5,6 @@ CMakeUserPresets.json
 # CLion
 .idea/*
 !.idea/cmake.xml
+
+# MSV
+.vs/*

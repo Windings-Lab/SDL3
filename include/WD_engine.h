@@ -5,7 +5,7 @@
 #include "WD_gl_pipeline.h"
 #include "utility/WD_constructors.h"
 
-class SDL_Window;
+struct SDL_Window;
 typedef struct SDL_GLContextState *SDL_GLContext;
 
 namespace WD

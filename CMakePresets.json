@@ -7,26 +7,20 @@
       "generator": "Ninja",
       "installDir": "${sourceDir}/install/${presetName}",
       "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": 
-      {
+      "architecture": {
         "value": "x64",
         "strategy": "external"
       },
-      "toolset": 
-      {
+      "toolset": {
         "value": "host=x64",
         "strategy": "external"
       },
-      "environment": 
-      {
-        "NINJA_STATUS": "%p [%es] (%f/%t)  -",
-        "PATH": "D:/ImpPrograms/msys64/mingw64/bin"
+      "environment": {
+        "NINJA_STATUS": "%p [%es] (%f/%t)  -"
       },
-      "cacheVariables": 
-      {
-        "CMAKE_COMMAND": "$env{PATH}/cmake.exe",
+      "cacheVariables": {
         "BUILD_SHARED_LIBS": "OFF",
-        
+
         "SDL3IMAGE_AVIF_SHARED": "OFF",
         "SDL3IMAGE_WEBP": "OFF",
         "SDL3IMAGE_XCF": "OFF",
@@ -49,6 +43,7 @@
         "SDL3IMAGE_GIF": "OFF",
         "SDL3IMAGE_XPM": "OFF",
         "SDL3IMAGE_XV": "OFF",
+        "SDL3IMAGE_VENDORED": "OFF",
 
         "PNG_TESTS": "OFF",
         "PNG_SHARED": "OFF",
@@ -92,11 +87,30 @@
     {
       "name": "clang-debug",
       "inherits": "default",
-      "cacheVariables": 
-      {
+      "environment": {
+        "PATH": "D:/ImpPrograms/msys64/mingw64/bin"
+      },
+      "cacheVariables": {
+        "CMAKE_COMMAND": "$env{PATH}/cmake.exe",
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "$env{PATH}/clang.exe",
         "CMAKE_CXX_COMPILER": "$env{PATH}/clang++.exe"
+      }
+    },
+    {
+      "name": "msvc-debug",
+      "inherits": "default",
+      "hidden": false,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "clang-cl",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "enableMicrosoftCodeAnalysis": true,
+          "intelliSenseMode": "windows-clang-x64"
+        }
       }
     }
   ]
