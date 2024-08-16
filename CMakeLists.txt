@@ -16,11 +16,12 @@ set(SOURCES
     main.cpp
     src/engine/WD_engine.cpp
     include/engine/WD_engine.h
-    include/engine/WD_gl_pipeline.h
-    
+    include/engine/WD_shader.h
+    src/engine/WD_shader.cpp
+
     # KEYBOARD
     include/keyboard/WD_keyboard.h
-    
+
     # UTILITY
     src/utility/WD_constructors.h
 
@@ -28,6 +29,7 @@ set(SOURCES
     src/glad/gl.c
     include/glad/gl.h
     include/KHR/khrplatform.h
+    include/WD_log.h
 )
 
 add_executable(WD_SDL ${SOURCES})
@@ -56,6 +58,10 @@ target_include_directories(WD_SDL
     $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/include>
     PRIVATE
     $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
+)
+
+target_precompile_headers(WD_SDL PRIVATE
+    "$<$<COMPILE_LANGUAGE:CXX>:${WD_SDL_SOURCE_DIR}/include/pch.h>"
 )
 
 add_subdirectory(vendor)

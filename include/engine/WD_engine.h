@@ -1,8 +1,5 @@
 #pragma once
 
-#include <vector>
-
-#include "WD_gl_pipeline.h"
 #include "utility/WD_constructors.h"
 
 struct SDL_Window;
@@ -22,10 +19,10 @@ namespace WD
         Engine& operator=(Engine&& other) = delete;
 
         SDL_Window* GetWindow() const;
-        
+
     public:
-        std::vector<Shader> Shader;
-        
+        std::vector<std::unique_ptr<class ShaderProgram>> ShaderPrograms;
+
     private:
         SDL_Window*     mWindow = nullptr;
         SDL_GLContext   mContext = nullptr;

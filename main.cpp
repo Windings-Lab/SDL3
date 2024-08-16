@@ -1,13 +1,24 @@
 #define SDL_MAIN_USE_CALLBACKS
 #include "SDL3/SDL_main.h"
 #include "SDL3/SDL.h"
-#include "glad/gl.h"
-
-#include <filesystem>
 
 #include "engine/WD_engine.h"
-#include "engine/WD_gl_pipeline.h"
+#include "engine/WD_shader.h"
+
+#include "include/WD_log.h"
+
 #include "keyboard/WD_keyboard.h"
+
+#ifndef NDEBUG
+namespace
+{
+    void GLAD_API_PTR opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
+    {
+        if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+        WD::LogError(std::format("OpenGL DEBUG Message: {0}", message));
+    }
+}
+#endif
 
 int SDL_AppInit(void **appstate, int argc, char **argv)
 {
@@ -18,7 +29,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 
         return SDL_APP_FAILURE;
     }
-    
+
     // OpenGL Version 4.6
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
@@ -62,14 +73,22 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 
     // OpenGL Viewport dimensions
     glViewport(0, 0, Width, Height);
+#ifndef NDEBUG
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageCallback(opengl_debug_callback, nullptr);
+    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+#endif
 
     // Creating an instance for an SDL appstate
-    auto* Engine = new WD::Engine(Window, Context);
+    WD::Engine* Engine = new WD::Engine(Window, Context);
     *appstate = static_cast<void*>(Engine);
-    
-    Engine->Shader.emplace_back(WD::CreateShaderProgram());
+
+    Engine->ShaderPrograms.emplace_back(WD::CreateShaderProgram());
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
+
+    Engine->ShaderPrograms[0]->Use();
 
     return SDL_APP_CONTINUE;
 }
@@ -77,7 +96,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 int SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
     const auto* Engine = static_cast<WD::Engine*>(appstate);
-    
+
     switch (event->type)
     {
     case SDL_EVENT_KEY_DOWN:
@@ -115,11 +134,11 @@ int SDL_AppIterate(void *appstate)
     glClearColor(0.2f, 0.3f, 0.3f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(Engine->Shader[0].ID);
-    glBindVertexArray(Engine->Shader[0].VAO);
+    //Engine->Shader[0]->Use();
+    //glBindVertexArray(Engine->Shader[0]->VAO);
     glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
     //glBindVertexArray(0);
-    
+
     SDL_GL_SwapWindow(Engine->GetWindow());
     return SDL_APP_CONTINUE;
 }
