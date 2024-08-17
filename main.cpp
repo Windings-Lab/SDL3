@@ -3,11 +3,10 @@
 #include "SDL3/SDL.h"
 
 #include "engine/WD_engine.h"
-#include "engine/WD_shader.h"
+#include "opengl/WD_shader.h"
 
-#include "include/WD_log.h"
-
-#include "keyboard/WD_keyboard.h"
+#include "engine/WD_log.h"
+#include "engine/keyboard/WD_keyboard.h"
 
 #ifndef NDEBUG
 namespace

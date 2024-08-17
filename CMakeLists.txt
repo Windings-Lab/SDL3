@@ -12,24 +12,32 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    # DEFAULT sources
     main.cpp
+
+    # ENGINE
     src/engine/WD_engine.cpp
     include/engine/WD_engine.h
-    include/engine/WD_shader.h
-    src/engine/WD_shader.cpp
+    include/engine/WD_log.h
 
-    # KEYBOARD
-    include/keyboard/WD_keyboard.h
+    # ENGINE::KEYBOARD
+    include/engine/keyboard/WD_keyboard.h
 
     # UTILITY
     src/utility/WD_constructors.h
 
-    # GLAD
-    src/glad/gl.c
-    include/glad/gl.h
-    include/KHR/khrplatform.h
-    include/WD_log.h
+    # OPENGL
+    include/opengl/WD_shader.h
+    src/opengl/WD_shader.cpp
+
+    # OPENGL::BUFFERS
+    include/opengl/buffers/WD_gl_buffer.h
+
+    # OPENGL::GLAD
+    src/opengl/glad/gl.c
+    include/opengl/glad/gl.h
+    include/opengl/KHR/khrplatform.h
+
+
 )
 
 add_executable(WD_SDL ${SOURCES})

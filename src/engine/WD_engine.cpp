@@ -1,6 +1,6 @@
 #include "engine/WD_engine.h"
 #include <SDL3/SDL_video.h>
-#include "engine/WD_shader.h"
+#include "opengl/WD_shader.h"
 
 WD::Engine::Engine(SDL_Window* window, SDL_GLContext context)
     : NonCopyable()

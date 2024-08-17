@@ -71,7 +71,7 @@ namespace WD
             -0.5f, -0.5f, 0.0f, // bottom left
             -0.5f, 0.5f, 0.0f // top left
         };
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glNamedBufferData(VBO, sizeof(vertices), vertices, GL_STATIC_DRAW);
         // ====== Creating and buffering Vertex Buffer Object ======
 
         // ====== Creating and buffering Element Buffer Object ======
@@ -84,7 +84,7 @@ namespace WD
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertexIndices), vertexIndices, GL_STATIC_DRAW);
+        glNamedBufferData(EBO, sizeof(vertexIndices), vertexIndices, GL_STATIC_DRAW);
         // ====== Creating and buffering Element Buffer Object ======
 
         // Teaching OpenGL about vertex attributes

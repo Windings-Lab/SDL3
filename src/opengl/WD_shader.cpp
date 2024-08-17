@@ -1,5 +1,5 @@
-#include "engine/WD_shader.h"
-#include "WD_log.h"
+#include "opengl/WD_shader.h"
+#include "engine/WD_log.h"
 
 #include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_filesystem.h>
