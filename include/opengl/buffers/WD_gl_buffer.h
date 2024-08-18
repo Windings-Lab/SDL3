@@ -10,8 +10,8 @@ namespace WD::GL
         bool BindTo(GLenum target);
         bool BufferData(const void* data, size_t size, GLenum usage);
 
-        GLuint GetID() const;
-        GLenum GetTarget() const;
+        GLuint ID() const;
+        GLenum Target() const;
 
     public:
         Buffer();
@@ -21,7 +21,7 @@ namespace WD::GL
 
     private:
         void swap(Buffer& other) noexcept;
-        GLuint ID;
-        GLenum Target;
+        GLuint mID;
+        GLenum mTarget;
     };
 }

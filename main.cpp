@@ -62,7 +62,7 @@ namespace WD
             1, 2, 3 // second triangle
         };
         EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
-        shaderProgram->EBO = EBO.GetID();
+        shaderProgram->EBO = EBO.ID();
         engine->Buffers.emplace_back(std::move(EBO));
         // ====== Creating and buffering Element Buffer Object ======
 

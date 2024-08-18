@@ -3,44 +3,44 @@
 namespace WD::GL
 {
     Buffer::Buffer()
-        : ID(0)
-        , Target(0)
+        : mID(0)
+        , mTarget(0)
     {
-        glGenBuffers(1, &ID);
-        if (ID == 0) throw glGetError();
+        glGenBuffers(1, &mID);
+        if (mID == 0) throw glGetError();
     }
 
-    GLuint Buffer::GetID() const
+    GLuint Buffer::ID() const
     {
-        return ID;
+        return mID;
     }
 
-    GLenum Buffer::GetTarget() const
+    GLenum Buffer::Target() const
     {
-        return Target;
+        return mTarget;
     }
 
     bool Buffer::BindTo(const GLenum target)
     {
-        glBindBuffer(target, ID);
+        glBindBuffer(target, mID);
         if(glGetError() != GL_NO_ERROR) return false;
 
-        Target = target;
+        mTarget = target;
         return true;
     }
 
     bool Buffer::BufferData(const void* data, const size_t size, const GLenum usage)
     {
-        glNamedBufferData(ID, size, data, usage);
+        glNamedBufferData(mID, size, data, usage);
         if(glGetError() != GL_NO_ERROR) return false;
 
         return true;
     }
 
-    Buffer::Buffer(Buffer&& other) noexcept : ID(other.ID), Target(other.Target)
+    Buffer::Buffer(Buffer&& other) noexcept : mID(other.mID), mTarget(other.mTarget)
     {
-        other.ID = 0;
-        other.Target = 0;
+        other.mID = 0;
+        other.mTarget = 0;
     }
 
     Buffer& Buffer::operator=(Buffer&& other) noexcept
@@ -56,16 +56,16 @@ namespace WD::GL
 
     Buffer::~Buffer()
     {
-        if(ID == 0) return;
+        if(mID == 0) return;
 
-        glDeleteBuffers(1, &ID);
+        glDeleteBuffers(1, &mID);
     }
 
     void Buffer::swap(Buffer& other) noexcept
     {
         using std::swap;
 
-        swap(ID, other.ID);
-        swap(Target, other.Target);
+        swap(mID, other.mID);
+        swap(mTarget, other.mTarget);
     }
 }
