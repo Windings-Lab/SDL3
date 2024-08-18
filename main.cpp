@@ -22,7 +22,7 @@ namespace
 
 namespace WD
 {
-    inline void CreateShaderProgram(Engine* engine)
+    void CreateShaderProgram(Engine* engine)
     {
         ShaderFactory shaderFactory;
         Shader vertShader = shaderFactory.Create("assets/shaders/vertex.vert", GL_VERTEX_SHADER);

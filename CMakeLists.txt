@@ -18,8 +18,10 @@ set(SOURCES
     src/engine/WD_engine.cpp
     include/engine/WD_engine.h
     include/engine/WD_log.h
+    src/engine/WD_log.cpp
 
     # ENGINE::KEYBOARD
+    src/engine/keyboard/WD_keyboard.cpp
     include/engine/keyboard/WD_keyboard.h
 
     # UTILITY
