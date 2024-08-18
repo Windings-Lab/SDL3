@@ -16,9 +16,9 @@ namespace WD
 
     Shader::Shader(Shader&& other) noexcept : ID(other.ID), Path(other.Path), Type(other.Type)
     {
-        const_cast<GLuint&>(other.ID) = 0;
-        const_cast<const char*&>(other.Path) = nullptr;
-        const_cast<GLenum&>(other.Type) = 0;
+        other.ID = 0;
+        other.Path = nullptr;
+        other.Type = 0;
     }
 
     Shader::~Shader()
@@ -43,9 +43,9 @@ namespace WD
     {
         using std::swap;
 
-        swap(const_cast<GLuint&>(ID), const_cast<GLuint&>(other.ID));
-        swap(const_cast<const char*&>(Path), const_cast<const char*&>(other.Path));
-        swap(const_cast<GLenum&>(Type), const_cast<GLenum&>(other.Type));
+        swap(ID, other.ID);
+        swap(Path, other.Path);
+        swap(Type, other.Type);
     }
 
     void Shader::Container::Add(Shader& shader)
@@ -78,6 +78,11 @@ namespace WD
             LogError("No shader in ShadersByPath when it's available in ShadersByID", true);
         }
         return std::move(ByPath.extract(shaderIt).mapped());
+    }
+
+    GLuint Shader::GetID() const
+    {
+        return ID;
     }
 
     bool Shader::operator!() const
@@ -150,7 +155,7 @@ namespace WD
 
     bool ShaderProgram::AddShader(Shader& shader)
     {
-        glAttachShader(ID, shader.ID);
+        glAttachShader(ID, shader.GetID());
         if(glGetError() != GL_NO_ERROR)
         {
             LogError(std::format("Shader attach failed"));
@@ -198,7 +203,7 @@ namespace WD
 
     bool ShaderProgram::DetachShader(const Shader& shader)
     {
-        glDetachShader(ID, shader.ID);
+        glDetachShader(ID, shader.GetID());
         if(glGetError() != GL_NO_ERROR) LogError("Existing shader detachment failed", true);
 
         return true;

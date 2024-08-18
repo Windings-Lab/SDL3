@@ -16,22 +16,16 @@ namespace WD
     class Engine : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
-        Engine(SDL_Window* window, SDL_GLContext context);
-        ~Engine();
-        Engine(const Engine& other) = delete;
-        Engine& operator=(const Engine& other) = delete;
-        Engine(Engine&& other) = delete;
-        Engine& operator=(Engine&& other) = delete;
-
         SDL_Window* GetWindow() const;
 
-    public:
         std::vector<std::unique_ptr<class ShaderProgram>> ShaderPrograms;
         std::vector<GL::Buffer> Buffers;
+
+        Engine(SDL_Window* window, SDL_GLContext context);
+        ~Engine();
 
     private:
         SDL_Window*     mWindow = nullptr;
         SDL_GLContext   mContext = nullptr;
-
     };
 }

@@ -5,8 +5,22 @@ namespace WD
 {
     struct ShaderFactory;
 
-    struct Shader : Utillity::NonCopyable
+    class Shader : Utillity::NonCopyable
     {
+    public:
+        friend ShaderFactory;
+        GLuint GetID() const;
+
+    private:
+        GLuint ID;
+        const char* Path;
+        GLenum Type;
+
+    public:
+        Shader(Shader&& other) noexcept;
+        Shader& operator=(Shader&& other) noexcept;
+        ~Shader();
+        bool operator!() const;
         class Container
         {
         public:
@@ -21,20 +35,9 @@ namespace WD
             std::unordered_map<GLuint, std::string> ByID;
         };
 
-        Shader(Shader&& other) noexcept;
-        Shader& operator=(Shader&& other) noexcept;
-        ~Shader();
-
-        bool operator!() const;
-
-        const GLuint ID;
-        const char* const Path;
-        const GLenum Type;
-
     private:
-        friend ShaderFactory;
-        Shader() = delete;
         Shader(const GLchar* path, GLenum type);
+        Shader() = delete;
         void swap(Shader& other) noexcept;
     };
 
@@ -47,23 +50,21 @@ namespace WD
     class ShaderProgram : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
-        ShaderProgram();
-        ~ShaderProgram();
-
         void Use() noexcept;
         bool AddShader(Shader& shader);
         bool RemoveShader(const GLchar* path);
         bool RemoveShader(GLuint ID);
 
-    private:
-        bool DetachShader(const Shader& shader);
-
-    public:
-        const GLuint ID;
         GLuint VAO; // Vertex Array Object ID
         GLuint EBO; // Element Buffer Object ID
 
+    public:
+        ShaderProgram();
+        ~ShaderProgram();
+
     private:
+        bool DetachShader(const Shader& shader);
+        GLuint ID;
         Shader::Container mShaders;
     };
 }
