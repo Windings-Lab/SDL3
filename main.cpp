@@ -3,10 +3,11 @@
 #include "SDL3/SDL.h"
 
 #include "engine/WD_engine.h"
-#include "opengl/WD_shader.h"
-
 #include "engine/WD_log.h"
 #include "engine/keyboard/WD_keyboard.h"
+
+#include "opengl/WD_shader.h"
+#include "opengl/buffers/WD_gl_buffer.h"
 
 #ifndef NDEBUG
 namespace
@@ -18,6 +19,67 @@ namespace
     }
 }
 #endif
+
+namespace WD
+{
+    inline void CreateShaderProgram(Engine* engine)
+    {
+        ShaderFactory shaderFactory;
+        Shader vertShader = shaderFactory.Create("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
+        Shader fragShader = shaderFactory.Create("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
+
+        std::unique_ptr<ShaderProgram> shaderProgram = std::make_unique<ShaderProgram>();
+        shaderProgram->AddShader(vertShader);
+        shaderProgram->AddShader(fragShader);
+
+        // ====== Creating Vertex Array Object ======
+        GLuint VAO = 0;
+        glGenVertexArrays(1, &VAO);
+        shaderProgram->VAO = VAO;
+        glBindVertexArray(VAO);
+        // ====== Creating Vertex Array Object ======
+
+        // ====== Creating and buffering Vertex Buffer Object ======
+        GL::Buffer VBO;
+        VBO.BindTo(GL_ARRAY_BUFFER);
+        constexpr float vertices[] =
+        {
+            0.5f, 0.5f, 0.0f, // top right
+            0.5f, -0.5f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f, // bottom left
+            -0.5f, 0.5f, 0.0f // top left
+        };
+        VBO.BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+        engine->Buffers.emplace_back(std::move(VBO));
+        // ====== Creating and buffering Vertex Buffer Object ======
+
+        // ====== Creating and buffering Element Buffer Object ======
+        GL::Buffer EBO;
+        EBO.BindTo(GL_ELEMENT_ARRAY_BUFFER);
+        const unsigned int vertexIndices[] =
+        {
+            0, 1, 3, // first triangle
+            1, 2, 3 // second triangle
+        };
+        EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
+        shaderProgram->EBO = EBO.ID;
+        engine->Buffers.emplace_back(std::move(EBO));
+        // ====== Creating and buffering Element Buffer Object ======
+
+        // Teaching OpenGL about vertex attributes
+        // 1-4: axes count
+        // Binds current bounded to GL_ARRAY_BUFFER VBO
+        constexpr int axes = 3;
+        glVertexAttribPointer(0, axes, GL_FLOAT, GL_FALSE, axes * sizeof(float), static_cast<void*>(0));
+        glEnableVertexAttribArray(0);
+
+        // Unbinding VBO after using glVertexAttribPointer
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        shaderProgram->Use();
+        engine->ShaderPrograms.emplace_back(std::move(shaderProgram));
+    }
+}
 
 int SDL_AppInit(void **appstate, int argc, char **argv)
 {
@@ -83,7 +145,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     WD::Engine* Engine = new WD::Engine(Window, Context);
     *appstate = static_cast<void*>(Engine);
 
-    Engine->ShaderPrograms.emplace_back(WD::CreateShaderProgram());
+    CreateShaderProgram(Engine);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
 

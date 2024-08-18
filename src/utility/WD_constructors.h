@@ -17,7 +17,7 @@ namespace WD::Utillity
     public:
         NonMovable() = default;
         ~NonMovable() = default;
-        
+
         NonMovable(NonMovable&&) = delete;
         NonMovable& operator=(NonMovable&&) = delete;
     };

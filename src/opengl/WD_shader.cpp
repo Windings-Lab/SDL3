@@ -9,13 +9,75 @@ namespace WD
     Shader::Shader(const GLchar* path, const GLenum type)
         : ID(glCreateShader(type)), Path(path), Type(type)
     {
-        if(ID == GL_INVALID_ENUM) throw glGetError();
+        auto error = glGetError();
+        if(error == GL_INVALID_ENUM) throw error;
         if(ID == 0) LogError(std::format("Shader is not created: %s", path), true);
+    }
+
+    Shader::Shader(Shader&& other) noexcept : ID(other.ID), Path(other.Path), Type(other.Type)
+    {
+        const_cast<GLuint&>(other.ID) = 0;
+        const_cast<const char*&>(other.Path) = nullptr;
+        const_cast<GLenum&>(other.Type) = 0;
     }
 
     Shader::~Shader()
     {
+        if(!*this) return;
+
         glDeleteShader(ID);
+    }
+
+    Shader& Shader::operator=(Shader&& other) noexcept
+    {
+        if(this != &other)
+        {
+            Shader tmp(std::move(other));
+            swap(tmp);
+        }
+
+        return *this;
+    }
+
+    void Shader::swap(Shader& other) noexcept
+    {
+        using std::swap;
+
+        swap(const_cast<GLuint&>(ID), const_cast<GLuint&>(other.ID));
+        swap(const_cast<const char*&>(Path), const_cast<const char*&>(other.Path));
+        swap(const_cast<GLenum&>(Type), const_cast<GLenum&>(other.Type));
+    }
+
+    void Shader::Container::Add(Shader& shader)
+    {
+        ByID[shader.ID] = shader.Path;
+        ByPath.emplace(shader.Path, std::move(shader));
+    }
+
+    Shader Shader::Container::Extract(const GLchar* path)
+    {
+        const auto it = ByPath.find(path);
+        if(it == ByPath.end())
+        {
+            LogError(std::format("No shader with specified path: %s", path), true);
+        }
+
+        return std::move(ByPath.extract(it).mapped());
+    }
+
+    Shader Shader::Container::Extract(GLuint ID)
+    {
+        const auto pathIt = ByID.find(ID);
+        if(pathIt == ByID.end())
+        {
+            LogError(std::format("No shader with specified ID: %i", ID), true);
+        }
+        const auto shaderIt = ByPath.find(pathIt->second);
+        if(shaderIt == ByPath.end())
+        {
+            LogError("No shader in ShadersByPath when it's available in ShadersByID", true);
+        }
+        return std::move(ByPath.extract(shaderIt).mapped());
     }
 
     bool Shader::operator!() const
@@ -23,22 +85,21 @@ namespace WD
         return ID == 0;
     }
 
-    std::unique_ptr<Shader> ShaderFactory::Create(const GLchar* path, GLenum type)
+    Shader ShaderFactory::Create(const GLchar* path, GLenum type)
     {
         if(SDL_GetPathInfo(path, nullptr) == -1)
         {
-            LogError(SDL_GetError());
-            return nullptr;
+            LogError(SDL_GetError(), true);
         }
 
-        auto shader = std::make_unique<Shader>(path, type);
+        Shader shader(path, type);
         const char* code = static_cast<const char*>(SDL_LoadFile(path, nullptr));
-        glShaderSource(shader->ID, 1, &code, nullptr);
-        glCompileShader(shader->ID);
+        glShaderSource(shader.ID, 1, &code, nullptr);
+        glCompileShader(shader.ID);
 
-        if(!CompileSuccess(*shader))
+        if(!CompileSuccess(shader))
         {
-            return nullptr;
+            throw std::runtime_error("Failed to compile shader");
         }
 
         return shader;
@@ -46,7 +107,7 @@ namespace WD
 
     bool ShaderFactory::CompileSuccess(const Shader& shader)
     {
-        // Check for succesfull compilation
+        // Check for successful compilation
         int success;
         glGetShaderiv(shader.ID, GL_COMPILE_STATUS, &success);
         if(!success)
@@ -73,6 +134,8 @@ namespace WD
 
     ShaderProgram::~ShaderProgram()
     {
+        if(ID == 0) return;
+
         glDeleteProgram(ID);
 
         auto error = glGetError();
@@ -85,32 +148,21 @@ namespace WD
         glUseProgram(ID);
     }
 
-    bool ShaderProgram::AddShader(std::unique_ptr<Shader> shader)
+    bool ShaderProgram::AddShader(Shader& shader)
     {
-        glAttachShader(ID, shader->ID);
+        glAttachShader(ID, shader.ID);
         if(glGetError() != GL_NO_ERROR)
         {
             LogError(std::format("Shader attach failed"));
             return false;
         }
 
-        if(!mShadersByID.emplace(shader->ID, shader->Path).second)
-        {
-            DetachShader(*shader);
-            return false;
-        }
-        if(!mShadersByPath.emplace(shader->Path, std::move(shader)).second)
-        {
-            mShadersByID.erase(shader->ID);
-            DetachShader(*shader);
-            return false;
-        }
+        mShaders.Add(shader);
 
         glLinkProgram(ID);
         if(glGetError() != GL_NO_ERROR)
         {
             LogError(std::format("Program was not linked"));
-            return false;
         }
 
         return true;
@@ -118,33 +170,28 @@ namespace WD
 
     bool ShaderProgram::RemoveShader(const GLchar* path)
     {
-        const auto it = mShadersByPath.find(path);
-        if(it == mShadersByPath.end())
+        try
         {
-            LogError(std::format("No shader with specified path: %s", path));
+            DetachShader(mShaders.Extract(path));
+        }
+        catch(const std::exception& e)
+        {
             return false;
         }
-        const std::unique_ptr<Shader> shader = std::move(mShadersByPath.extract(path).mapped());
-        DetachShader(*shader);
 
         return true;
     }
 
     bool ShaderProgram::RemoveShader(const GLuint ID)
     {
-        auto it_string = mShadersByID.find(ID);
-        if(it_string == mShadersByID.end())
+        try
         {
-            LogError(std::format("No shader with specified ID: %i", ID));
+            DetachShader(mShaders.Extract(ID));
+        }
+        catch(const std::exception& e)
+        {
             return false;
         }
-        auto it = mShadersByPath.find(it_string->second);
-        if(it == mShadersByPath.end())
-        {
-            LogError("No shader in ShadersByPath when it's available in ShadersByID", true);
-        }
-        const std::unique_ptr<Shader> shader = std::move(mShadersByPath.extract(it_string->second).mapped());
-        DetachShader(*shader);
 
         return true;
     }

@@ -30,14 +30,13 @@ set(SOURCES
     src/opengl/WD_shader.cpp
 
     # OPENGL::BUFFERS
+    src/opengl/buffers/WD_gl_buffer.cpp
     include/opengl/buffers/WD_gl_buffer.h
 
     # OPENGL::GLAD
     src/opengl/glad/gl.c
     include/opengl/glad/gl.h
     include/opengl/KHR/khrplatform.h
-
-
 )
 
 add_executable(WD_SDL ${SOURCES})

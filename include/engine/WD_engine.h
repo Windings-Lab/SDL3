@@ -7,6 +7,11 @@ typedef struct SDL_GLContextState *SDL_GLContext;
 
 namespace WD
 {
+    namespace GL
+    {
+        class Buffer;
+    }
+
     // Class for handling Window and OpenGL Context
     class Engine : Utillity::NonCopyable, Utillity::NonMovable
     {
@@ -22,6 +27,7 @@ namespace WD
 
     public:
         std::vector<std::unique_ptr<class ShaderProgram>> ShaderPrograms;
+        std::vector<GL::Buffer> Buffers;
 
     private:
         SDL_Window*     mWindow = nullptr;
