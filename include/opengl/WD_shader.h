@@ -51,9 +51,9 @@ namespace WD
     {
     public:
         void Use() noexcept;
-        bool AddShader(Shader& shader);
-        bool RemoveShader(const GLchar* path);
-        bool RemoveShader(GLuint ID);
+        bool Attach(Shader& shader);
+        bool Detach(const GLchar* path);
+        bool Detach(GLuint ID);
 
         GLuint VAO; // Vertex Array Object ID
         GLuint EBO; // Element Buffer Object ID

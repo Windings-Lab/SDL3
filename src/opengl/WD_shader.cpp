@@ -153,7 +153,7 @@ namespace WD
         glUseProgram(ID);
     }
 
-    bool ShaderProgram::AddShader(Shader& shader)
+    bool ShaderProgram::Attach(Shader& shader)
     {
         glAttachShader(ID, shader.GetID());
         if(glGetError() != GL_NO_ERROR)
@@ -173,7 +173,7 @@ namespace WD
         return true;
     }
 
-    bool ShaderProgram::RemoveShader(const GLchar* path)
+    bool ShaderProgram::Detach(const GLchar* path)
     {
         try
         {
@@ -187,7 +187,7 @@ namespace WD
         return true;
     }
 
-    bool ShaderProgram::RemoveShader(const GLuint ID)
+    bool ShaderProgram::Detach(const GLuint ID)
     {
         try
         {

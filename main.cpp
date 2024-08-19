@@ -29,8 +29,8 @@ namespace WD
         Shader fragShader = shaderFactory.Create("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
         std::unique_ptr<ShaderProgram> shaderProgram = std::make_unique<ShaderProgram>();
-        shaderProgram->AddShader(vertShader);
-        shaderProgram->AddShader(fragShader);
+        shaderProgram->Attach(vertShader);
+        shaderProgram->Attach(fragShader);
 
         // ====== Creating Vertex Array Object ======
         GLuint VAO = 0;
