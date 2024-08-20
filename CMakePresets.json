@@ -113,5 +113,12 @@
         }
       }
     }
+  ],
+  "buildPresets": [
+    {
+      "name": "verbose",
+      "configurePreset": "clang-debug",
+      "verbose": true
+    }
   ]
 }

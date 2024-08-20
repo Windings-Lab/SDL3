@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(WD_SDL LANGUAGES C CXX)
+project(WD_SDL LANGUAGES C CXX ASM ASM_NASM)
 
 # list(APPEND CMAKE_MODULE_PATH "${WD_SDL_SOURCE_DIR}/cmake")
 
@@ -82,4 +82,23 @@ add_custom_command(
         -E create_symlink "${WD_SDL_SOURCE_DIR}/assets/" "${CMAKE_OUTPUT_DIRECTORY}/assets/"
     DEPENDS "${CMAKE_OUTPUT_DIRECTORY}/assets/"
     COMMENT "symbolic link ${WD_SDL_SOURCE_DIR}/assets/ => ${CMAKE_OUTPUT_DIRECTORY}/assets/"
+)
+
+# Configuration for assembler
+set(ASM_SOURCES
+    src/asm/learn.asm
+)
+add_library(nasm_objects OBJECT ${ASM_SOURCES})
+set_target_properties(nasm_objects PROPERTIES LANGUAGE ASM_NASM)
+
+add_executable(WD_ASM $<TARGET_OBJECTS:nasm_objects>)
+
+target_link_libraries(WD_ASM PRIVATE kernel32 user32)
+target_link_options(WD_ASM PRIVATE
+    -e WinMain
+    -subsystem windows
+)
+
+target_compile_options(WD_ASM PRIVATE
+    -fwin64
 )
