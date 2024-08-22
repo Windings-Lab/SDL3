@@ -2,30 +2,31 @@
 
 #include "utility/WD_constructors.h"
 
-struct SDL_Window;
-typedef struct SDL_GLContextState *SDL_GLContext;
-
 namespace WD
 {
     namespace GL
     {
-        class Buffer;
+        class Context;
     }
+
+    using WindowPtr = std::unique_ptr<class Window>;
+    using ContextPtr = std::unique_ptr<GL::Context>;
 
     // Class for handling Window and OpenGL Context
     class Engine : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
-        SDL_Window* GetWindow() const;
+        Window* GetWindow() const;
+        GL::Context* GetGLContext() const;
 
-        std::vector<std::unique_ptr<class ShaderProgram>> ShaderPrograms;
-        std::vector<GL::Buffer> Buffers;
+        Window* CreateWindow(int width, int height);
+        GL::Context* CreateGLContext(const Window& window);
 
-        Engine(SDL_Window* window, SDL_GLContext context);
+        Engine();
         ~Engine();
 
     private:
-        SDL_Window*     mWindow = nullptr;
-        SDL_GLContext   mContext = nullptr;
+        WindowPtr mWindow;
+        ContextPtr mGLContext;
     };
 }

@@ -1,10 +1,9 @@
-#include "opengl/WD_shader.h"
-#include "engine/WD_log.h"
+#include "opengl/WD_gl_shader.h"
 
 #include <SDL3/SDL_iostream.h>
 #include <SDL3/SDL_filesystem.h>
 
-namespace WD
+namespace WD::GL
 {
     Shader::Shader(const GLchar* path, const GLenum type)
         : ID(glCreateShader(type)), Path(path), Type(type)

@@ -1,4 +1,5 @@
 set(ZLIB_ROOT "${WD_SDL_SOURCE_DIR}/vendor/zlib")
+set(ZLIB_LIBRARY "${WD_SDL_SOURCE_DIR}/vendor/zlib")
 set(PNG_PNG_INCLUDE_DIR "${WD_SDL_SOURCE_DIR}/vendor/libpng")
 add_subdirectory(zlib)
 add_subdirectory(libpng)

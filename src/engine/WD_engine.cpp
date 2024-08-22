@@ -1,26 +1,80 @@
 #include "engine/WD_engine.h"
-#include <SDL3/SDL_video.h>
-#include "opengl/WD_shader.h"
-#include "opengl/buffers/WD_gl_buffer.h"
+#include "engine/WD_window.h"
 
-WD::Engine::Engine(SDL_Window* window, SDL_GLContext context)
+#include "opengl/WD_gl_context.h"
+#include "opengl/WD_gl_shader.h"
+
+
+WD::Engine::Engine()
     : NonCopyable()
     , NonMovable()
-    , mWindow(window)
-    , mContext(context)
 {
+}
+
+WD::Window* WD::Engine::CreateWindow(int width, int height)
+{
+    if(mWindow)
+    {
+        LogError(std::format("Window already created!"));
+        return mWindow.get();
+    }
+
+    try
+    {
+        mWindow = std::make_unique<Window>(width, height);
+    }
+    catch (std::runtime_error& e)
+    {
+        return nullptr;
+    }
+
+    return mWindow.get();
+}
+
+WD::GL::Context* WD::Engine::CreateGLContext(const Window& window)
+{
+    if(mGLContext)
+    {
+        LogError(std::format("OpenGL Context already created!"));
+        return mGLContext.get();
+    }
+
+    if(&window != mWindow.get())
+    {
+        if(!mWindow)
+        {
+            LogError(std::format("Engine window not created! Weird behaviour"));
+            return nullptr;
+        }
+
+        LogError(std::format("Engine window and provided window are not equal! Weird behaviour"));
+        return nullptr;
+    }
+
+    try
+    {
+        mGLContext = std::make_unique<GL::Context>(mWindow.get());
+    }
+    catch (std::runtime_error& e)
+    {
+        return nullptr;
+    }
+
+    return mGLContext.get();
+}
+
+WD::Window* WD::Engine::GetWindow() const
+{
+    return mWindow.get();
+}
+
+WD::GL::Context* WD::Engine::GetGLContext() const
+{
+    return mGLContext.get();
 }
 
 WD::Engine::~Engine()
 {
-    ShaderPrograms.clear();
-    Buffers.clear();
-
-    // Clear everything before window destroyed
-    SDL_DestroyWindow(mWindow);
-}
-
-SDL_Window* WD::Engine::GetWindow() const
-{
-    return mWindow;
+    mGLContext.reset();
+    mWindow.reset();
 }

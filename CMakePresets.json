@@ -116,8 +116,23 @@
   ],
   "buildPresets": [
     {
-      "name": "verbose",
+      "name": "clang-debug-verbose",
       "configurePreset": "clang-debug",
+      "verbose": true
+    },
+    {
+      "name": "clang-debug-noverbose",
+      "configurePreset": "clang-debug",
+      "verbose": false
+    },
+    {
+      "name": "msvc-debug-noverbose",
+      "configurePreset": "msvc-debug",
+      "verbose": false
+    },
+    {
+      "name": "msvc-debug-verbose",
+      "configurePreset": "msvc-debug",
       "verbose": true
     }
   ]

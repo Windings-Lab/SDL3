@@ -19,17 +19,26 @@ set(SOURCES
     include/engine/WD_engine.h
     include/engine/WD_log.h
     src/engine/WD_log.cpp
+    include/engine/WD_window.h
+    src/engine/WD_window.cpp
 
     # ENGINE::KEYBOARD
     src/engine/keyboard/WD_keyboard.cpp
     include/engine/keyboard/WD_keyboard.h
 
+    # ENGINE::MATH
+    src/engine/math/WD_math.cpp
+    include/engine/math/WD_math.h
+    include/engine/math/WD_point.h
+
     # UTILITY
     src/utility/WD_constructors.h
 
     # OPENGL
-    include/opengl/WD_shader.h
-    src/opengl/WD_shader.cpp
+    include/opengl/WD_gl_shader.h
+    src/opengl/WD_gl_shader.cpp
+    include/opengl/WD_gl_context.h
+    src/opengl/WD_gl_context.cpp
 
     # OPENGL::BUFFERS
     src/opengl/buffers/WD_gl_buffer.cpp

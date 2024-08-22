@@ -1,7 +1,7 @@
 #pragma once
 #include "utility/WD_constructors.h"
 
-namespace WD
+namespace WD::GL
 {
     struct ShaderFactory;
 
