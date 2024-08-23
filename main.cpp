@@ -9,9 +9,27 @@
 #include "opengl/WD_gl_shader.h"
 #include "opengl/WD_gl_context.h"
 
+#include <chrono>
+#include "engine/math/WD_math.h"
+
+double cpu_time(void (*func)())
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    func();
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> total = end - start;
+
+    return total.count();
+}
+
 void DoSomething()
 {
+    constexpr double clock_rate = 3910000000;
+    const double cpu_time1 = cpu_time(WD::Math::DoSomething);
+    const double cpu_time2 = cpu_time(WD::Math::DoSomethingRef);
 
+    int ret = 5;
 }
 
 void CreateShaderProgram(WD::GL::Context* glContext)
@@ -24,7 +42,7 @@ void CreateShaderProgram(WD::GL::Context* glContext)
     glContext->ShaderPrograms[0]->Use();
 }
 
-int SDL_AppInit(void **appstate, int argc, char **argv)
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -38,7 +56,9 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
 
     constexpr int Height = 600;
     constexpr int Width = 800;
+#undef CreateWindow
     const WD::Window* Window = Engine->CreateWindow(Width, Height);
+#define CreateWindow __MINGW_NAME_AW(CreateWindow)
     if(!Window)
     {
         return SDL_APP_FAILURE;
@@ -56,7 +76,7 @@ int SDL_AppInit(void **appstate, int argc, char **argv)
     return SDL_APP_CONTINUE;
 }
 
-int SDL_AppEvent(void *appstate, const SDL_Event *event)
+SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
     const auto* Engine = static_cast<WD::Engine*>(appstate);
 
@@ -91,7 +111,7 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
     return SDL_APP_CONTINUE;
 }
 
-int SDL_AppIterate(void *appstate)
+SDL_AppResult SDL_AppIterate(void *appstate)
 {
     WD::Engine* Engine = static_cast<WD::Engine*>(appstate);
 

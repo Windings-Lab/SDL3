@@ -1,16 +1,17 @@
+#include "SDL3/SDL_init.h"
 #include "SDL3/SDL_keycode.h"
 #include "SDL3/SDL_log.h"
 
 namespace WD::Keyboard
 {
-    int Handle_Input(SDL_Keycode keycode)
+    SDL_AppResult Handle_Input(SDL_Keycode keycode)
     {
         if(keycode == SDLK_ESCAPE)
         {
             SDL_Log("Quiting!");
-            return 1;
+            return SDL_APP_SUCCESS;
         }
 
-        return 0;
+        return SDL_APP_CONTINUE;
     }
 }

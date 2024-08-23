@@ -8,8 +8,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(compiler_is_msvc "$<CXX_COMPILER_ID:MSVC>")
 
 set(SOURCES
     main.cpp
@@ -54,7 +56,30 @@ add_executable(WD_SDL ${SOURCES})
 
 target_compile_features(WD_SDL PRIVATE cxx_std_23)
 
+if(MSVC)
+	set_target_properties(WD_SDL PROPERTIES
+		COMPILE_PDB_NAME WD_SDL
+		COMPILE_PDB_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin
+	)
+endif()
+
 target_compile_options(WD_SDL PRIVATE
+	$<${compiler_is_msvc}:
+		  /std:c++latest
+		  /Zc:preprocessor
+		  /utf-8
+		  /EHsc
+		  /nologo
+		  /UNICODE
+		  $<$<CONFIG:Release>:
+			/Ox
+			/MD
+		  >
+		  $<$<CONFIG:Debug>:
+			/MDd
+		  >
+	 >
+
     $<$<CXX_COMPILER_ID:Clang>:
         $<$<CONFIG:Debug>:
             -march=native
@@ -67,8 +92,10 @@ target_compile_options(WD_SDL PRIVATE
 )
 
 target_link_options(WD_SDL PRIVATE
-    -static-libgcc
-    -static-libstdc++
+	$<$<CXX_COMPILER_ID:Clang>:
+		-static-libgcc
+		-static-libstdc++
+	>
 )
 
 target_include_directories(WD_SDL

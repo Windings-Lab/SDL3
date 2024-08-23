@@ -2,5 +2,5 @@
 
 namespace WD::Keyboard
 {
-    int Handle_Input(SDL_Keycode keycode);
+    SDL_AppResult Handle_Input(SDL_Keycode keycode);
 }
