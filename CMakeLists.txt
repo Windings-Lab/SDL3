@@ -71,6 +71,7 @@ target_compile_options(WD_SDL PRIVATE
 		  /EHsc
 		  /nologo
 		  /UNICODE
+		  /FAs
 		  $<$<CONFIG:Release>:
 			/Ox
 			/MD
