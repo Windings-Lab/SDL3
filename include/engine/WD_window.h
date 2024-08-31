@@ -14,7 +14,7 @@ namespace WD
     public:
         Window(int width, int height);
 
-        SDL_Window* Get() const;
+        auto Get() const -> SDL_Window*;
 
         int Width() const;
         int Height() const;

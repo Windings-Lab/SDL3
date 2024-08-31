@@ -20,7 +20,7 @@ namespace WD
         mValue = window;
     }
 
-    SDL_Window* Window::Get() const
+    auto Window::Get() const -> SDL_Window*
     {
         return mValue;
     }
