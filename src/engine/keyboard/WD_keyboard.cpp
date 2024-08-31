@@ -1,6 +1,5 @@
 #include "SDL_init.h"
 #include "SDL_keycode.h"
-#include "SDL_log.h"
 
 namespace WD::Keyboard
 {

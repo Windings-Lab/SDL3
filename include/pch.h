@@ -7,6 +7,8 @@
 #include <filesystem>
 #include <string>
 
+#include "SDL_log.h"
+
 #include "engine/WD_log.h"
 
 #include "opengl/glad/gl.h"
