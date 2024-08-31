@@ -38,7 +38,9 @@ set(SOURCES
 
     # OPENGL
     include/opengl/WD_gl_shader.h
-    src/opengl/WD_gl_shader.cpp
+	src/opengl/shader/WD_gl_shader.cpp
+	src/opengl/shader/WD_gl_shaderfactory.cpp
+	src/opengl/shader/WD_gl_shaderprogram.cpp
     include/opengl/WD_gl_context.h
     src/opengl/WD_gl_context.cpp
 

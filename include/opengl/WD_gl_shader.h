@@ -3,12 +3,10 @@
 
 namespace WD::GL
 {
-    struct ShaderFactory;
-
     class Shader : Utillity::NonCopyable
     {
     public:
-        friend ShaderFactory;
+        friend struct ShaderFactory;
         GLuint GetID() const;
 
     private:
@@ -18,17 +16,17 @@ namespace WD::GL
 
     public:
         Shader(Shader&& other) noexcept;
-        Shader& operator=(Shader&& other) noexcept;
+        auto operator=(Shader&& other) noexcept -> Shader&;
         ~Shader();
-        bool operator!() const;
+        auto operator!() const -> bool;
         class Container
         {
         public:
             Container() = default;
 
-            void Add(Shader& shader);
-            Shader Extract(const GLchar* path);
-            Shader Extract(GLuint ID);
+            auto Add(Shader& shader) -> void;
+            auto Extract(const GLchar* path) -> Shader;
+            auto Extract(GLuint ID) -> Shader;
 
         private:
             std::unordered_map<std::string, Shader> ByPath;
@@ -38,22 +36,22 @@ namespace WD::GL
     private:
         Shader(const GLchar* path, GLenum type);
         Shader() = delete;
-        void swap(Shader& other) noexcept;
+        auto swap(Shader& other) noexcept -> void;
     };
 
     struct ShaderFactory
     {
-        Shader Create(const GLchar* path, GLenum type);
-        bool CompileSuccess(const Shader& shader);
+        auto Create(const GLchar* path, GLenum type) -> Shader;
+        auto CompileSuccess(const Shader& shader) -> bool;
     };
 
     class ShaderProgram : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
-        void Use() noexcept;
-        bool Attach(Shader& shader);
-        bool Detach(const GLchar* path);
-        bool Detach(GLuint ID);
+        auto Use() noexcept -> void;
+        auto Attach(Shader& shader) -> bool;
+        auto Detach(const GLchar* path) -> bool;
+        auto Detach(GLuint ID) -> bool;
 
         GLuint VAO; // Vertex Array Object ID
         GLuint EBO; // Element Buffer Object ID
@@ -63,7 +61,7 @@ namespace WD::GL
         ~ShaderProgram();
 
     private:
-        bool DetachShader(const Shader& shader);
+        auto DetachShader(const Shader& shader) -> bool;
         GLuint ID;
         Shader::Container mShaders;
     };
