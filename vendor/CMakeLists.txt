@@ -18,5 +18,5 @@ target_link_libraries(WD_SDL PUBLIC vendor)
 
 target_include_directories(WD_SDL
 	PUBLIC
-	$<BUILD_INTERFACE:${SDL3_SOURCE_DIR}/include>
+	$<BUILD_INTERFACE:${SDL3_SOURCE_DIR}/include/SDL3>
 )

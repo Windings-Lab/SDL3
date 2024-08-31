@@ -1,6 +1,6 @@
 #define SDL_MAIN_USE_CALLBACKS
-#include "SDL3/SDL_main.h"
-#include "SDL3/SDL.h"
+#include "SDL_main.h"
+#include "SDL.h"
 
 #include "engine/WD_engine.h"
 #include "engine/keyboard/WD_keyboard.h"
