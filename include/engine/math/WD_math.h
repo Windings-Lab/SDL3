@@ -2,10 +2,7 @@
 
 namespace WD::Math
 {
-    class Point2D;
+    struct Point2D;
 
-    double Distance(Point2D a, Point2D b);
-
-    void DoSomething();
-    void DoSomethingRef();
+    double Distance(const Point2D& a, const Point2D& b);
 }

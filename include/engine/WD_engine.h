@@ -16,11 +16,11 @@ namespace WD
     class Engine : Utillity::NonCopyable, Utillity::NonMovable
     {
     public:
-        auto GetWindow() const -> Window*;
-        auto GetGLContext() const -> GL::Context*;
+        auto GetWindow() -> Window&;
+        auto GetGLContext() -> GL::Context&;
 
-        auto CreateWindow(int width, int height) -> Window*;
-        auto CreateGLContext(const Window& window) -> GL::Context*;
+        auto CreateWindow(int width, int height) -> Window&;
+        auto CreateGLContext(const Window& window) -> GL::Context&;
 
         Engine();
         ~Engine();

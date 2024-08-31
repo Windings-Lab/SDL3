@@ -44,7 +44,7 @@ namespace WD::GL
         swap(Type, other.Type);
     }
 
-    auto Shader::Container::Add(Shader& shader) -> void
+    auto Shader::Container::Add(Shader&& shader) -> void
     {
         ByID[shader.ID] = shader.Path;
         ByPath.emplace(shader.Path, std::move(shader));
@@ -61,7 +61,7 @@ namespace WD::GL
         return std::move(ByPath.extract(it).mapped());
     }
 
-    auto Shader::Container::Extract(GLuint ID) -> Shader
+    auto Shader::Container::Extract(const GLuint ID) -> Shader
     {
         const auto pathIt = ByID.find(ID);
         if(pathIt == ByID.end())

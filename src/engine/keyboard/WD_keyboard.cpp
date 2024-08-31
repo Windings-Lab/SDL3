@@ -4,7 +4,7 @@
 
 namespace WD::Keyboard
 {
-    SDL_AppResult Handle_Input(SDL_Keycode keycode)
+    SDL_AppResult Handle_Input(const SDL_Keycode keycode)
     {
         if(keycode == SDLK_ESCAPE)
         {

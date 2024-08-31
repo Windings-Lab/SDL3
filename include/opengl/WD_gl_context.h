@@ -15,7 +15,7 @@ namespace WD::GL
         std::vector<std::unique_ptr<class ShaderProgram>> ShaderPrograms;
 
     public:
-        explicit Context(Window* window);
+        explicit Context(Window& window);
 
         void Iterate();
 
@@ -26,7 +26,7 @@ namespace WD::GL
 
     private:
         SDL_GLContext mValue = nullptr;
-        Window* mWindow;
+        Window& mWindow;
 
         std::vector<class Buffer> mBuffers;
     };

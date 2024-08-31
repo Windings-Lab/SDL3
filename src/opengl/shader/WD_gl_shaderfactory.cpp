@@ -5,7 +5,7 @@
 
 namespace WD::GL
 {
-    auto ShaderFactory::Create(const GLchar* path, GLenum type) -> Shader
+    auto ShaderFactory::Create(const GLchar* path, const GLenum type) -> Shader
     {
         if(SDL_GetPathInfo(path, nullptr) == -1)
         {

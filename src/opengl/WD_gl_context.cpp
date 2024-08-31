@@ -19,7 +19,7 @@ namespace
 
 namespace WD::GL
 {
-    Context::Context(Window* window)
+    Context::Context(Window& window)
         : mWindow(window)
     {
         // OpenGL Version 4.6
@@ -35,7 +35,7 @@ namespace WD::GL
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 #endif
 
-        const SDL_GLContext context = SDL_GL_CreateContext(mWindow->Get());
+        const SDL_GLContext context = SDL_GL_CreateContext(mWindow.Get());
         if (!context)
         {
             LogError(std::format("OpenGL Context failed to create!"), true);
@@ -47,7 +47,7 @@ namespace WD::GL
             LogError(std::format("GLAD failed to initialize"), true);
         }
 
-        UpdateViewport(mWindow->Width(), mWindow->Height());
+        UpdateViewport(mWindow.Width(), mWindow.Height());
 #ifndef NDEBUG
         glEnable(GL_DEBUG_OUTPUT);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -66,18 +66,18 @@ namespace WD::GL
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         //glBindVertexArray(0);
 
-        SDL_GL_SwapWindow(mWindow->Get());
+        SDL_GL_SwapWindow(mWindow.Get());
     }
 
     void Context::CreateShaderProgram()
     {
         ShaderFactory shaderFactory;
-        Shader vertShader = shaderFactory.Create("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
-        Shader fragShader = shaderFactory.Create("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
+        auto&& vertShader = shaderFactory.Create("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
+        auto&& fragShader = shaderFactory.Create("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
-        std::unique_ptr<ShaderProgram> shaderProgram = std::make_unique<ShaderProgram>();
-        shaderProgram->Attach(vertShader);
-        shaderProgram->Attach(fragShader);
+        auto shaderProgram = std::make_unique<ShaderProgram>();
+        shaderProgram->Attach(std::move(vertShader));
+        shaderProgram->Attach(std::move(fragShader));
 
         // ====== Creating Vertex Array Object ======
         GLuint VAO = 0;
@@ -87,7 +87,7 @@ namespace WD::GL
         // ====== Creating Vertex Array Object ======
 
         // ====== Creating and buffering Vertex Buffer Object ======
-        GL::Buffer VBO;
+        Buffer VBO;
         VBO.BindTo(GL_ARRAY_BUFFER);
         constexpr float vertices[] =
         {
@@ -101,7 +101,7 @@ namespace WD::GL
         // ====== Creating and buffering Vertex Buffer Object ======
 
         // ====== Creating and buffering Element Buffer Object ======
-        GL::Buffer EBO;
+        Buffer EBO;
         EBO.BindTo(GL_ELEMENT_ARRAY_BUFFER);
         const unsigned int vertexIndices[] =
         {
@@ -116,7 +116,7 @@ namespace WD::GL
         // Teaching OpenGL about vertex attributes
         // 1-4: axes count
         // Binds current bounded to GL_ARRAY_BUFFER VBO
-        constexpr int axes = 3;
+        constexpr auto axes = 3;
         glVertexAttribPointer(0, axes, GL_FLOAT, GL_FALSE, axes * sizeof(float), static_cast<void*>(0));
         glEnableVertexAttribArray(0);
 
@@ -127,7 +127,7 @@ namespace WD::GL
         ShaderPrograms.emplace_back(std::move(shaderProgram));
     }
 
-    void Context::UpdateViewport(int width, int height)
+    void Context::UpdateViewport(const int width, const int height)
     {
         glViewport(0, 0, width, height);
     }

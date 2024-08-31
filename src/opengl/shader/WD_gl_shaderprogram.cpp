@@ -26,22 +26,14 @@ namespace WD::GL
         glUseProgram(ID);
     }
 
-    auto ShaderProgram::Attach(Shader& shader) -> bool
+    auto ShaderProgram::Attach(Shader&& shader) -> bool
     {
         glAttachShader(ID, shader.GetID());
-        if(glGetError() != GL_NO_ERROR)
-        {
-            LogError(std::format("Shader attach failed"));
-            return false;
-        }
+        if(glGetError() != GL_NO_ERROR) return false;
 
-        mShaders.Add(shader);
+        mShaders.Add(std::move(shader));
 
         glLinkProgram(ID);
-        if(glGetError() != GL_NO_ERROR)
-        {
-            LogError(std::format("Program was not linked"));
-        }
 
         return true;
     }

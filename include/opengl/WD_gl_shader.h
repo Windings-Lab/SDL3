@@ -24,9 +24,9 @@ namespace WD::GL
         public:
             Container() = default;
 
-            auto Add(Shader& shader) -> void;
+            auto Add(Shader&& shader) -> void;
             auto Extract(const GLchar* path) -> Shader;
-            auto Extract(GLuint ID) -> Shader;
+            auto Extract(const GLuint ID) -> Shader;
 
         private:
             std::unordered_map<std::string, Shader> ByPath;
@@ -41,7 +41,7 @@ namespace WD::GL
 
     struct ShaderFactory
     {
-        auto Create(const GLchar* path, GLenum type) -> Shader;
+        auto Create(const GLchar* path, const GLenum type) -> Shader;
         auto CompileSuccess(const Shader& shader) -> bool;
     };
 
@@ -49,9 +49,9 @@ namespace WD::GL
     {
     public:
         auto Use() noexcept -> void;
-        auto Attach(Shader& shader) -> bool;
+        auto Attach(Shader&& shader) -> bool;
         auto Detach(const GLchar* path) -> bool;
-        auto Detach(GLuint ID) -> bool;
+        auto Detach(const GLuint ID) -> bool;
 
         GLuint VAO; // Vertex Array Object ID
         GLuint EBO; // Element Buffer Object ID

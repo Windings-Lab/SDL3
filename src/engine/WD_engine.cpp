@@ -12,66 +12,49 @@ namespace WD
     {
     }
 
-    auto Engine::CreateWindow(int width, int height) -> Window*
+    auto Engine::CreateWindow(const int width, const int height) -> Window&
     {
         if(mWindow)
         {
-            LogError(std::format("Window already created!"));
-            return mWindow.get();
+            LogError(std::format("Window already created!"), true);
         }
 
-        try
-        {
-            mWindow = std::make_unique<Window>(width, height);
-        }
-        catch (std::runtime_error& e)
-        {
-            return nullptr;
-        }
+        mWindow = std::make_unique<Window>(width, height);
 
-        return mWindow.get();
+        return *mWindow;
     }
 
-    auto Engine::CreateGLContext(const Window& window) -> GL::Context*
+    auto Engine::CreateGLContext(const Window& window) -> GL::Context&
     {
         if(mGLContext)
         {
             LogError(std::format("OpenGL Context already created!"));
-            return mGLContext.get();
+            return *mGLContext;
         }
 
         if(&window != mWindow.get())
         {
             if(!mWindow)
             {
-                LogError(std::format("Engine window not created! Weird behaviour"));
-                return nullptr;
+                LogError(std::format("Engine window not created! Weird behaviour"), true);
             }
 
-            LogError(std::format("Engine window and provided window are not equal! Weird behaviour"));
-            return nullptr;
+            LogError(std::format("Engine window and provided window are not equal! Weird behaviour"), true);
         }
 
-        try
-        {
-            mGLContext = std::make_unique<GL::Context>(mWindow.get());
-        }
-        catch (std::runtime_error& e)
-        {
-            return nullptr;
-        }
+        mGLContext = std::make_unique<GL::Context>(*mWindow);
 
-        return mGLContext.get();
+        return *mGLContext;
     }
 
-    auto Engine::GetWindow() const -> Window*
+    auto Engine::GetWindow() -> Window&
     {
-        return mWindow.get();
+        return *mWindow;
     }
 
-    auto Engine::GetGLContext() const -> GL::Context*
+    auto Engine::GetGLContext() -> GL::Context&
     {
-        return mGLContext.get();
+        return *mGLContext;
     }
 
     Engine::~Engine()

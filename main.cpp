@@ -10,36 +10,31 @@
 #include "opengl/WD_gl_context.h"
 
 #include <chrono>
-#include "engine/math/WD_math.h"
 
 double cpu_time(void (*func)())
 {
-    auto start = std::chrono::high_resolution_clock::now();
+    const auto start = std::chrono::high_resolution_clock::now();
     func();
-    auto end = std::chrono::high_resolution_clock::now();
+    const auto end = std::chrono::high_resolution_clock::now();
 
-    std::chrono::duration<double> total = end - start;
+    const std::chrono::duration<double> total = end - start;
 
     return total.count();
 }
 
 void DoSomething()
 {
-    constexpr double clock_rate = 3910000000;
-    const double cpu_time1 = cpu_time(WD::Math::DoSomething);
-    const double cpu_time2 = cpu_time(WD::Math::DoSomethingRef);
 
-    int ret = 5;
 }
 
-void CreateShaderProgram(WD::GL::Context* glContext)
+void CreateShaderProgram(WD::GL::Context& glContext)
 {
-    glContext->CreateShaderProgram();
+    glContext.CreateShaderProgram();
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
 
-    glContext->ShaderPrograms[0]->Use();
+    glContext.ShaderPrograms[0]->Use();
 }
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
@@ -54,21 +49,10 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
     WD::Engine* Engine = new WD::Engine();
     *appstate = static_cast<void*>(Engine);
 
-    constexpr int Height = 600;
-    constexpr int Width = 800;
-#undef CreateWindow
-    const WD::Window* Window = Engine->CreateWindow(Width, Height);
-#define CreateWindow __MINGW_NAME_AW(CreateWindow)
-    if(!Window)
-    {
-        return SDL_APP_FAILURE;
-    }
-
-    WD::GL::Context* glContext = Engine->CreateGLContext(*Window);
-    if(!glContext)
-    {
-        return SDL_APP_FAILURE;
-    }
+    constexpr auto Height = 600;
+    constexpr auto Width = 800;
+    const auto& Window = Engine->CreateWindow(Width, Height);
+    auto& glContext = Engine->CreateGLContext(Window);
 
     CreateShaderProgram(glContext);
     DoSomething();
@@ -78,7 +62,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 
 SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
-    const auto* Engine = static_cast<WD::Engine*>(appstate);
+    auto* Engine = static_cast<WD::Engine*>(appstate);
 
     switch (event->type)
     {
@@ -93,11 +77,11 @@ SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
         }
     case SDL_EVENT_WINDOW_RESIZED:
         {
-            WD::Window* window = Engine->GetWindow();
-            window->Update();
-            const int width = window->Width();
-            const int height = window->Height();
-            Engine->GetGLContext()->UpdateViewport(width, height);
+            auto& window = Engine->GetWindow();
+            window.Update();
+            const auto width = window.Width();
+            const auto height = window.Height();
+            Engine->GetGLContext().UpdateViewport(width, height);
 
             SDL_Log("Window resized: %dx%d", width, height);
             break;
@@ -113,9 +97,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    WD::Engine* Engine = static_cast<WD::Engine*>(appstate);
+    auto* Engine = static_cast<WD::Engine*>(appstate);
 
-    Engine->GetGLContext()->Iterate();
+    Engine->GetGLContext().Iterate();
 
     return SDL_APP_CONTINUE;
 }

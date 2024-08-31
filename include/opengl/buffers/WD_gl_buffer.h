@@ -7,8 +7,8 @@ namespace WD::GL
     class Buffer : Utillity::NonCopyable
     {
     public:
-        bool BindTo(GLenum target);
-        bool BufferData(const void* data, size_t size, GLenum usage);
+        bool BindTo(const GLenum target);
+        bool BufferData(const void* data, const size_t size, const GLenum usage);
 
         GLuint ID() const;
         GLenum Target() const;
