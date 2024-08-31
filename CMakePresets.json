@@ -2,7 +2,19 @@
   "version": 6,
   "configurePresets": [
     {
+      "name": "user-default",
+      "hidden": true,
+      "environment": {
+        "GNU_PATH": "D:/ImpPrograms/msys64/mingw64/bin"
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "D:/ImpPrograms/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
+      }
+    },
+    {
       "name": "default",
+      "inherits": "user-default",
       "hidden": true,
       "generator": "Ninja",
       "installDir": "${sourceDir}/install/${presetName}",
@@ -49,9 +61,6 @@
         "PNG_SHARED": "OFF",
         "SKIP_INSTALL_EXPORT": "ON",
 
-        "ZLIB_BUILD_EXAMPLES": "OFF",
-        "ZLIB_USE_STATIC_LIBS": "ON",
-
         "SDL_STATIC": "ON",
         "SDL_SHARED": "OFF",
         "SDL_HIDAPI_LIBUSB": "OFF",
@@ -88,14 +97,11 @@
     {
       "name": "clang-debug",
       "inherits": "default",
-      "environment": {
-        "PATH": "D:/ImpPrograms/msys64/mingw64/bin"
-      },
       "cacheVariables": {
-        "CMAKE_COMMAND": "$env{PATH}/cmake.exe",
+        "CMAKE_COMMAND": "$env{GNU_PATH}/cmake.exe",
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_C_COMPILER": "$env{PATH}/clang.exe",
-        "CMAKE_CXX_COMPILER": "$env{PATH}/clang++.exe"
+        "CMAKE_C_COMPILER": "$env{GNU_PATH}/clang.exe",
+        "CMAKE_CXX_COMPILER": "$env{GNU_PATH}/clang++.exe"
       }
     },
     {
