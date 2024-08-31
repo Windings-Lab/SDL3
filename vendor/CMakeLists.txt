@@ -22,12 +22,16 @@ set(PNG_PNG_INCLUDE_DIR "${WD_SDL_SOURCE_DIR}/vendor/libpng;${WD_SDL_BINARY_DIR}
 add_subdirectory(SDL)
 add_subdirectory(SDL_image)
 
-target_include_directories(WD_SDL PRIVATE "${SDL3_SOURCE_DIR}/src/video/khronos")
-
 add_library(vendor INTERFACE)
 target_link_libraries(vendor INTERFACE
 	ZLIB::ZLIB
 	PNG::PNG
-	SDL3::SDL3 
-    SDL3_image::SDL3_image
+	SDL3::SDL3
+	SDL3_image::SDL3_image
+)
+target_link_libraries(WD_SDL PUBLIC vendor)
+
+target_include_directories(WD_SDL
+	PUBLIC
+	$<BUILD_INTERFACE:${SDL3_SOURCE_DIR}/include>
 )
