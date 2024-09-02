@@ -3,7 +3,7 @@ module;
 #include "SDL_init.h"
 #include "SDL_keycode.h"
 
-export module wd_keyboard;
+export module wd.engine.Keyboard;
 
 export namespace WD::Keyboard
 {

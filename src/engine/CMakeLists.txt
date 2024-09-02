@@ -1,6 +1,6 @@
 target_sources(WD_SDL
     PRIVATE
-    WD_engine.cpp
+    engine.cpp
     WD_log.cpp
     WD_window.cpp
 )

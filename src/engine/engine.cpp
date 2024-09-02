@@ -1,7 +1,8 @@
-#include "engine/WD_engine.h"
-#include "engine/WD_window.h"
+module;
 
 #include "opengl/WD_gl_context.h"
+
+module wd.engine.Engine;
 
 namespace WD
 {

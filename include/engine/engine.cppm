@@ -1,14 +1,12 @@
-#pragma once
+module;
 
 #include "opengl/WD_gl_context.h"
+#include "utility/WD_constructors.h"
 
-namespace WD
+export module wd.engine.Engine;
+
+export namespace WD
 {
-    namespace GL
-    {
-        class Context;
-    }
-
     class Engine : Utillity::NonMovable
     {
     public:

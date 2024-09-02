@@ -2,8 +2,7 @@ module;
 
 #include "SDL_keycode.h"
 
-module wd_keyboard;
-
+module wd.engine.Keyboard;
 
 namespace WD::Keyboard
 {
