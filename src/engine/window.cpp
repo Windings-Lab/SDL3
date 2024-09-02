@@ -1,6 +1,8 @@
-#include "engine/WD_window.h"
+module;
 
 #include "SDL_video.h"
+
+module wd.engine.Window;
 
 namespace WD
 {

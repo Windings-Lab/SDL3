@@ -1,14 +1,10 @@
 #pragma once
 
 #include "opengl/shader/WD_gl_shader_container.h"
-#include "engine/WD_window.h"
+
+import wd.engine.Window;
 
 typedef struct SDL_GLContextState* SDL_GLContext;
-
-namespace WD
-{
-    class Window;
-}
 
 namespace WD::GL
 {

@@ -3,7 +3,6 @@
 #include "opengl/shader/WD_gl_shader_program.h"
 #include "opengl/buffers/WD_gl_buffer.h"
 
-#include "engine/WD_window.h"
 #include "opengl/shader/WD_gl_shader.h"
 
 #include "SDL_video.h"

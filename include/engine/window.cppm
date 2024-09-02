@@ -1,8 +1,8 @@
-#pragma once
+export module wd.engine.Window;
 
-struct SDL_Window;
+export struct SDL_Window;
 
-namespace WD
+export namespace WD
 {
     namespace GL
     {
