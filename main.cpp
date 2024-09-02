@@ -3,13 +3,14 @@
 #include "SDL.h"
 
 #include "engine/WD_engine.h"
-#include "engine/keyboard/WD_keyboard.h"
 #include "engine/WD_window.h"
 
 #include "opengl/shader/WD_gl_shader_program.h"
 #include "opengl/WD_gl_context.h"
 
 #include <chrono>
+
+import wd_keyboard;
 
 double cpu_time(void (*func)())
 {

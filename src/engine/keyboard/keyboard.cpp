@@ -1,5 +1,9 @@
-#include "SDL_init.h"
+module;
+
 #include "SDL_keycode.h"
+
+module wd_keyboard;
+
 
 namespace WD::Keyboard
 {

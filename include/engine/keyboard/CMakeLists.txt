@@ -1,3 +1,6 @@
-target_sources(WD_SDL PUBLIC
-    WD_keyboard.h
+target_sources(WD_SDL
+    PUBLIC
+        FILE_SET CXX_MODULES
+        FILES
+            keyboard.cppm
 )
