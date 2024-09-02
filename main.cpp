@@ -6,7 +6,7 @@
 #include "engine/keyboard/WD_keyboard.h"
 #include "engine/WD_window.h"
 
-#include "opengl/WD_gl_shader.h"
+#include "opengl/shader/WD_gl_shader_program.h"
 #include "opengl/WD_gl_context.h"
 
 #include <chrono>
@@ -46,15 +46,13 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
         return SDL_APP_FAILURE;
     }
 
-    WD::Engine* Engine = new WD::Engine();
+    constexpr auto Width = 800;
+    constexpr auto Height = 600;
+
+    WD::Engine* Engine = new WD::Engine(Width, Height);
     *appstate = static_cast<void*>(Engine);
 
-    constexpr auto Height = 600;
-    constexpr auto Width = 800;
-    const auto& Window = Engine->CreateWindow(Width, Height);
-    auto& glContext = Engine->CreateGLContext(Window);
-
-    CreateShaderProgram(glContext);
+    CreateShaderProgram(Engine->GetGLContext());
     DoSomething();
 
     return SDL_APP_CONTINUE;

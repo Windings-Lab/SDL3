@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Boost CONFIG REQUIRED)
+
 add_executable(WD_SDL main.cpp)
 
 target_compile_features(WD_SDL PRIVATE cxx_std_23)

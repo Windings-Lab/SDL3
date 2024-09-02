@@ -1,8 +1,10 @@
 #include "opengl/WD_gl_context.h"
+
+#include "opengl/shader/WD_gl_shader_program.h"
 #include "opengl/buffers/WD_gl_buffer.h"
-#include "opengl/WD_gl_shader.h"
 
 #include "engine/WD_window.h"
+#include "opengl/shader/WD_gl_shader.h"
 
 #include "SDL_video.h"
 
@@ -19,8 +21,8 @@ namespace
 
 namespace WD::GL
 {
-    Context::Context(Window& window)
-        : mWindow(window)
+    Context::Context(const int width, const int height)
+        : mWindow(width, height)
     {
         // OpenGL Version 4.6
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -56,6 +58,11 @@ namespace WD::GL
 #endif
     }
 
+    auto Context::GetWindow() -> Window&
+    {
+        return mWindow;
+    }
+
     void Context::Iterate()
     {
         glClearColor(0.2f, 0.3f, 0.3f, 1.f);
@@ -69,15 +76,25 @@ namespace WD::GL
         SDL_GL_SwapWindow(mWindow.Get());
     }
 
+    auto Context::CreateShader(const GLchar* path, const GLenum type) -> const Shader*
+    {
+        auto shader = std::make_unique<Shader>(path, type);
+        shader->Compile();
+        const auto shaderPtr = shader.get();
+
+        mShaders.emplace(std::move(shader));
+
+        return shaderPtr;
+    }
+
     void Context::CreateShaderProgram()
     {
-        ShaderFactory shaderFactory;
-        auto&& vertShader = shaderFactory.Create("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
-        auto&& fragShader = shaderFactory.Create("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
+        const auto shaderProgram = ShaderPrograms.emplace_back(std::make_unique<ShaderProgram>()).get();
+        const auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
+        const auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
-        auto shaderProgram = std::make_unique<ShaderProgram>();
-        shaderProgram->Attach(std::move(vertShader));
-        shaderProgram->Attach(std::move(fragShader));
+        shaderProgram->Attach(vertShader);
+        shaderProgram->Attach(fragShader);
 
         // ====== Creating Vertex Array Object ======
         GLuint VAO = 0;
@@ -87,8 +104,8 @@ namespace WD::GL
         // ====== Creating Vertex Array Object ======
 
         // ====== Creating and buffering Vertex Buffer Object ======
-        Buffer VBO;
-        VBO.BindTo(GL_ARRAY_BUFFER);
+        const auto& VBO = mBuffers.emplace_back(std::make_unique<Buffer>());
+        VBO->BindTo(GL_ARRAY_BUFFER);
         constexpr float vertices[] =
         {
             0.5f, 0.5f, 0.0f, // top right
@@ -96,21 +113,19 @@ namespace WD::GL
             -0.5f, -0.5f, 0.0f, // bottom left
             -0.5f, 0.5f, 0.0f // top left
         };
-        VBO.BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
-        mBuffers.emplace_back(std::move(VBO));
+        VBO->BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
         // ====== Creating and buffering Vertex Buffer Object ======
 
         // ====== Creating and buffering Element Buffer Object ======
-        Buffer EBO;
-        EBO.BindTo(GL_ELEMENT_ARRAY_BUFFER);
+        const auto& EBO = mBuffers.emplace_back(std::make_unique<Buffer>());
+        EBO->BindTo(GL_ELEMENT_ARRAY_BUFFER);
         const unsigned int vertexIndices[] =
         {
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
-        EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
-        shaderProgram->EBO = EBO.ID();
-        mBuffers.emplace_back(std::move(EBO));
+        EBO->BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
+        shaderProgram->EBO = EBO->ID();
         // ====== Creating and buffering Element Buffer Object ======
 
         // Teaching OpenGL about vertex attributes
@@ -124,7 +139,6 @@ namespace WD::GL
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         shaderProgram->Use();
-        ShaderPrograms.emplace_back(std::move(shaderProgram));
     }
 
     void Context::UpdateViewport(const int width, const int height)
@@ -135,6 +149,7 @@ namespace WD::GL
     Context::~Context()
     {
         ShaderPrograms.clear();
+        mShaders.clear();
         mBuffers.clear();
         SDL_GL_DestroyContext(mValue);
     }

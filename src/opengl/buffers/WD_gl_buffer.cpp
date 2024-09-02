@@ -37,35 +37,8 @@ namespace WD::GL
         return true;
     }
 
-    Buffer::Buffer(Buffer&& other) noexcept : mID(other.mID), mTarget(other.mTarget)
-    {
-        other.mID = 0;
-        other.mTarget = 0;
-    }
-
-    Buffer& Buffer::operator=(Buffer&& other) noexcept
-    {
-        if(this != &other)
-        {
-            Buffer tmp(std::move(other));
-            swap(tmp);
-        }
-
-        return *this;
-    }
-
     Buffer::~Buffer()
     {
-        if(mID == 0) return;
-
         glDeleteBuffers(1, &mID);
-    }
-
-    void Buffer::swap(Buffer& other) noexcept
-    {
-        using std::swap;
-
-        swap(mID, other.mID);
-        swap(mTarget, other.mTarget);
     }
 }

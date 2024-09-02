@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utility/WD_constructors.h"
+#include "opengl/WD_gl_context.h"
 
 namespace WD
 {
@@ -9,24 +9,16 @@ namespace WD
         class Context;
     }
 
-    using WindowPtr = std::unique_ptr<class Window>;
-    using ContextPtr = std::unique_ptr<GL::Context>;
-
-    // Class for handling Window and OpenGL Context
-    class Engine : Utillity::NonCopyable, Utillity::NonMovable
+    class Engine : Utillity::NonMovable
     {
     public:
         auto GetWindow() -> Window&;
         auto GetGLContext() -> GL::Context&;
 
-        auto CreateWindow(int width, int height) -> Window&;
-        auto CreateGLContext(const Window& window) -> GL::Context&;
-
-        Engine();
+        Engine(const int width, const int height);
         ~Engine();
 
     private:
-        WindowPtr mWindow;
-        ContextPtr mGLContext;
+        GL::Context mGLContext;
     };
 }

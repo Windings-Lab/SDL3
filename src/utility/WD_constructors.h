@@ -14,14 +14,12 @@ namespace WD::Utillity
         NonCopyable& operator=(NonCopyable&&) = default;
     };
 
-    class NonMovable
+    class NonMovable : public NonCopyable
     {
     public:
         NonMovable() = default;
         ~NonMovable() = default;
 
-        NonMovable(const NonMovable&) = default;
-        NonMovable& operator=(const NonMovable&) = default;
         NonMovable(NonMovable&&) = delete;
         NonMovable& operator=(NonMovable&&) = delete;
     };

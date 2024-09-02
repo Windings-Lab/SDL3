@@ -1,10 +1,8 @@
 #pragma once
 
-#include "utility/WD_constructors.h"
-
 namespace WD::GL
 {
-    class Buffer : Utillity::NonCopyable
+    class Buffer : Utillity::NonMovable
     {
     public:
         bool BindTo(const GLenum target);
@@ -15,12 +13,9 @@ namespace WD::GL
 
     public:
         Buffer();
-        Buffer(Buffer&& other) noexcept;
-        Buffer& operator=(Buffer&& other) noexcept;
         ~Buffer();
 
     private:
-        void swap(Buffer& other) noexcept;
         GLuint mID;
         GLenum mTarget;
     };

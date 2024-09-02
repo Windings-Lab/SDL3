@@ -1,4 +1,29 @@
-#include "opengl/WD_gl_shader.h"
+#include "opengl/shader/WD_gl_shader.h"
+
+#include "SDL_filesystem.h"
+#include "SDL_iostream.h"
+
+namespace
+{
+    auto CompileSuccess(const WD::GL::Shader& shader) -> bool
+    {
+        // Check for successful compilation
+        int success;
+        glGetShaderiv(shader.ID, GL_COMPILE_STATUS, &success);
+        if(!success)
+        {
+            constexpr int bufSize = 512;
+            char infolog[bufSize];
+            glGetShaderInfoLog(shader.ID, bufSize, nullptr, infolog);
+            WD::LogError(std::format("Shader compilation failed:\n"
+                                     "Info: %s\n", infolog,
+                                     "Path: %s\n", shader.Path,
+                                     "Type: %s", shader.Type));
+        }
+
+        return success;
+    }
+}
 
 namespace WD::GL
 {
@@ -10,79 +35,25 @@ namespace WD::GL
         if(ID == 0) LogError(std::format("Shader is not created: %s", path), true);
     }
 
-    Shader::Shader(Shader&& other) noexcept : ID(other.ID), Path(other.Path), Type(other.Type)
+    void Shader::Compile() const
     {
-        other.ID = 0;
-        other.Path = nullptr;
-        other.Type = 0;
+        if(SDL_GetPathInfo(Path, nullptr) == -1)
+        {
+            LogError(SDL_GetError(), true);
+        }
+
+        const char* code = static_cast<const char*>(SDL_LoadFile(Path, nullptr));
+        glShaderSource(ID, 1, &code, nullptr);
+        glCompileShader(ID);
+
+        if(!CompileSuccess(*this))
+        {
+            throw std::runtime_error("Failed to compile shader");
+        }
     }
 
     Shader::~Shader()
     {
-        if(!*this) return;
-
         glDeleteShader(ID);
-    }
-
-    auto Shader::operator=(Shader&& other) noexcept -> Shader&
-    {
-        if(this != &other)
-        {
-            Shader tmp(std::move(other));
-            swap(tmp);
-        }
-
-        return *this;
-    }
-
-    auto Shader::swap(Shader& other) noexcept -> void
-    {
-        using std::swap;
-
-        swap(ID, other.ID);
-        swap(Path, other.Path);
-        swap(Type, other.Type);
-    }
-
-    auto Shader::Container::Add(Shader&& shader) -> void
-    {
-        ByID[shader.ID] = shader.Path;
-        ByPath.emplace(shader.Path, std::move(shader));
-    }
-
-    auto Shader::Container::Extract(const GLchar* path) -> Shader
-    {
-        const auto it = ByPath.find(path);
-        if(it == ByPath.end())
-        {
-            LogError(std::format("No shader with specified path: %s", path), true);
-        }
-
-        return std::move(ByPath.extract(it).mapped());
-    }
-
-    auto Shader::Container::Extract(const GLuint ID) -> Shader
-    {
-        const auto pathIt = ByID.find(ID);
-        if(pathIt == ByID.end())
-        {
-            LogError(std::format("No shader with specified ID: %i", ID), true);
-        }
-        const auto shaderIt = ByPath.find(pathIt->second);
-        if(shaderIt == ByPath.end())
-        {
-            LogError("No shader in ShadersByPath when it's available in ShadersByID", true);
-        }
-        return std::move(ByPath.extract(shaderIt).mapped());
-    }
-
-    auto Shader::GetID() const -> GLuint
-    {
-        return ID;
-    }
-
-    auto Shader::operator!() const -> bool
-    {
-        return ID == 0;
     }
 }
