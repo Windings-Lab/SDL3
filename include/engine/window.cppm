@@ -6,11 +6,6 @@ export struct SDL_Window;
 
 export namespace WD
 {
-    namespace GL
-    {
-        class Context;
-    }
-
     class Window : Utility::NonMovable
     {
     public:

@@ -5,7 +5,7 @@
 #include "SDL_video.h"
 
 import wd.engine.Log;
-import wd.opengl.Shader;
+import wd.opengl.shader.Shader;
 import wd.opengl.Buffer;
 
 #ifndef NDEBUG

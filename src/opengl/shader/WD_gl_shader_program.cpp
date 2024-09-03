@@ -1,7 +1,7 @@
 #include "opengl/shader/WD_gl_shader_program.h"
 
 import wd.engine.Log;
-import wd.opengl.Shader;
+import wd.opengl.shader.Shader;
 
 namespace WD::GL
 {

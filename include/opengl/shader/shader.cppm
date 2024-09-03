@@ -1,4 +1,4 @@
-export module wd.opengl.Shader;
+export module wd.opengl.shader.Shader;
 
 import wd.utility.Constructors;
 

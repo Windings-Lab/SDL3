@@ -3,7 +3,7 @@ module;
 #include "SDL_filesystem.h"
 #include "SDL_iostream.h"
 
-module wd.opengl.Shader;
+module wd.opengl.shader.Shader;
 
 import wd.engine.Log;
 
