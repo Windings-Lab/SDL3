@@ -9,5 +9,6 @@ target_sources(WD_SDL
     m_wd.cppm
 )
 
+add_subdirectory(math)
 add_subdirectory(engine)
 add_subdirectory(opengl)

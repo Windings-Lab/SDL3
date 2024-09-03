@@ -1,6 +1,8 @@
-#include "engine/math/WD_math.h"
+module;
 
-#include "engine/math/WD_point.h"
+#include "math/WD_point.h"
+
+module wd.math.Math;
 
 namespace WD::Math
 {

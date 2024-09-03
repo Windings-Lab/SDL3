@@ -6,4 +6,3 @@ target_sources(WD_SDL
 )
 
 add_subdirectory(keyboard)
-add_subdirectory(math)

@@ -9,5 +9,4 @@ target_sources(WD_SDL
         window.cppm
 )
 
-add_subdirectory(math)
 add_subdirectory(keyboard)
