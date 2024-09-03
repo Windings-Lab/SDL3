@@ -2,28 +2,26 @@ module;
 
 #include "opengl/glad/gl.h"
 #include <boost/multi_index_container.hpp>
-#include <boost/multi_index/global_fun.hpp>
+#include <boost/multi_index/member.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 
 export module wd.opengl.shader.Container;
 
-export namespace WD::GL
-{
-    class Shader;
-}
+export import wd.opengl.shader.Shader;
 
-export namespace boost::multi_index
-{
-    auto extractID(const WD::GL::Shader& shader) -> GLuint;
-    auto extractPath(const WD::GL::Shader& shader) -> const GLchar*;
+using boost::multi_index::multi_index_container;
+using boost::multi_index::indexed_by;
+using boost::multi_index::hashed_unique;
 
+export
+{
     using shader_container_ptr = multi_index_container
     <
         const WD::GL::Shader*,
         indexed_by
         <
-            hashed_unique<global_fun<const WD::GL::Shader&, GLuint, &extractID>>,
-            hashed_unique<global_fun<const WD::GL::Shader&, const GLchar*, &extractPath>>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLchar* const, Path)>
         >
     >;
 
@@ -32,8 +30,8 @@ export namespace boost::multi_index
         std::unique_ptr<WD::GL::Shader>,
         indexed_by
         <
-            hashed_unique<global_fun<const WD::GL::Shader&, GLuint, &extractID>>,
-            hashed_unique<global_fun<const WD::GL::Shader&, const GLchar*, &extractPath>>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLchar* const, Path)>
         >
     >;
 }

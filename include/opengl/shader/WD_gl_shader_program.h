@@ -26,6 +26,6 @@ namespace WD::GL
     private:
         auto Detach(const Shader& shader) -> void;
         GLuint mID;
-        boost::multi_index::shader_container_ptr mShaders;
+        shader_container_ptr mShaders;
     };
 }

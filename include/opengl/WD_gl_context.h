@@ -34,7 +34,7 @@ namespace WD::GL
     private:
         Window mWindow;
         SDL_GLContext mValue = nullptr;
-        boost::multi_index::shader_container mShaders;
+        shader_container mShaders;
         buffer_container mBuffers;
     };
 }
