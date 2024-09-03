@@ -1,8 +1,6 @@
-module;
-
-#include "math/WD_point.h"
-
 module wd.math.Math;
+
+import wd.math.Point;
 
 namespace WD::Math
 {

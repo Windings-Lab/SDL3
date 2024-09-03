@@ -1,4 +1,4 @@
-#pragma once
+export module wd.math.Point;
 
 namespace WD::Math
 {

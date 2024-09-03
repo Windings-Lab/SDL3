@@ -1,8 +1,8 @@
-target_sources(WD_SDL PUBLIC
-    WD_point.h
+target_sources(WD_SDL
     PUBLIC
-    FILE_SET CXX_MODULES
-    FILES
-    m_math.cppm
-    math.cppm
+        FILE_SET CXX_MODULES
+        FILES
+        m_math.cppm
+        math.cppm
+        point.cppm
 )
