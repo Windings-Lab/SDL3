@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 project(WD_SDL LANGUAGES C CXX ASM)
 
+find_package(Boost CONFIG REQUIRED
+		COMPONENTS multi_index
+)
+
 set(CMAKE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -9,8 +13,6 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
-
-find_package(Boost CONFIG REQUIRED)
 
 add_executable(WD_SDL main.cpp)
 
@@ -66,6 +68,8 @@ target_include_directories(WD_SDL
     PRIVATE
     $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
 )
+
+target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES})
 
 add_subdirectory(include)
 add_subdirectory(src)

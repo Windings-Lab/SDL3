@@ -8,8 +8,3 @@
 	url = https://github.com/libsdl-org/SDL_image
 	ignore = all
 	branch = main
-[submodule "vendor/libpng"]
-	path = vendor/libpng
-	url = https://github.com/libsdl-org/libpng.git
-	branch = v1.6.43-SDL
-	ignore = all

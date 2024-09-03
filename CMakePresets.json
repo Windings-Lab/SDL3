@@ -57,10 +57,6 @@
         "SDLIMAGE_XV": "OFF",
         "SDLIMAGE_VENDORED": "OFF",
 
-        "PNG_TESTS": "OFF",
-        "PNG_SHARED": "OFF",
-        "SKIP_INSTALL_EXPORT": "ON",
-
         "SDL_STATIC": "ON",
         "SDL_SHARED": "OFF",
         "SDL_HIDAPI_LIBUSB": "OFF",

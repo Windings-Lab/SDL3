@@ -11,3 +11,7 @@ If you are not using CLion, then when running cmake use `--preset <preset-name>`
 ## CMakePresets.json
 
 There is a preset called `user-default`. Change variables as needed here
+
+## Dependencies
+
+`find_package` will look for `zlib` and `libpng`. 
