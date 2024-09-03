@@ -1,9 +1,10 @@
 #pragma once
 
+#include <boost/multi_index_container.hpp>
+#include "opengl/glad/gl.h"
+
 import wd.opengl.shader.Container;
 import wd.engine.Window;
-
-#include <boost/multi_index_container.hpp>
 
 typedef struct SDL_GLContextState* SDL_GLContext;
 

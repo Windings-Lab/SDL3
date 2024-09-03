@@ -1,7 +1,10 @@
 module;
 
-#include "SDL_filesystem.h"
-#include "SDL_iostream.h"
+#include <format>
+#include <SDL_filesystem.h>
+#include <SDL_iostream.h>
+
+#include "opengl/glad/gl.h"
 
 module wd.opengl.shader.Shader;
 

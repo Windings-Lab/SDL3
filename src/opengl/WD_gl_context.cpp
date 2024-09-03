@@ -2,7 +2,8 @@
 
 #include "opengl/shader/WD_gl_shader_program.h"
 
-#include "SDL_video.h"
+#include <SDL_video.h>
+#include <format>
 
 import wd.engine.Log;
 import wd.opengl.shader.Shader;

@@ -1,3 +1,7 @@
+module;
+
+#include "opengl/glad/gl.h"
+
 module wd.opengl.Buffer;
 
 namespace WD::GL

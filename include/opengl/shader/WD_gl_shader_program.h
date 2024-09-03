@@ -1,9 +1,10 @@
 #pragma once
 
+#include <boost/multi_index_container.hpp>
+#include "opengl/glad/gl.h"
+
 import wd.utility.Constructors;
 import wd.opengl.shader.Container;
-
-#include <boost/multi_index_container.hpp>
 
 namespace WD::GL
 {

@@ -1,6 +1,7 @@
 module;
 
-#include "SDL_keycode.h"
+#include <SDL_keycode.h>
+#include <SDL_log.h>
 
 module wd.engine.Keyboard;
 

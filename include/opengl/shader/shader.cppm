@@ -1,3 +1,7 @@
+module;
+
+#include "opengl/glad/gl.h"
+
 export module wd.opengl.shader.Shader;
 
 import wd.utility.Constructors;

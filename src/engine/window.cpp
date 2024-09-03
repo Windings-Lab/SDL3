@@ -1,6 +1,7 @@
 module;
 
-#include "SDL_video.h"
+#include <format>
+#include <SDL_video.h>
 
 module wd.engine.Window;
 
