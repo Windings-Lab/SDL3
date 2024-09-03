@@ -1,12 +1,12 @@
 #include "opengl/WD_gl_context.h"
 
 #include "opengl/shader/WD_gl_shader_program.h"
-#include "opengl/buffers/WD_gl_buffer.h"
 
 #include "SDL_video.h"
 
 import wd.engine.Log;
 import wd.opengl.Shader;
+import wd.opengl.Buffer;
 
 #ifndef NDEBUG
 namespace

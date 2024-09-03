@@ -1,4 +1,6 @@
 target_sources(WD_SDL
     PUBLIC
-    WD_gl_buffer.h
+    FILE_SET CXX_MODULES
+    FILES
+    buffer.cppm
 )

@@ -1,8 +1,12 @@
-#pragma once
+module;
+
+#include "opengl/glad/gl.h"
+
+export module wd.opengl.Buffer;
 
 import wd.utility.Constructors;
 
-namespace WD::GL
+export namespace WD::GL
 {
     class Buffer : Utility::NonMovable
     {

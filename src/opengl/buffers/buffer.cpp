@@ -1,4 +1,4 @@
-#include "opengl/buffers/WD_gl_buffer.h"
+module wd.opengl.Buffer;
 
 namespace WD::GL
 {
