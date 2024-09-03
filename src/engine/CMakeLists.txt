@@ -1,7 +1,7 @@
 target_sources(WD_SDL
     PRIVATE
     engine.cpp
-    WD_log.cpp
+    log.cpp
     window.cpp
 )
 

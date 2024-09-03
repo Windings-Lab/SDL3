@@ -2,6 +2,8 @@
 
 #include "opengl/shader/WD_gl_shader.h"
 
+import wd.engine.Log;
+
 namespace WD::GL
 {
     ShaderProgram::ShaderProgram()

@@ -1,5 +1,7 @@
 #include "opengl/shader/WD_gl_shader.h"
 
+import wd.engine.Log;
+
 #include "SDL_filesystem.h"
 #include "SDL_iostream.h"
 

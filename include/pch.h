@@ -10,7 +10,6 @@
 
 #include "SDL_log.h"
 
-#include "engine/WD_log.h"
 #include "utility/WD_constructors.h"
 
 #include "opengl/glad/gl.h"

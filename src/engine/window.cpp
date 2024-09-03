@@ -4,6 +4,8 @@ module;
 
 module wd.engine.Window;
 
+import wd.engine.Log;
+
 namespace WD
 {
     Window::Window(const int width, const int height)

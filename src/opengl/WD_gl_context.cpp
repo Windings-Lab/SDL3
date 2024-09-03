@@ -7,6 +7,8 @@
 
 #include "SDL_video.h"
 
+import wd.engine.Log;
+
 #ifndef NDEBUG
 namespace
 {
