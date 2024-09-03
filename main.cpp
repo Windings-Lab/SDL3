@@ -1,12 +1,9 @@
 #define SDL_MAIN_USE_CALLBACKS
-#include "SDL_main.h"
-#include "SDL.h"
-
-
-#include "opengl/shader/WD_gl_shader_program.h"
-#include "opengl/WD_gl_context.h"
-
+#include <SDL.h>
+#include <SDL_main.h>
 #include <chrono>
+
+#include "opengl/WD_gl_context.h"
 
 import wd;
 
@@ -33,7 +30,8 @@ void CreateShaderProgram(WD::GL::Context& glContext)
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
 
-    glContext.ShaderPrograms[0]->Use();
+    const auto shaderProgram = glContext.ShaderPrograms[0].get();
+    shaderProgram->Use();
 }
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)

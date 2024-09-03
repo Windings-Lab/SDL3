@@ -1,12 +1,14 @@
-#pragma once
+module;
 
 #include <boost/multi_index_container.hpp>
 #include "opengl/glad/gl.h"
 
+export module wd.opengl.shader.Program;
+
 import wd.utility.Constructors;
 import wd.opengl.shader.Container;
 
-namespace WD::GL
+export namespace WD::GL
 {
     class ShaderProgram : Utility::NonMovable
     {

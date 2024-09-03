@@ -1,12 +1,11 @@
 #include "opengl/WD_gl_context.h"
 
-#include "opengl/shader/WD_gl_shader_program.h"
-
 #include <SDL_video.h>
 #include <format>
 
 import wd.engine.Log;
 import wd.opengl.shader.Shader;
+import wd.opengl.shader.Program;
 import wd.opengl.Buffer;
 
 #ifndef NDEBUG

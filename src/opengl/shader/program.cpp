@@ -1,6 +1,10 @@
-#include "opengl/shader/WD_gl_shader_program.h"
+module;
 
+#include <boost/multi_index_container.hpp>
 #include <format>
+#include "opengl/glad/gl.h"
+
+module wd.opengl.shader.Program;
 
 import wd.engine.Log;
 import wd.opengl.shader.Shader;
