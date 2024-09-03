@@ -1,8 +1,10 @@
 #pragma once
 
+import wd.utility.Constructors;
+
 namespace WD::GL
 {
-    class Shader : Utillity::NonMovable
+    class Shader : Utility::NonMovable
     {
     public:
         Shader(const GLchar* path, GLenum type);

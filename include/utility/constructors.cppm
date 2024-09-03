@@ -1,6 +1,6 @@
-#pragma once
+export module wd.utility.Constructors;
 
-namespace WD::Utillity
+export namespace WD::Utility
 {
     class NonCopyable
     {

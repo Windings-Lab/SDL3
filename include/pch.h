@@ -9,7 +9,4 @@
 #include <tuple>
 
 #include "SDL_log.h"
-
-#include "utility/WD_constructors.h"
-
 #include "opengl/glad/gl.h"

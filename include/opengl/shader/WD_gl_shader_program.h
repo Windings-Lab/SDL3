@@ -2,6 +2,8 @@
 
 #include "opengl/shader/WD_gl_shader_container.h"
 
+import wd.utility.Constructors;
+
 namespace WD::GL
 {
     class Shader;
@@ -9,7 +11,7 @@ namespace WD::GL
 
 namespace WD::GL
 {
-    class ShaderProgram : Utillity::NonMovable
+    class ShaderProgram : Utility::NonMovable
     {
     public:
         void Use() const noexcept;

@@ -12,3 +12,4 @@ target_sources(WD_SDL
 add_subdirectory(math)
 add_subdirectory(engine)
 add_subdirectory(opengl)
+add_subdirectory(utility)

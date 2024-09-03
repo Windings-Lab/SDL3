@@ -1,8 +1,10 @@
 #pragma once
 
+import wd.utility.Constructors;
+
 namespace WD::GL
 {
-    class Buffer : Utillity::NonMovable
+    class Buffer : Utility::NonMovable
     {
     public:
         bool BindTo(const GLenum target);

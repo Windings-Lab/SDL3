@@ -1,5 +1,7 @@
 export module wd.engine.Window;
 
+import wd.utility.Constructors;
+
 export struct SDL_Window;
 
 export namespace WD
@@ -9,7 +11,7 @@ export namespace WD
         class Context;
     }
 
-    class Window
+    class Window : Utility::NonMovable
     {
     public:
         Window(int width, int height);

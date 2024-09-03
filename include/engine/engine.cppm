@@ -1,13 +1,14 @@
 module;
 
 #include "opengl/WD_gl_context.h"
-#include "utility/WD_constructors.h"
 
 export module wd.engine.Engine;
 
+import wd.utility.Constructors;
+
 export namespace WD
 {
-    class Engine : Utillity::NonMovable
+    class Engine : Utility::NonMovable
     {
     public:
         auto GetWindow() -> Window&;
