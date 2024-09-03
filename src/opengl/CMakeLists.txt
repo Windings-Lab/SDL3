@@ -1,6 +1,6 @@
 target_sources(WD_SDL
     PRIVATE
-    WD_gl_context.cpp
+    context.cpp
 )
 
 add_subdirectory(buffers)

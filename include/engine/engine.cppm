@@ -1,13 +1,16 @@
 module;
 
-#include "opengl/WD_gl_context.h"
+#include <boost/multi_index_container.hpp>
 
 export module wd.engine.Engine;
 
+import wd.opengl.Context;
 import wd.utility.Constructors;
 
 export namespace WD
 {
+    class Window;
+
     class Engine : Utility::NonMovable
     {
     public:

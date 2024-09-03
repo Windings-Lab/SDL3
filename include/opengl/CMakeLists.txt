@@ -1,10 +1,9 @@
 target_sources(WD_SDL
     PUBLIC
-    WD_gl_context.h
-    PUBLIC
         FILE_SET CXX_MODULES
         FILES
-        opengl.cppm
+        m_opengl.cppm
+        context.cppm
 )
 
 add_subdirectory(buffers)

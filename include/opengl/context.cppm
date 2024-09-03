@@ -1,15 +1,17 @@
-#pragma once
+module;
 
 #include <boost/multi_index_container.hpp>
 #include "opengl/glad/gl.h"
+
+export module wd.opengl.Context;
 
 import wd.opengl.shader.Container;
 import wd.opengl.shader.Program;
 import wd.engine.Window;
 
-typedef struct SDL_GLContextState* SDL_GLContext;
+export typedef struct SDL_GLContextState* SDL_GLContext;
 
-namespace WD::GL
+export namespace WD::GL
 {
     using buffer_container = std::vector<std::unique_ptr<class Buffer>>;
     using shader_program_container = std::vector<std::unique_ptr<ShaderProgram>>;
