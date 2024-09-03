@@ -3,11 +3,10 @@
 #include "opengl/shader/WD_gl_shader_program.h"
 #include "opengl/buffers/WD_gl_buffer.h"
 
-#include "opengl/shader/WD_gl_shader.h"
-
 #include "SDL_video.h"
 
 import wd.engine.Log;
+import wd.opengl.Shader;
 
 #ifndef NDEBUG
 namespace

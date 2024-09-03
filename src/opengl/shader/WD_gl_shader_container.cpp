@@ -1,6 +1,6 @@
 #include "opengl/shader/WD_gl_shader_container.h"
 
-#include "opengl/shader/WD_gl_shader.h"
+import wd.opengl.Shader;
 
 namespace boost::multi_index
 {

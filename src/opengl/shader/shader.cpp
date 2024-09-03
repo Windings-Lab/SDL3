@@ -1,9 +1,11 @@
-#include "opengl/shader/WD_gl_shader.h"
-
-import wd.engine.Log;
+module;
 
 #include "SDL_filesystem.h"
 #include "SDL_iostream.h"
+
+module wd.opengl.Shader;
+
+import wd.engine.Log;
 
 namespace
 {

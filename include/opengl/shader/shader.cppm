@@ -1,8 +1,8 @@
-#pragma once
+export module wd.opengl.Shader;
 
 import wd.utility.Constructors;
 
-namespace WD::GL
+export namespace WD::GL
 {
     class Shader : Utility::NonMovable
     {
