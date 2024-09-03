@@ -1,4 +1,4 @@
-#include "opengl/shader/WD_gl_shader_container.h"
+module wd.opengl.shader.Container;
 
 import wd.opengl.shader.Shader;
 

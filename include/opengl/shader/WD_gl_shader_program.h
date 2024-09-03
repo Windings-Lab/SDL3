@@ -1,13 +1,9 @@
 #pragma once
 
-#include "opengl/shader/WD_gl_shader_container.h"
-
 import wd.utility.Constructors;
+import wd.opengl.shader.Container;
 
-namespace WD::GL
-{
-    class Shader;
-}
+#include <boost/multi_index_container.hpp>
 
 namespace WD::GL
 {

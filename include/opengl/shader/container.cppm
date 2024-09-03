@@ -1,15 +1,18 @@
-#pragma once
+module;
 
+#include "opengl/glad/gl.h"
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/global_fun.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 
-namespace WD::GL
+export module wd.opengl.shader.Container;
+
+export namespace WD::GL
 {
     class Shader;
 }
 
-namespace boost::multi_index
+export namespace boost::multi_index
 {
     auto extractID(const WD::GL::Shader& shader) -> GLuint;
     auto extractPath(const WD::GL::Shader& shader) -> const GLchar*;

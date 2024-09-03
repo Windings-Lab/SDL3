@@ -1,15 +1,14 @@
 #pragma once
 
-#include "opengl/shader/WD_gl_shader_container.h"
-
+import wd.opengl.shader.Container;
 import wd.engine.Window;
+
+#include <boost/multi_index_container.hpp>
 
 typedef struct SDL_GLContextState* SDL_GLContext;
 
 namespace WD::GL
 {
-    class Shader;
-
     using buffer_container = std::vector<std::unique_ptr<class Buffer>>;
     using shader_program_container = std::vector<std::unique_ptr<class ShaderProgram>>;
 
