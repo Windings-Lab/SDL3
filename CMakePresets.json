@@ -6,10 +6,6 @@
       "hidden": true,
       "environment": {
         "GNU_PATH": "D:/ImpPrograms/msys64/mingw64/bin"
-      },
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "D:/ImpPrograms/vcpkg/scripts/buildsystems/vcpkg.cmake",
-        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
       }
     },
     {
@@ -31,6 +27,7 @@
         "NINJA_STATUS": "%p [%es] (%f/%t)  -"
       },
       "cacheVariables": {
+        "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "conan_provider.cmake",
         "BUILD_SHARED_LIBS": "OFF",
 
         "SDLIMAGE_AVIF_SHARED": "OFF",
