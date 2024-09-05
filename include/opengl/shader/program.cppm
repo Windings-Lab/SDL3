@@ -1,6 +1,6 @@
 module;
 
-#include <boost/multi_index_container.hpp>
+#include <boost/mpl/set/aux_/has_key_impl.hpp>
 #include "opengl/glad/gl.h"
 
 export module wd.opengl.shader.Program;

@@ -9,9 +9,9 @@ export module wd.opengl.shader.Container;
 
 export import wd.opengl.shader.Shader;
 
-using boost::multi_index::multi_index_container;
-using boost::multi_index::indexed_by;
-using boost::multi_index::hashed_unique;
+export using boost::multi_index::multi_index_container;
+export using boost::multi_index::indexed_by;
+export using boost::multi_index::hashed_unique;
 
 export
 {

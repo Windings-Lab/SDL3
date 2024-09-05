@@ -2,15 +2,7 @@
   "version": 6,
   "configurePresets": [
     {
-      "name": "user-default",
-      "hidden": true,
-      "environment": {
-        "GNU_PATH": "D:/ImpPrograms/msys64/mingw64/bin"
-      }
-    },
-    {
       "name": "default",
-      "inherits": "user-default",
       "hidden": true,
       "generator": "Ninja",
       "installDir": "${sourceDir}/install/${presetName}",
@@ -27,7 +19,6 @@
         "NINJA_STATUS": "%p [%es] (%f/%t)  -"
       },
       "cacheVariables": {
-        "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "conan_provider.cmake",
         "BUILD_SHARED_LIBS": "OFF",
 
         "SDLIMAGE_AVIF_SHARED": "OFF",
@@ -88,36 +79,44 @@
       }
     },
     {
-      "name": "clang-debug",
+      "name": "mingw-clang",
       "inherits": "default",
+      "hidden": true,
+      "environment": {
+        "GNU_PATH": "D:/ImpPrograms/msys64/mingw64/bin"
+      },
       "cacheVariables": {
         "CMAKE_COMMAND": "$env{GNU_PATH}/cmake.exe",
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "$env{GNU_PATH}/clang.exe",
         "CMAKE_CXX_COMPILER": "$env{GNU_PATH}/clang++.exe"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "MinGW"
+        }
       }
     },
     {
-      "name": "msv-clang-debug",
-      "inherits": "default",
-      "hidden": false,
+      "name": "mingw-clang-debug",
+      "inherits": "mingw-clang",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_C_COMPILER": "clang-cl",
-        "CMAKE_CXX_COMPILER": "clang-cl"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "enableMicrosoftCodeAnalysis": true,
-          "intelliSenseMode": "windows-clang-x64"
-        }
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "mingw-clang-release",
+      "inherits": "mingw-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "msvc",
       "inherits": "default",
-      "hidden": false,
+      "hidden": true,
       "cacheVariables": {
+        "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "cmake/wd_conan_provider.cmake",
         "CMAKE_C_COMPILER": "cl",
         "CMAKE_CXX_COMPILER": "cl"
       },
@@ -125,13 +124,15 @@
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
           "enableMicrosoftCodeAnalysis": true,
           "intelliSenseMode": "windows-msvc-x64"
+        },
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
         }
       }
     },
     {
       "name": "msvc-debug",
       "inherits": "msvc",
-      "hidden": false,
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       }
@@ -139,7 +140,6 @@
     {
       "name": "msvc-release",
       "inherits": "msvc",
-      "hidden": false,
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
@@ -147,39 +147,19 @@
   ],
   "buildPresets": [
     {
-      "name": "clang-debug-verbose",
-      "configurePreset": "clang-debug",
+      "name": "mingw-clang-debug-verbose",
+      "configurePreset": "mingw-clang-debug",
       "verbose": true
     },
     {
-      "name": "clang-debug-noverbose",
-      "configurePreset": "clang-debug",
-      "verbose": false
-    },
-    {
-      "name": "msv-clang-debug-noverbose",
-      "configurePreset": "msv-clang-debug",
-      "verbose": false
-    },
-    {
-      "name": "msv-clang-debug-verbose",
-      "configurePreset": "msv-clang-debug",
+      "name": "mingw-clang-release-verbose",
+      "configurePreset": "mingw-clang-release",
       "verbose": true
-    },
-    {
-      "name": "msvc-debug-noverbose",
-      "configurePreset": "msvc-debug",
-      "verbose": false
     },
     {
       "name": "msvc-debug-verbose",
       "configurePreset": "msvc-debug",
       "verbose": true
-    },
-    {
-      "name": "msvc-release-noverbose",
-      "configurePreset": "msvc-release",
-      "verbose": false
     },
     {
       "name": "msvc-release-verbose",

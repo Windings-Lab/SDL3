@@ -1,6 +1,5 @@
 module;
 
-#include <boost/multi_index_container.hpp>
 #include <format>
 #include "opengl/glad/gl.h"
 

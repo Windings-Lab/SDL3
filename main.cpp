@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <SDL_main.h>
 #include <chrono>
-#include <boost/multi_index_container.hpp>
 
 #include "opengl/glad/gl.h"
 

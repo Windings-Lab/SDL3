@@ -1,7 +1,3 @@
-module;
-
-#include <boost/multi_index_container.hpp>
-
 export module wd.engine.Engine;
 
 import wd.opengl.Context;

@@ -8,3 +8,6 @@ CMakeUserPresets.json
 
 # MSV
 .vs/*
+
+# Conan
+conan_provider.cmake

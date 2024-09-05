@@ -1,6 +1,7 @@
 module;
 
-#include <boost/multi_index_container.hpp>
+#include <vector>
+#include <memory>
 #include "opengl/glad/gl.h"
 
 export module wd.opengl.Context;

@@ -1,7 +1,3 @@
-module;
-
-#include <boost/multi_index_container.hpp>
-
 module wd.engine.Engine;
 
 namespace WD

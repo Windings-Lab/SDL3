@@ -10,10 +10,6 @@ set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
-find_package(Boost CONFIG REQUIRED
-	COMPONENTS multi_index
-)
-
 add_executable(WD_SDL main.cpp)
 
 target_compile_features(WD_SDL PRIVATE cxx_std_23)
@@ -69,7 +65,14 @@ target_include_directories(WD_SDL
     $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
 )
 
-target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES})
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++23")
+	find_package(Boost)
+else()
+	find_package(Boost COMPONENTS multi_index REQUIRED)
+endif()
+
+target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES} ${Boost_HEADERS_LIBRARY})
 
 add_subdirectory(include)
 add_subdirectory(src)
