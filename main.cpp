@@ -1,22 +1,10 @@
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL.h>
 #include <SDL_main.h>
-#include <chrono>
 
 #include "opengl/glad/gl.h"
 
 import wd;
-
-double cpu_time(void (*func)())
-{
-    const auto start = std::chrono::high_resolution_clock::now();
-    func();
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    const std::chrono::duration<double> total = end - start;
-
-    return total.count();
-}
 
 void DoSomething()
 {
