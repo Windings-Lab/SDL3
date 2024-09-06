@@ -13,9 +13,14 @@ namespace wd::gl
     {
     }
 
+    GLenum Object::Type() const noexcept
+    {
+        return mType;
+    }
+
     Object::Object(const GLuint id, const GLenum type)
         : ID(id)
-        , Type(type)
+        , mType(type)
     {
         const auto error = glGetError();
         if(error || ID == 0)

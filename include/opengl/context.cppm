@@ -2,25 +2,26 @@ module;
 
 #include <vector>
 #include <memory>
+#include <boost/mpl/set/aux_/has_key_impl.hpp>
 #include "gl.h"
 
 export module wd.gl.Context;
 
 import wd.gl.object.shader.Container;
-import wd.gl.object.shader.Program;
 import wd.engine.Window;
 
 export typedef struct SDL_GLContextState* SDL_GLContext;
 
 export namespace wd::gl
 {
-    using buffer_container = std::vector<std::unique_ptr<class Buffer>>;
-    using shader_program_container = std::vector<std::unique_ptr<Program>>;
+    using program_container = std::vector<std::unique_ptr<class Program>>;
+    using buffer_container = std::vector<std::unique_ptr<struct Buffer>>;
+    using vao_container = std::vector<std::unique_ptr<struct VertexArray>>;
 
     class Context
     {
     public:
-        shader_program_container ShaderPrograms;
+        program_container Programs;
 
     public:
         Context(const int width, const int height);
@@ -40,5 +41,6 @@ export namespace wd::gl
         SDL_GLContext mValue = nullptr;
         shader_container mShaders;
         buffer_container mBuffers;
+        vao_container mVertexArrays;
     };
 }

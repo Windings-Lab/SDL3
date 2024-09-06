@@ -18,9 +18,6 @@ export namespace wd::gl
         auto DetachBy(GLuint id) -> const Shader*;
         auto DetachBy(const GLchar* path) -> const Shader*;
 
-        GLuint VAO; // Vertex Array Object ID
-        GLuint EBO; // Element Buffer Object ID
-
     public:
         Program();
         virtual ~Program() override;

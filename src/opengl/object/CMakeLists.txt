@@ -4,4 +4,5 @@ target_sources(WD_SDL
 )
 
 add_subdirectory(buffer)
+add_subdirectory(vao)
 add_subdirectory(shader)

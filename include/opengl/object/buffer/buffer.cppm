@@ -11,6 +11,7 @@ export namespace wd::gl
     struct Buffer : public Object
     {
         void BufferData(const void* data, size_t size, GLenum usage);
+        void Unbind();
 
         Buffer() = delete;
         explicit Buffer(GLenum type);

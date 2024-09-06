@@ -18,7 +18,7 @@ void CreateShaderProgram(wd::gl::Context& glContext)
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);
 
-    const auto shaderProgram = glContext.ShaderPrograms[0].get();
+    auto shaderProgram = glContext.Programs[0].get();
     shaderProgram->Use();
 }
 

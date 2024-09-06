@@ -32,6 +32,11 @@ namespace wd::gl
         }
     }
 
+    void Buffer::Unbind()
+    {
+        glBindBuffer(mType, 0);
+    }
+
     Buffer::~Buffer()
     {
         glDeleteBuffers(1, &ID);

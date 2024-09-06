@@ -25,7 +25,7 @@ namespace
             wd::LogError(std::format("Shader compilation failed:\n"
                                      "Info: %s\n", infolog,
                                      "Path: %s\n", shader.Path,
-                                     "Type: %s", shader.Type));
+                                     "Type: %s", shader.Type()));
         }
 
         return success;

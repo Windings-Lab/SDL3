@@ -11,8 +11,6 @@ namespace wd::gl
 {
     Program::Program()
         : Object(glCreateProgram(), GL_PROGRAM)
-        , VAO(0)
-        , EBO(0)
     {
     }
 

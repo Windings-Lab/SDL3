@@ -14,9 +14,12 @@ export namespace wd::gl
         virtual ~Object() = 0;
 
         const GLuint ID;
-        const GLenum Type;
+        GLenum Type() const noexcept;
 
     protected:
         explicit Object(GLuint id, GLenum type);
+
+    protected:
+        GLenum mType;
     };
 }

@@ -10,6 +10,7 @@ module wd.gl.Context;
 import wd.engine.Log;
 import wd.gl.object.shader.Shader;
 import wd.gl.object.shader.Program;
+import wd.gl.object.VertexArray;
 import wd.gl.object.Buffer;
 
 #ifndef NDEBUG
@@ -74,7 +75,7 @@ namespace wd::gl
 
         //Engine->Shader[0]->Use();
         //glBindVertexArray(Engine->Shader[0]->VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         //glBindVertexArray(0);
 
         SDL_GL_SwapWindow(mWindow.Get());
@@ -93,7 +94,7 @@ namespace wd::gl
 
     void Context::CreateShaderProgram()
     {
-        const auto shaderProgram = ShaderPrograms.emplace_back(std::make_unique<Program>()).get();
+        const auto shaderProgram = Programs.emplace_back(std::make_unique<Program>()).get();
         const auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
         const auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
@@ -101,14 +102,11 @@ namespace wd::gl
         shaderProgram->Attach(fragShader);
 
         // ====== Creating Vertex Array Object ======
-        GLuint VAO = 0;
-        glGenVertexArrays(1, &VAO);
-        shaderProgram->VAO = VAO;
-        glBindVertexArray(VAO);
+        const auto VAO = mVertexArrays.emplace_back(std::make_unique<VertexArray>()).get();
         // ====== Creating Vertex Array Object ======
 
         // ====== Creating and buffering Vertex Buffer Object ======
-        const auto& VBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ARRAY_BUFFER));
+        const auto VBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ARRAY_BUFFER)).get();
         constexpr float vertices[] =
         {
             0.5f, 0.5f, 0.0f, // top right
@@ -120,25 +118,24 @@ namespace wd::gl
         // ====== Creating and buffering Vertex Buffer Object ======
 
         // ====== Creating and buffering Element Buffer Object ======
-        const auto& EBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER));
+        const auto EBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER)).get();
         const unsigned int vertexIndices[] =
         {
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
         EBO->BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
-        shaderProgram->EBO = EBO->ID;
         // ====== Creating and buffering Element Buffer Object ======
 
         // Teaching OpenGL about vertex attributes
         // 1-4: axes count
         // Binds current bounded to GL_ARRAY_BUFFER VBO
         constexpr auto axes = 3;
-        glVertexAttribPointer(0, axes, GL_FLOAT, GL_FALSE, axes * sizeof(float), static_cast<void*>(0));
-        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, axes, GL_FLOAT, GL_FALSE, axes * sizeof(float), nullptr);
+        VAO->Enable();
 
-        // Unbinding VBO after using glVertexAttribPointer
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        // After using glVertexAttribPointer
+        VBO->Unbind();
 
         shaderProgram->Use();
     }
@@ -150,9 +147,10 @@ namespace wd::gl
 
     Context::~Context()
     {
-        ShaderPrograms.clear();
+        Programs.clear();
         mShaders.clear();
         mBuffers.clear();
+        mVertexArrays.clear();
         SDL_GL_DestroyContext(mValue);
     }
 }
