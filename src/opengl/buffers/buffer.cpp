@@ -11,7 +11,7 @@ namespace WD::GL
 {
     Buffer::Buffer()
         : mID(0)
-        , mTarget(0)
+        , mType(0)
     {
         glGenBuffers(1, &mID);
         const auto error = glGetError();
@@ -28,24 +28,27 @@ namespace WD::GL
 
     GLenum Buffer::Target() const
     {
-        return mTarget;
+        return mType;
     }
 
-    bool Buffer::BindTo(const GLenum target)
+    void Buffer::BindTo(const GLenum type)
     {
-        glBindBuffer(target, mID);
-        if(glGetError() != GL_NO_ERROR) return false;
+        glBindBuffer(type, mID);
+        if (const auto error = glGetError())
+        {
+            LogError(std::format("Failed to bind buffer"), true);
+        }
 
-        mTarget = target;
-        return true;
+        mType = type;
     }
 
-    bool Buffer::BufferData(const void* data, const size_t size, const GLenum usage)
+    void Buffer::BufferData(const void* data, const size_t size, const GLenum usage)
     {
         glNamedBufferData(mID, size, data, usage);
-        if(glGetError() != GL_NO_ERROR) return false;
-
-        return true;
+        if (const auto error = glGetError())
+        {
+            LogError(std::format("Failed to buffer data"), true);
+        }
     }
 
     Buffer::~Buffer()

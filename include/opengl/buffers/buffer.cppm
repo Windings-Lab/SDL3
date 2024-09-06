@@ -11,8 +11,8 @@ export namespace WD::GL
     class Buffer : Utility::NonMovable
     {
     public:
-        bool BindTo(const GLenum target);
-        bool BufferData(const void* data, const size_t size, const GLenum usage);
+        void BindTo(const GLenum type);
+        void BufferData(const void* data, const size_t size, const GLenum usage);
 
         GLuint ID() const;
         GLenum Target() const;
@@ -23,6 +23,6 @@ export namespace WD::GL
 
     private:
         GLuint mID;
-        GLenum mTarget;
+        GLenum mType;
     };
 }
