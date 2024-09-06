@@ -37,9 +37,11 @@ namespace WD::GL
     Shader::Shader(const GLchar* path, const GLenum type)
         : ID(glCreateShader(type)), Path(path), Type(type)
     {
-        auto error = glGetError();
-        if(error == GL_INVALID_ENUM) throw error;
-        if(ID == 0) LogError(std::format("Shader is not created: %s", path), true);
+        const auto error = glGetError();
+        if(error || ID == 0)
+        {
+            LogError(std::format("Shader is not created: %s", path), true);
+        }
     }
 
     void Shader::Compile() const
@@ -55,7 +57,7 @@ namespace WD::GL
 
         if(!CompileSuccess(*this))
         {
-            throw std::runtime_error("Failed to compile shader");
+            LogError(std::format("Failed to compile shader"), true);
         }
     }
 

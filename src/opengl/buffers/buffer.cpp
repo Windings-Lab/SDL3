@@ -1,8 +1,11 @@
 module;
 
+#include <format>
 #include "opengl/glad/gl.h"
 
 module wd.opengl.Buffer;
+
+import wd.engine.Log;
 
 namespace WD::GL
 {
@@ -11,7 +14,11 @@ namespace WD::GL
         , mTarget(0)
     {
         glGenBuffers(1, &mID);
-        if (mID == 0) throw glGetError();
+        const auto error = glGetError();
+        if (error || mID == 0)
+        {
+            LogError(std::format("Failed to create buffer"), true);
+        }
     }
 
     GLuint Buffer::ID() const

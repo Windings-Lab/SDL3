@@ -18,7 +18,7 @@ namespace
     void GLAD_API_PTR opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
     {
         if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
-        WD::LogError(std::format("OpenGL DEBUG Message: {0}", message));
+        WD::LogError(std::format("OpenGL error Message: {0}", message));
     }
 }
 #endif

@@ -15,7 +15,11 @@ namespace WD::GL
         , EBO(0)
         , mID(glCreateProgram())
     {
-        if (mID == 0) throw glGetError();
+        const auto error = glGetError();
+        if (error || mID == 0)
+        {
+            LogError(std::format("Program failed to create", error), true);
+        }
     }
 
     ShaderProgram::~ShaderProgram()
@@ -39,7 +43,7 @@ namespace WD::GL
         glAttachShader(mID, shader->ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            throw std::runtime_error("Failed to attach shader");
+            LogError(std::format("Failed to attach shader"), true);
         }
 
         glLinkProgram(mID);
@@ -70,7 +74,7 @@ namespace WD::GL
         glDetachShader(mID, shader.ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            throw std::runtime_error("Failed to detach shader");
+            LogError(std::format("Failed to detach shader"), true);
         }
     }
 }
