@@ -6,9 +6,9 @@ export module wd.opengl.Buffer;
 
 import wd.utility.Constructors;
 
-export namespace WD::GL
+export namespace wd::gl
 {
-    class Buffer : Utility::NonMovable
+    class Buffer : utility::NonMovable
     {
     public:
         void BindTo(const GLenum type);

@@ -5,11 +5,11 @@ module;
 #include <memory>
 #include "opengl/glad/gl.h"
 
-module wd.opengl.Context;
+module wd.gl.Context;
 
 import wd.engine.Log;
-import wd.opengl.shader.Shader;
-import wd.opengl.shader.Program;
+import wd.gl.shader.Shader;
+import wd.gl.shader.Program;
 import wd.opengl.Buffer;
 
 #ifndef NDEBUG
@@ -18,12 +18,12 @@ namespace
     void GLAD_API_PTR opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
     {
         if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
-        WD::LogError(std::format("OpenGL error Message: {0}", message));
+        wd::LogError(std::format("OpenGL error Message: {0}", message));
     }
 }
 #endif
 
-namespace WD::GL
+namespace wd::gl
 {
     Context::Context(const int width, const int height)
         : mWindow(width, height)

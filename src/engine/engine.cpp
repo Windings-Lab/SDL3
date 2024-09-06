@@ -1,6 +1,6 @@
 module wd.engine.Engine;
 
-namespace WD
+namespace wd
 {
     Engine::Engine(const int width, const int height)
         : NonMovable()
@@ -13,7 +13,7 @@ namespace WD
         return mGLContext.GetWindow();
     }
 
-    auto Engine::GetGLContext() -> GL::Context&
+    auto Engine::GetGLContext() -> gl::Context&
     {
         return mGLContext;
     }

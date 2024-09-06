@@ -3,12 +3,12 @@ module;
 #include <format>
 #include "opengl/glad/gl.h"
 
-module wd.opengl.shader.Program;
+module wd.gl.shader.Program;
 
 import wd.engine.Log;
-import wd.opengl.shader.Shader;
+import wd.gl.shader.Shader;
 
-namespace WD::GL
+namespace wd::gl
 {
     ShaderProgram::ShaderProgram()
         : VAO(0)

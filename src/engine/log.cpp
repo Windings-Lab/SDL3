@@ -7,7 +7,7 @@ module;
 
 module wd.engine.Log;
 
-namespace WD
+namespace wd
 {
     void LogError(const std::string& message, const bool _throw)
     {

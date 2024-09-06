@@ -7,7 +7,7 @@ module wd.engine.Window;
 
 import wd.engine.Log;
 
-namespace WD
+namespace wd
 {
     Window::Window(const int width, const int height)
         : mWidth(width)

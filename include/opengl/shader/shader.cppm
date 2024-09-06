@@ -2,13 +2,13 @@ module;
 
 #include "opengl/glad/gl.h"
 
-export module wd.opengl.shader.Shader;
+export module wd.gl.shader.Shader;
 
 import wd.utility.Constructors;
 
-export namespace WD::GL
+export namespace wd::gl
 {
-    class Shader : Utility::NonMovable
+    class Shader : utility::NonMovable
     {
     public:
         Shader(const GLchar* path, GLenum type);

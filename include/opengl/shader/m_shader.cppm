@@ -1,5 +1,5 @@
-export module wd.opengl.shader;
+export module wd.gl.shader;
 
-export import wd.opengl.shader.Shader;
-export import wd.opengl.shader.Container;
-export import wd.opengl.shader.Program;
+export import wd.gl.shader.Shader;
+export import wd.gl.shader.Container;
+export import wd.gl.shader.Program;

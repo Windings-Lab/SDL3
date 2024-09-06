@@ -4,9 +4,9 @@ import wd.utility.Constructors;
 
 export struct SDL_Window;
 
-export namespace WD
+export namespace wd
 {
-    class Window : Utility::NonMovable
+    class Window : utility::NonMovable
     {
     public:
         Window(int width, int height);

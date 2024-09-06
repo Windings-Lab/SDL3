@@ -6,7 +6,7 @@ module;
 
 module wd.engine.Keyboard;
 
-namespace WD::Keyboard
+namespace wd::keyboard
 {
     SDL_AppResult Handle_Input(const SDL_Keycode keycode)
     {

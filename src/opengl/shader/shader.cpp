@@ -6,13 +6,13 @@ module;
 
 #include "opengl/glad/gl.h"
 
-module wd.opengl.shader.Shader;
+module wd.gl.shader.Shader;
 
 import wd.engine.Log;
 
 namespace
 {
-    auto CompileSuccess(const WD::GL::Shader& shader) -> bool
+    auto CompileSuccess(const wd::gl::Shader& shader) -> bool
     {
         // Check for successful compilation
         int success;
@@ -22,7 +22,7 @@ namespace
             constexpr int bufSize = 512;
             char infolog[bufSize];
             glGetShaderInfoLog(shader.ID, bufSize, nullptr, infolog);
-            WD::LogError(std::format("Shader compilation failed:\n"
+            wd::LogError(std::format("Shader compilation failed:\n"
                                      "Info: %s\n", infolog,
                                      "Path: %s\n", shader.Path,
                                      "Type: %s", shader.Type));
@@ -32,7 +32,7 @@ namespace
     }
 }
 
-namespace WD::GL
+namespace wd::gl
 {
     Shader::Shader(const GLchar* path, const GLenum type)
         : ID(glCreateShader(type)), Path(path), Type(type)

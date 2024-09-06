@@ -1,22 +1,22 @@
 export module wd.engine.Engine;
 
-import wd.opengl.Context;
+import wd.gl.Context;
 import wd.utility.Constructors;
 
-export namespace WD
+export namespace wd
 {
     class Window;
 
-    class Engine : Utility::NonMovable
+    class Engine : utility::NonMovable
     {
     public:
         auto GetWindow() -> Window&;
-        auto GetGLContext() -> GL::Context&;
+        auto GetGLContext() -> gl::Context&;
 
         Engine(const int width, const int height);
         ~Engine();
 
     private:
-        GL::Context mGLContext;
+        gl::Context mGLContext;
     };
 }

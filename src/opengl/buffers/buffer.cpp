@@ -7,7 +7,7 @@ module wd.opengl.Buffer;
 
 import wd.engine.Log;
 
-namespace WD::GL
+namespace wd::gl
 {
     Buffer::Buffer()
         : mID(0)

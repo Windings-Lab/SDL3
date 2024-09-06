@@ -1,6 +1,6 @@
 export module wd.utility.Constructors;
 
-export namespace WD::Utility
+export namespace wd::utility
 {
     class NonCopyable
     {

@@ -5,9 +5,9 @@ module;
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 
-export module wd.opengl.shader.Container;
+export module wd.gl.shader.Container;
 
-export import wd.opengl.shader.Shader;
+export import wd.gl.shader.Shader;
 
 export using boost::multi_index::multi_index_container;
 export using boost::multi_index::indexed_by;
@@ -17,21 +17,21 @@ export
 {
     using shader_container_ptr = multi_index_container
     <
-        const WD::GL::Shader*,
+        const wd::gl::Shader*,
         indexed_by
         <
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLuint, ID)>,
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLchar* const, Path)>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
         >
     >;
 
     using shader_container = multi_index_container
     <
-        std::unique_ptr<WD::GL::Shader>,
+        std::unique_ptr<wd::gl::Shader>,
         indexed_by
         <
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLuint, ID)>,
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(WD::GL::Shader, const GLchar* const, Path)>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
         >
     >;
 }

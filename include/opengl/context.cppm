@@ -4,15 +4,15 @@ module;
 #include <memory>
 #include "opengl/glad/gl.h"
 
-export module wd.opengl.Context;
+export module wd.gl.Context;
 
-import wd.opengl.shader.Container;
-import wd.opengl.shader.Program;
+import wd.gl.shader.Container;
+import wd.gl.shader.Program;
 import wd.engine.Window;
 
 export typedef struct SDL_GLContextState* SDL_GLContext;
 
-export namespace WD::GL
+export namespace wd::gl
 {
     using buffer_container = std::vector<std::unique_ptr<class Buffer>>;
     using shader_program_container = std::vector<std::unique_ptr<ShaderProgram>>;

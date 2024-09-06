@@ -11,7 +11,7 @@ void DoSomething()
 
 }
 
-void CreateShaderProgram(WD::GL::Context& glContext)
+void CreateShaderProgram(wd::gl::Context& glContext)
 {
     glContext.CreateShaderProgram();
 
@@ -26,7 +26,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        WD::LogError("SDL failed to initialize!");
+        wd::LogError("SDL failed to initialize!");
 
         return SDL_APP_FAILURE;
     }
@@ -34,7 +34,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
     constexpr auto Width = 800;
     constexpr auto Height = 600;
 
-    WD::Engine* Engine = new WD::Engine(Width, Height);
+    wd::Engine* Engine = new wd::Engine(Width, Height);
     *appstate = static_cast<void*>(Engine);
 
     CreateShaderProgram(Engine->GetGLContext());
@@ -45,13 +45,13 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 
 SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
-    auto* Engine = static_cast<WD::Engine*>(appstate);
+    auto* Engine = static_cast<wd::Engine*>(appstate);
 
     switch (event->type)
     {
     case SDL_EVENT_KEY_DOWN:
         {
-            return WD::Keyboard::Handle_Input(event->key.key);
+            return wd::keyboard::Handle_Input(event->key.key);
         }
     case SDL_EVENT_QUIT:
         {
@@ -80,7 +80,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
 
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    auto* Engine = static_cast<WD::Engine*>(appstate);
+    auto* Engine = static_cast<wd::Engine*>(appstate);
 
     Engine->GetGLContext().Iterate();
 
@@ -89,5 +89,5 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
 void SDL_AppQuit(void *appstate)
 {
-    delete static_cast<WD::Engine*>(appstate);
+    delete static_cast<wd::Engine*>(appstate);
 }

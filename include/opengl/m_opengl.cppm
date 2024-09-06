@@ -1,4 +1,4 @@
-export module wd.opengl;
+export module wd.gl;
 
-export import wd.opengl.shader.Shader;
-export import wd.opengl.Context;
+export import wd.gl.shader.Shader;
+export import wd.gl.Context;
