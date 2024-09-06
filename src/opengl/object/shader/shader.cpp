@@ -4,9 +4,9 @@ module;
 #include <SDL_filesystem.h>
 #include <SDL_iostream.h>
 
-#include "opengl/glad/gl.h"
+#include "opengl/gl.h"
 
-module wd.gl.shader.Shader;
+module wd.gl.object.shader.Shader;
 
 import wd.engine.Log;
 
@@ -35,16 +35,12 @@ namespace
 namespace wd::gl
 {
     Shader::Shader(const GLchar* path, const GLenum type)
-        : ID(glCreateShader(type)), Path(path), Type(type)
+        : Object(glCreateShader(type), type)
+        , Path(path)
     {
-        const auto error = glGetError();
-        if(error || ID == 0)
-        {
-            LogError(std::format("Shader is not created: %s", path), true);
-        }
     }
 
-    void Shader::Compile() const
+    void Shader::Compile()
     {
         if(SDL_GetPathInfo(Path, nullptr) == -1)
         {

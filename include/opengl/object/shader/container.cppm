@@ -1,13 +1,14 @@
 module;
 
-#include "opengl/glad/gl.h"
+#include "opengl/gl.h"
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 
-export module wd.gl.shader.Container;
+export module wd.gl.object.shader.Container;
 
-export import wd.gl.shader.Shader;
+import wd.gl.object.Object;
+export import wd.gl.object.shader.Shader;
 
 export using boost::multi_index::multi_index_container;
 export using boost::multi_index::indexed_by;
@@ -20,7 +21,7 @@ export
         const wd::gl::Shader*,
         indexed_by
         <
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Object, const GLuint, ID)>,
             hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
         >
     >;
@@ -30,7 +31,7 @@ export
         std::unique_ptr<wd::gl::Shader>,
         indexed_by
         <
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLuint, ID)>,
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Object, const GLuint, ID)>,
             hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
         >
     >;

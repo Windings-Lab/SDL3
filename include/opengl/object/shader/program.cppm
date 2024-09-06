@@ -1,16 +1,16 @@
 module;
 
 #include <boost/mpl/set/aux_/has_key_impl.hpp>
-#include "opengl/glad/gl.h"
+#include "opengl/gl.h"
 
-export module wd.gl.shader.Program;
+export module wd.gl.object.shader.Program;
 
-import wd.utility.Constructors;
-import wd.gl.shader.Container;
+import wd.gl.object.shader.Container;
+import wd.gl.object.Object;
 
 export namespace wd::gl
 {
-    class ShaderProgram : utility::NonMovable
+    class Program : public Object
     {
     public:
         void Use() const noexcept;
@@ -22,12 +22,11 @@ export namespace wd::gl
         GLuint EBO; // Element Buffer Object ID
 
     public:
-        ShaderProgram();
-        ~ShaderProgram();
+        Program();
+        virtual ~Program() override;
 
     private:
         auto Detach(const Shader& shader) -> void;
-        GLuint mID;
         shader_container_ptr mShaders;
     };
 }

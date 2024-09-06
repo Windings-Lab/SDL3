@@ -1,8 +1,7 @@
 target_sources(WD_SDL
     PRIVATE
     context.cpp
+    gl.c
 )
 
-add_subdirectory(buffers)
-add_subdirectory(glad)
-add_subdirectory(shader)
+add_subdirectory(object)

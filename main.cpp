@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <SDL_main.h>
 
-#include "opengl/glad/gl.h"
+#include "opengl/gl.h"
 
 import wd;
 
