@@ -16,12 +16,3 @@ There is a preset called `user-default`. Change variables as needed here
 
 * Use `conan` package manager
 * `find_package` will look for `zlib`, `libpng`, `boost`
-
-## MSVC compatibility
-
-Not working until modules fully compatible either with 
-* CMake header units, or
-* MSVC `export using`, or
-* `Boost` translated all headers into modules
-
-Didn't check with other compilers but `CLang` works

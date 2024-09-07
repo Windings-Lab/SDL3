@@ -81,13 +81,13 @@ namespace wd::gl
         SDL_GL_SwapWindow(mWindow.Get());
     }
 
-    auto Context::CreateShader(const GLchar* path, const GLenum type) -> const object::Shader*
+    auto Context::CreateShader(const GLchar* path, const GLenum type) -> object::Shader*
     {
         auto shader = std::make_unique<object::Shader>(path, type);
         shader->Compile();
         const auto shaderPtr = shader.get();
 
-        mShaders.emplace(std::move(shader));
+        mShaders.emplace_back(std::move(shader));
 
         return shaderPtr;
     }
@@ -95,8 +95,8 @@ namespace wd::gl
     void Context::CreateProgram()
     {
         const auto program = Programs.emplace_back(std::make_unique<object::shader::Program>()).get();
-        const auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
-        const auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
+        auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
+        auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
         program->Attach(vertShader);
         program->Attach(fragShader);

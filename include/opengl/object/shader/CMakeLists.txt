@@ -4,6 +4,5 @@ target_sources(WD_SDL
         FILES
     m_shader.cppm
     shader.cppm
-    container.cppm
     program.cppm
 )

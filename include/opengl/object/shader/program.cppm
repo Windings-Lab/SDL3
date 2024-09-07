@@ -1,12 +1,16 @@
 module;
 
-#include <boost/mpl/set/aux_/has_key_impl.hpp>
+#include <vector>
 #include "opengl/gl.h"
 
 export module wd.gl.object.shader.Program;
 
-import wd.gl.object.shader.Container;
 import wd.gl.object.Object;
+
+namespace wd::gl::object
+{
+    using shader_container_ptr = std::vector<struct Shader*>;
+}
 
 export namespace wd::gl::object::shader
 {
@@ -14,9 +18,8 @@ export namespace wd::gl::object::shader
     {
     public:
         void Use() const noexcept;
-        void Attach(const Shader* shader);
-        auto DetachBy(GLuint id) -> const Shader*;
-        auto DetachBy(const GLchar* path) -> const Shader*;
+        void Attach(Shader* shader);
+        auto DetachBy(GLuint id) -> Shader*;
 
     public:
         Program();

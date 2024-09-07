@@ -1,6 +1,8 @@
 module;
 
 #include <format>
+#include <bits/ranges_algo.h>
+
 #include "opengl/gl.h"
 
 module wd.gl.object.shader.Program;
@@ -31,7 +33,7 @@ namespace wd::gl::object::shader
         glUseProgram(ID);
     }
 
-    void Program::Attach(const Shader* shader)
+    void Program::Attach(Shader* shader)
     {
         glAttachShader(ID, shader->ID);
         if(glGetError() != GL_NO_ERROR)
@@ -41,22 +43,16 @@ namespace wd::gl::object::shader
 
         glLinkProgram(ID);
 
-        mShaders.insert(shader);
+        mShaders.emplace_back(shader);
     }
 
-    auto Program::DetachBy(const GLuint id) -> const Shader*
+    auto Program::DetachBy(GLuint id) -> Shader*
     {
-        auto& index = mShaders.get<0>();
-        const auto shader = index.extract(id).value();
-        Detach(*shader);
-
-        return shader;
-    }
-
-    auto Program::DetachBy(const GLchar* path) -> const Shader*
-    {
-        auto& index = mShaders.get<1>();
-        const auto shader = index.extract(path).value();
+        const auto [first, last] = std::ranges::remove_if(mShaders, [id](Shader* shader)
+        {
+            return shader->ID == id;
+        });
+        const auto shader = *mShaders.erase(first, last).base();
         Detach(*shader);
 
         return shader;
