@@ -40,7 +40,7 @@ export namespace wd::gl
         void Iterate();
 
         auto CreateShader(const GLchar* path, const GLenum type) -> const object::Shader*;
-        void CreateShaderProgram();
+        void CreateProgram();
         void UpdateViewport(int width, int height);
 
         ~Context();

@@ -13,7 +13,7 @@ void DoSomething()
 
 void CreateShaderProgram(wd::gl::Context& glContext)
 {
-    glContext.CreateShaderProgram();
+    glContext.CreateProgram();
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glPointSize(5.f);

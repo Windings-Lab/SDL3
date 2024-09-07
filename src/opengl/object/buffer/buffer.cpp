@@ -16,11 +16,6 @@ namespace wd::gl::object
         return id;
     }(), type)
     {
-        glBindBuffer(type, ID);
-        if (const auto error = glGetError())
-        {
-            LogError(std::format("Failed to bind buffer"), true);
-        }
     }
 
     void Buffer::BufferData(const void* data, const size_t size, const GLenum usage)
@@ -32,9 +27,22 @@ namespace wd::gl::object
         }
     }
 
+    void Buffer::Bind()
+    {
+        glBindBuffer(mType, ID);
+        if (const auto error = glGetError())
+        {
+            LogError(std::format("Failed to bind buffer"), true);
+        }
+    }
+
     void Buffer::Unbind()
     {
         glBindBuffer(mType, 0);
+        if (const auto error = glGetError())
+        {
+            LogError(std::format("Failed to unbind buffer"), true);
+        }
     }
 
     Buffer::~Buffer()

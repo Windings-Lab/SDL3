@@ -92,52 +92,47 @@ namespace wd::gl
         return shaderPtr;
     }
 
-    void Context::CreateShaderProgram()
+    void Context::CreateProgram()
     {
-        const auto shaderProgram = Programs.emplace_back(std::make_unique<object::shader::Program>()).get();
+        const auto program = Programs.emplace_back(std::make_unique<object::shader::Program>()).get();
         const auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
         const auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
-        shaderProgram->Attach(vertShader);
-        shaderProgram->Attach(fragShader);
+        program->Attach(vertShader);
+        program->Attach(fragShader);
 
-        // ====== Creating Vertex Array Object ======
+        // Creating Vertex Array Object
         const auto VAO = mVertexArrays.emplace_back(std::make_unique<object::vertex::Array>()).get();
-        // ====== Creating Vertex Array Object ======
 
-        // ====== Creating and buffering Vertex Buffer Object ======
-        const auto VBO = mBuffers.emplace_back(std::make_unique<object::Buffer>(GL_ARRAY_BUFFER)).get();
-        constexpr float vertices[] =
+        // ====== Buffering Vertex Buffer Object ======
+        constexpr GLdouble vertices[] =
         {
-            0.5f, 0.5f, 0.0f, // top right
-            0.5f, -0.5f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, // bottom left
-            -0.5f, 0.5f, 0.0f // top left
+            0.5, 0.5, 0.0, // top right
+            0.5, -0.5, 0.0, // bottom right
+            -0.5, -0.5, 0.0, // bottom left
+            -0.5, 0.5, 0.0 // top left
         };
-        VBO->BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
-        // ====== Creating and buffering Vertex Buffer Object ======
+        VAO->VBO.Bind();
+        VAO->VBO.BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+        // ====== Buffering Vertex Buffer Object ======
 
-        // ====== Creating and buffering Element Buffer Object ======
-        const auto EBO = mBuffers.emplace_back(std::make_unique<object::Buffer>(GL_ELEMENT_ARRAY_BUFFER)).get();
-        const unsigned int vertexIndices[] =
+        // ====== Buffering Element Buffer Object ======
+        constexpr GLuint vertexIndices[] =
         {
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
-        EBO->BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
-        // ====== Creating and buffering Element Buffer Object ======
+        VAO->EBO.Bind();
+        VAO->EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
+        // ====== Buffering Element Buffer Object ======
 
-        // Teaching OpenGL about vertex attributes
-        // 1-4: axes count
-        // Binds current bounded to GL_ARRAY_BUFFER VBO
-        constexpr auto axes = 3;
-        glVertexAttribPointer(0, axes, GL_FLOAT, GL_FALSE, axes * sizeof(float), nullptr);
+        VAO->ReadVBO();
         VAO->Enable();
 
         // After using glVertexAttribPointer
-        VBO->Unbind();
+        VAO->VBO.Unbind();
 
-        shaderProgram->Use();
+        program->Use();
     }
 
     void Context::UpdateViewport(const int width, const int height)
