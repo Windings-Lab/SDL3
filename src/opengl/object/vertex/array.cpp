@@ -2,11 +2,11 @@ module;
 
 #include "opengl/gl.h"
 
-module wd.gl.object.VertexArray;
+module wd.gl.object.vertex.Array;
 
-namespace wd::gl
+namespace wd::gl::object::vertex
 {
-    VertexArray::VertexArray()
+    Array::Array()
         : Object([]
         {
             GLuint id;
@@ -17,12 +17,12 @@ namespace wd::gl
         glBindVertexArray(ID);
     }
 
-    void VertexArray::Enable()
+    void Array::Enable()
     {
         glEnableVertexArrayAttrib(ID, 0);
     }
 
-    void VertexArray::Disable()
+    void Array::Disable()
     {
         glDisableVertexArrayAttrib(ID, 0);
     }

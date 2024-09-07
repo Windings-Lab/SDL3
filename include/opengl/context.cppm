@@ -14,14 +14,23 @@ export typedef struct SDL_GLContextState* SDL_GLContext;
 
 export namespace wd::gl
 {
-    using program_container = std::vector<std::unique_ptr<class Program>>;
-    using buffer_container = std::vector<std::unique_ptr<struct Buffer>>;
-    using vao_container = std::vector<std::unique_ptr<struct VertexArray>>;
+    namespace object
+    {
+        using buffer_container = std::vector<std::unique_ptr<struct Buffer>>;
+        namespace shader
+        {
+            using container = std::vector<std::unique_ptr<class Program>>;
+        }
+        namespace vertex
+        {
+            using container = std::vector<std::unique_ptr<struct Array>>;
+        }
+    }
 
     class Context
     {
     public:
-        program_container Programs;
+        object::shader::container Programs;
 
     public:
         Context(const int width, const int height);
@@ -30,7 +39,7 @@ export namespace wd::gl
 
         void Iterate();
 
-        auto CreateShader(const GLchar* path, const GLenum type) -> const Shader*;
+        auto CreateShader(const GLchar* path, const GLenum type) -> const object::Shader*;
         void CreateShaderProgram();
         void UpdateViewport(int width, int height);
 
@@ -40,7 +49,7 @@ export namespace wd::gl
         Window mWindow;
         SDL_GLContext mValue = nullptr;
         shader_container mShaders;
-        buffer_container mBuffers;
-        vao_container mVertexArrays;
+        object::buffer_container mBuffers;
+        object::vertex::container mVertexArrays;
     };
 }

@@ -12,7 +12,7 @@ import wd.engine.Log;
 
 namespace
 {
-    auto CompileSuccess(const wd::gl::Shader& shader) -> bool
+    auto CompileSuccess(const wd::gl::object::Shader& shader) -> bool
     {
         // Check for successful compilation
         int success;
@@ -32,7 +32,7 @@ namespace
     }
 }
 
-namespace wd::gl
+namespace wd::gl::object
 {
     Shader::Shader(const GLchar* path, const GLenum type)
         : Object(glCreateShader(type), type)

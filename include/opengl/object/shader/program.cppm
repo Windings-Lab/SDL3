@@ -8,7 +8,7 @@ export module wd.gl.object.shader.Program;
 import wd.gl.object.shader.Container;
 import wd.gl.object.Object;
 
-export namespace wd::gl
+export namespace wd::gl::object::shader
 {
     class Program : public Object
     {

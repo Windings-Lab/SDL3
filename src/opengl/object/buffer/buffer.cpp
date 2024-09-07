@@ -7,7 +7,7 @@ module wd.gl.object.Buffer;
 
 import wd.engine.Log;
 
-namespace wd::gl
+namespace wd::gl::object
 {
     Buffer::Buffer(const GLenum type) : Object([]
     {

@@ -14,7 +14,7 @@ namespace wd
         SDL_SetError("%s", message.c_str());
         auto error = SDL_GetError();
         auto msg = std::format("Thread {0}: {1}", std::this_thread::get_id(), error);
-        SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, msg.c_str());
+        SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, "%s", msg.c_str());
         if(_throw) throw std::runtime_error(error);
     }
 }

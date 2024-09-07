@@ -6,7 +6,7 @@ export module wd.gl.object.Buffer;
 
 import wd.gl.object.Object;
 
-export namespace wd::gl
+export namespace wd::gl::object
 {
     struct Buffer : public Object
     {

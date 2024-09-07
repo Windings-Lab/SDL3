@@ -6,7 +6,7 @@ export module wd.gl.object.shader.Shader;
 
 import wd.gl.object.Object;
 
-export namespace wd::gl
+export namespace wd::gl::object
 {
     struct Shader : public Object
     {

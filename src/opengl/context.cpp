@@ -10,7 +10,7 @@ module wd.gl.Context;
 import wd.engine.Log;
 import wd.gl.object.shader.Shader;
 import wd.gl.object.shader.Program;
-import wd.gl.object.VertexArray;
+import wd.gl.object.vertex.Array;
 import wd.gl.object.Buffer;
 
 #ifndef NDEBUG
@@ -81,9 +81,9 @@ namespace wd::gl
         SDL_GL_SwapWindow(mWindow.Get());
     }
 
-    auto Context::CreateShader(const GLchar* path, const GLenum type) -> const Shader*
+    auto Context::CreateShader(const GLchar* path, const GLenum type) -> const object::Shader*
     {
-        auto shader = std::make_unique<Shader>(path, type);
+        auto shader = std::make_unique<object::Shader>(path, type);
         shader->Compile();
         const auto shaderPtr = shader.get();
 
@@ -94,7 +94,7 @@ namespace wd::gl
 
     void Context::CreateShaderProgram()
     {
-        const auto shaderProgram = Programs.emplace_back(std::make_unique<Program>()).get();
+        const auto shaderProgram = Programs.emplace_back(std::make_unique<object::shader::Program>()).get();
         const auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
         const auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
@@ -102,11 +102,11 @@ namespace wd::gl
         shaderProgram->Attach(fragShader);
 
         // ====== Creating Vertex Array Object ======
-        const auto VAO = mVertexArrays.emplace_back(std::make_unique<VertexArray>()).get();
+        const auto VAO = mVertexArrays.emplace_back(std::make_unique<object::vertex::Array>()).get();
         // ====== Creating Vertex Array Object ======
 
         // ====== Creating and buffering Vertex Buffer Object ======
-        const auto VBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ARRAY_BUFFER)).get();
+        const auto VBO = mBuffers.emplace_back(std::make_unique<object::Buffer>(GL_ARRAY_BUFFER)).get();
         constexpr float vertices[] =
         {
             0.5f, 0.5f, 0.0f, // top right
@@ -118,7 +118,7 @@ namespace wd::gl
         // ====== Creating and buffering Vertex Buffer Object ======
 
         // ====== Creating and buffering Element Buffer Object ======
-        const auto EBO = mBuffers.emplace_back(std::make_unique<Buffer>(GL_ELEMENT_ARRAY_BUFFER)).get();
+        const auto EBO = mBuffers.emplace_back(std::make_unique<object::Buffer>(GL_ELEMENT_ARRAY_BUFFER)).get();
         const unsigned int vertexIndices[] =
         {
             0, 1, 3, // first triangle

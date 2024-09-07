@@ -18,21 +18,21 @@ export
 {
     using shader_container_ptr = multi_index_container
     <
-        const wd::gl::Shader*,
+        const wd::gl::object::Shader*,
         indexed_by
         <
             hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Object, const GLuint, ID)>,
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::object::Shader, const GLchar* const, Path)>
         >
     >;
 
     using shader_container = multi_index_container
     <
-        std::unique_ptr<wd::gl::Shader>,
+        std::unique_ptr<wd::gl::object::Shader>,
         indexed_by
         <
             hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Object, const GLuint, ID)>,
-            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::Shader, const GLchar* const, Path)>
+            hashed_unique<BOOST_MULTI_INDEX_MEMBER(wd::gl::object::Shader, const GLchar* const, Path)>
         >
     >;
 }

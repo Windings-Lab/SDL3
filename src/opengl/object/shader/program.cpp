@@ -6,8 +6,9 @@ module;
 module wd.gl.object.shader.Program;
 
 import wd.engine.Log;
+import wd.gl.object.shader.Shader;
 
-namespace wd::gl
+namespace wd::gl::object::shader
 {
     Program::Program()
         : Object(glCreateProgram(), GL_PROGRAM)
