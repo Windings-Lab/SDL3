@@ -1,12 +1,11 @@
 export module wd.engine.Engine;
 
 import wd.gl.Context;
+import wd.engine.Window;
 import wd.utility.Constructors;
 
 export namespace wd
 {
-    class Window;
-
     class Engine : utility::NonMovable
     {
     public:
@@ -17,6 +16,7 @@ export namespace wd
         ~Engine();
 
     private:
+        Window mWindow;
         gl::Context mGLContext;
     };
 }

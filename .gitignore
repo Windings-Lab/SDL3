@@ -11,3 +11,6 @@ CMakeUserPresets.json
 
 # Conan
 conan_provider.cmake
+
+# Doxygen
+doxygen/

@@ -8,6 +8,7 @@ module;
 module wd.gl.Context;
 
 import wd.engine.Log;
+import wd.engine.Window;
 import wd.gl.object.shader.Shader;
 import wd.gl.object.shader.Program;
 import wd.gl.object.vertex.Array;
@@ -26,8 +27,7 @@ namespace
 
 namespace wd::gl
 {
-    Context::Context(const int width, const int height)
-        : mWindow(width, height)
+    Context::Context(Window& window) : mWindow(window)
     {
         // OpenGL Version 4.6
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);

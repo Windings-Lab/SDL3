@@ -6,7 +6,10 @@ module;
 
 export module wd.gl.Context;
 
-import wd.engine.Window;
+export namespace wd
+{
+    class Window;
+}
 
 export typedef struct SDL_GLContextState* SDL_GLContext;
 
@@ -32,7 +35,7 @@ export namespace wd::gl
         object::shader::program_container Programs;
 
     public:
-        Context(const int width, const int height);
+        Context(Window& window);
 
         auto GetWindow() -> Window&;
 
@@ -45,7 +48,7 @@ export namespace wd::gl
         ~Context();
 
     private:
-        Window mWindow;
+        Window& mWindow;
         SDL_GLContext mValue = nullptr;
         object::shader_container mShaders;
         object::buffer_container mBuffers;

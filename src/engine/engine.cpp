@@ -4,13 +4,14 @@ namespace wd
 {
     Engine::Engine(const int width, const int height)
         : NonMovable()
-        , mGLContext(width, height)
+        , mWindow(width, height)
+        , mGLContext(mWindow)
     {
     }
 
     auto Engine::GetWindow() -> Window&
     {
-        return mGLContext.GetWindow();
+        return mWindow;
     }
 
     auto Engine::GetGLContext() -> gl::Context&
