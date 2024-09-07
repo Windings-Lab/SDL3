@@ -1,7 +1,11 @@
 module;
 
 #include <format>
+#if defined(__clang__)
 #include <bits/ranges_algo.h>
+#elif defined(_MSC_VER)
+#include <algorithm>
+#endif
 
 #include "opengl/gl.h"
 
@@ -52,7 +56,11 @@ namespace wd::gl::object::shader
         {
             return shader->ID == id;
         });
+#if defined(__clang__)
         const auto shader = *mShaders.erase(first, last).base();
+#elif defined(_MSC_VER)
+        const auto shader = *mShaders.erase(first, last);
+#endif
         Detach(*shader);
 
         return shader;
