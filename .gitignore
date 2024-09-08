@@ -13,4 +13,5 @@ CMakeUserPresets.json
 conan_provider.cmake
 
 # Doxygen
-doxygen/
+doxygen/*
+!doxygen/wd_sdl.doxygen
