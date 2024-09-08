@@ -4,17 +4,19 @@ module;
 
 module wd.sdl.opengl.object.vertex.Array;
 
+import wd.sdl.opengl.object.Buffer;
+
 namespace wd::sdl::opengl::object::vertex
 {
-    Array::Array()
+    Array::Array(Buffer& vbo, Buffer& ebo)
         : Object([]
         {
             GLuint id;
             glGenVertexArrays(1, &id);
             return id;
         }(), GL_VERTEX_ARRAY)
-        , VBO(GL_ARRAY_BUFFER)
-        , EBO(GL_ELEMENT_ARRAY_BUFFER)
+        , VBO(vbo)
+        , EBO(ebo)
     {
         glBindVertexArray(ID);
     }

@@ -1,6 +1,6 @@
 export module wd.math.Point;
 
-namespace wd::math
+export namespace wd::math
 {
     struct Point2D
     {

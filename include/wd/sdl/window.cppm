@@ -1,5 +1,6 @@
 export module wd.sdl.Window;
 
+import wd.sdl.Log;
 import wd.utility.Constructors;
 
 export struct SDL_Window;

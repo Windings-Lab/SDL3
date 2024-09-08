@@ -7,13 +7,6 @@ module;
 
 module wd.sdl.opengl.Context;
 
-import wd.sdl.Log;
-import wd.sdl.Window;
-import wd.sdl.opengl.object.shader.Shader;
-import wd.sdl.opengl.object.shader.Program;
-import wd.sdl.opengl.object.vertex.Array;
-import wd.sdl.opengl.object.Buffer;
-
 #ifndef NDEBUG
 namespace
 {
@@ -27,7 +20,8 @@ namespace
 
 namespace wd::sdl::opengl
 {
-    Context::Context(sdl::Window& window) : mWindow(window)
+    Context::Context(const int width, const int height)
+        : mWindow(width, height)
     {
         // OpenGL Version 4.6
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -101,8 +95,13 @@ namespace wd::sdl::opengl
         program->Attach(vertShader);
         program->Attach(fragShader);
 
+        //GL_ARRAY_BUFFER
+        //GL_ELEMENT_ARRAY_BUFFER
+
         // Creating Vertex Array Object
-        const auto VAO = mVertexArrays.emplace_back(std::make_unique<object::vertex::Array>()).get();
+        auto VBO = std::make_unique<object::Buffer>(GL_ARRAY_BUFFER);
+        auto EBO = std::make_unique<object::Buffer>(GL_ELEMENT_ARRAY_BUFFER);
+        auto VAO = std::make_unique<object::vertex::Array>(*VBO, *EBO);
 
         // ====== Buffering Vertex Buffer Object ======
         constexpr GLdouble vertices[] =
@@ -133,6 +132,10 @@ namespace wd::sdl::opengl
         VAO->VBO.Unbind();
 
         program->Use();
+        
+        mVertexArrays.emplace_back(std::move(VAO));
+        mBuffers.emplace_back(std::move(VBO));
+        mBuffers.emplace_back(std::move(EBO));
     }
 
     void Context::UpdateViewport(const int width, const int height)

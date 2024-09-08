@@ -8,8 +8,6 @@ module;
 
 module wd.sdl.opengl.object.shader.Shader;
 
-import wd.sdl.Log;
-
 namespace
 {
     auto CompileSuccess(const wd::sdl::opengl::object::Shader& shader) -> bool

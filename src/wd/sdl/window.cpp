@@ -5,8 +5,6 @@ module;
 
 module wd.sdl.Window;
 
-import wd.sdl.Log;
-
 namespace wd::sdl
 {
     Window::Window(const int width, const int height)

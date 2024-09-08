@@ -5,8 +5,6 @@ module;
 
 module wd.sdl.opengl.object.Object;
 
-import wd.sdl.Log;
-
 namespace wd::sdl::opengl
 {
     Object::~Object()

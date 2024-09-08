@@ -5,8 +5,6 @@ module;
 
 module wd.sdl.opengl.object.Buffer;
 
-import wd.sdl.Log;
-
 namespace wd::sdl::opengl::object
 {
     Buffer::Buffer(const GLenum type) : Object([]

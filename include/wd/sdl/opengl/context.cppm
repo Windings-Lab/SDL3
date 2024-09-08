@@ -2,14 +2,14 @@ module;
 
 #include <vector>
 #include <memory>
-#include "gl.h"
+#include "wd/sdl/opengl/gl.h"
 
 export module wd.sdl.opengl.Context;
 
-export namespace wd::sdl
-{
-    class Window;
-}
+export import wd.sdl.opengl.object;
+export import wd.sdl.Window;
+import wd.sdl.Log;
+import wd.utility.Constructors;
 
 export typedef struct SDL_GLContextState* SDL_GLContext;
 
@@ -17,25 +17,25 @@ export namespace wd::sdl::opengl
 {
     namespace object
     {
-        using shader_container = std::vector<std::unique_ptr<struct Shader>>;
-        using buffer_container = std::vector<std::unique_ptr<struct Buffer>>;
+        using shader_container = std::vector<std::unique_ptr<Shader>>;
+        using buffer_container = std::vector<std::unique_ptr<Buffer>>;
         namespace shader
         {
-            using program_container = std::vector<std::unique_ptr<class Program>>;
+            using program_container = std::vector<std::unique_ptr<Program>>;
         }
         namespace vertex
         {
-            using array_container = std::vector<std::unique_ptr<struct Array>>;
+            using array_container = std::vector<std::unique_ptr<Array>>;
         }
     }
 
-    class Context
+    class Context : utility::NonMovable
     {
     public:
         object::shader::program_container Programs;
 
     public:
-        explicit Context(Window& window);
+        explicit Context(const int width, const int height);
 
         auto GetWindow() -> Window&;
 
@@ -48,7 +48,7 @@ export namespace wd::sdl::opengl
         ~Context();
 
     private:
-        Window& mWindow;
+        Window mWindow;
         SDL_GLContext mValue = nullptr;
         object::shader_container mShaders;
         object::buffer_container mBuffers;

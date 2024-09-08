@@ -7,13 +7,15 @@ export module wd.sdl.opengl.object.shader.Program;
 
 import wd.sdl.opengl.object.Object;
 
-namespace wd::sdl::opengl::object
+export namespace wd::sdl::opengl::object
 {
-    using shader_container_ptr = std::vector<struct Shader*>;
+    struct Shader;
 }
 
 export namespace wd::sdl::opengl::object::shader
 {
+    using shader_container_ptr = std::vector<Shader*>;
+
     class Program : public Object
     {
     public:
