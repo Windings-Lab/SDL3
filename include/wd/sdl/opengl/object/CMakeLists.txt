@@ -3,6 +3,8 @@ target_sources(WD_SDL
     FILE_SET CXX_MODULES
     FILES
     m_object.cppm
+    factory.cppm
+    storage.cppm
     object.cppm
 )
 

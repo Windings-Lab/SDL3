@@ -1,11 +1,7 @@
 export module wd.sdl.opengl.object.vertex.Array;
 
 import wd.sdl.opengl.object.Object;
-
-export namespace wd::sdl::opengl::object
-{
-    struct Buffer;
-}
+import wd.sdl.opengl.object.Buffer;
 
 export namespace wd::sdl::opengl::object::vertex
 {

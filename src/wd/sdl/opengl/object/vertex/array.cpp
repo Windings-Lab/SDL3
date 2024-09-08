@@ -4,8 +4,6 @@ module;
 
 module wd.sdl.opengl.object.vertex.Array;
 
-import wd.sdl.opengl.object.Buffer;
-
 namespace wd::sdl::opengl::object::vertex
 {
     Array::Array(Buffer& vbo, Buffer& ebo)

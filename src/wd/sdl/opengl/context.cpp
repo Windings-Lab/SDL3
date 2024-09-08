@@ -22,6 +22,10 @@ namespace wd::sdl::opengl
 {
     Context::Context(const int width, const int height)
         : mWindow(width, height)
+          , mValue(nullptr, [](const SDL_GLContext* context)
+          {
+              SDL_GL_DestroyContext(*context);
+          })
     {
         // OpenGL Version 4.6
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -36,16 +40,16 @@ namespace wd::sdl::opengl
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 #endif
 
-        const SDL_GLContext context = SDL_GL_CreateContext(mWindow.Get());
+        SDL_GLContext context = SDL_GL_CreateContext(mWindow.Get());
         if (!context)
         {
-            sdl::LogError(std::format("OpenGL Context failed to create!"), true);
+            LogError(std::format("OpenGL Context failed to create!"), true);
         }
-        mValue = context;
+        mValue.reset(&context);
 
-        if(!gladLoadGL(SDL_GL_GetProcAddress))
+        if (!gladLoadGL(SDL_GL_GetProcAddress))
         {
-            sdl::LogError(std::format("GLAD failed to initialize"), true);
+            LogError(std::format("GLAD failed to initialize"), true);
         }
 
         UpdateViewport(mWindow.Width(), mWindow.Height());
@@ -57,9 +61,14 @@ namespace wd::sdl::opengl
 #endif
     }
 
-    auto Context::GetWindow() -> sdl::Window&
+    auto Context::GetWindow() -> Window&
     {
         return mWindow;
+    }
+
+    auto Context::GetStorage() -> const object::Storage&
+    {
+        return mObjectFactory.GetStorage();
     }
 
     void Context::Iterate()
@@ -75,22 +84,11 @@ namespace wd::sdl::opengl
         SDL_GL_SwapWindow(mWindow.Get());
     }
 
-    auto Context::CreateShader(const GLchar* path, const GLenum type) -> object::Shader*
-    {
-        auto shader = std::make_unique<object::Shader>(path, type);
-        shader->Compile();
-        const auto shaderPtr = shader.get();
-
-        mShaders.emplace_back(std::move(shader));
-
-        return shaderPtr;
-    }
-
     void Context::CreateProgram()
     {
-        const auto program = Programs.emplace_back(std::make_unique<object::shader::Program>()).get();
-        auto vertShader = CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
-        auto fragShader = CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
+        const auto program = mObjectFactory.CreateProgram();
+        auto vertShader = mObjectFactory.CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
+        auto fragShader = mObjectFactory.CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
 
         program->Attach(vertShader);
         program->Attach(fragShader);
@@ -99,9 +97,9 @@ namespace wd::sdl::opengl
         //GL_ELEMENT_ARRAY_BUFFER
 
         // Creating Vertex Array Object
-        auto VBO = std::make_unique<object::Buffer>(GL_ARRAY_BUFFER);
-        auto EBO = std::make_unique<object::Buffer>(GL_ELEMENT_ARRAY_BUFFER);
-        auto VAO = std::make_unique<object::vertex::Array>(*VBO, *EBO);
+        auto VBO = mObjectFactory.CreateBuffer(GL_ARRAY_BUFFER);
+        auto EBO = mObjectFactory.CreateBuffer(GL_ELEMENT_ARRAY_BUFFER);
+        auto VAO = mObjectFactory.CreateVertexArray(*VBO, *EBO);
 
         // ====== Buffering Vertex Buffer Object ======
         constexpr GLdouble vertices[] =
@@ -132,10 +130,6 @@ namespace wd::sdl::opengl
         VAO->VBO.Unbind();
 
         program->Use();
-        
-        mVertexArrays.emplace_back(std::move(VAO));
-        mBuffers.emplace_back(std::move(VBO));
-        mBuffers.emplace_back(std::move(EBO));
     }
 
     void Context::UpdateViewport(const int width, const int height)
@@ -145,10 +139,6 @@ namespace wd::sdl::opengl
 
     Context::~Context()
     {
-        Programs.clear();
-        mShaders.clear();
-        mBuffers.clear();
-        mVertexArrays.clear();
-        SDL_GL_DestroyContext(mValue);
+
     }
 }

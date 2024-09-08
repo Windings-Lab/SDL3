@@ -22,7 +22,7 @@ namespace
         //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
         glPointSize(5.f);
 
-        auto shaderProgram = glContext.Programs[0].get();
+        auto shaderProgram = glContext.GetStorage().Programs[0].get();
         shaderProgram->Use();
     }
 }

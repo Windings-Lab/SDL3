@@ -6,11 +6,7 @@ module;
 export module wd.sdl.opengl.object.shader.Program;
 
 import wd.sdl.opengl.object.Object;
-
-export namespace wd::sdl::opengl::object
-{
-    struct Shader;
-}
+import wd.sdl.opengl.object.shader.Shader;
 
 export namespace wd::sdl::opengl::object::shader
 {

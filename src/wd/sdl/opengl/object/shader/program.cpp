@@ -11,8 +11,6 @@ module;
 
 module wd.sdl.opengl.object.shader.Program;
 
-import wd.sdl.opengl.object.shader.Shader;
-
 namespace wd::sdl::opengl::object::shader
 {
     Program::Program()
