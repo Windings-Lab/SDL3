@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <SDL_main.h>
 
-#include "opengl/gl.h"
+#include "wd/sdl/opengl/gl.h"
 
 import wd;
 
@@ -11,7 +11,7 @@ void DoSomething()
 
 }
 
-void CreateShaderProgram(wd::gl::Context& glContext)
+void CreateShaderProgram(wd::sdl::opengl::Context& glContext)
 {
     glContext.CreateProgram();
 
@@ -26,7 +26,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        wd::LogError("SDL failed to initialize!");
+        wd::sdl::LogError("SDL failed to initialize!");
 
         return SDL_APP_FAILURE;
     }
@@ -51,7 +51,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, const SDL_Event *event)
     {
     case SDL_EVENT_KEY_DOWN:
         {
-            return wd::keyboard::Handle_Input(event->key.key);
+            return wd::sdl::Handle_Input(event->key.key);
         }
     case SDL_EVENT_QUIT:
         {
