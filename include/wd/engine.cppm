@@ -22,7 +22,7 @@ export namespace wd
         auto GetGLContext() -> sdl::opengl::Context&;
 
         Engine(const int width, const int height);
-        ~Engine();
+        ~Engine() = default;
 
     private:
         sdl::opengl::Context mGLContext;

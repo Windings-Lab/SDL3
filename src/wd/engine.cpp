@@ -137,8 +137,4 @@ namespace wd
     {
         return mGLContext;
     }
-
-    Engine::~Engine()
-    {
-    }
 }

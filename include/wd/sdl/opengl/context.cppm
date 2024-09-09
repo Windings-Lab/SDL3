@@ -27,8 +27,8 @@ export namespace wd::sdl::opengl
 
         void UpdateViewport(int width, int height);
 
-        ~Context();
-        
+        ~Context() = default;
+
         SDL_GLContext operator->() const noexcept;
         SDL_GLContext operator*() const noexcept;
 

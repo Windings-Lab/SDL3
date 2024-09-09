@@ -19,6 +19,8 @@ export namespace wd::sdl::opengl::object
         auto CreateBuffer(GLenum type) -> Buffer*;
         auto CreateVertexArray() -> vertex::Array*;
 
+        ~Factory() = default;
+
     private:
         Storage mStorage;
     };

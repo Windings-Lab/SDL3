@@ -6,6 +6,8 @@ export namespace wd::math
     {
         double X;
         double Y;
+
+        ~Point2D() = default;
     };
 
     using Vertex2D = Point2D;

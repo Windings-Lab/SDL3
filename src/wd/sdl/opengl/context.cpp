@@ -92,11 +92,6 @@ namespace wd::sdl::opengl
         glViewport(0, 0, width, height);
     }
 
-    Context::~Context()
-    {
-
-    }
-
     SDL_GLContext Context::operator->() const noexcept
     {
         return *mValue.get();
