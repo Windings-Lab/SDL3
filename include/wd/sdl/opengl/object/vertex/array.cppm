@@ -7,14 +7,14 @@ export namespace wd::sdl::opengl::object::vertex
 {
     struct Array : public Object
     {
-        Array(Buffer& vbo, Buffer& ebo);
+        Array();
 
         void ReadVBO();
 
         void Enable();
         void Disable();
 
-        Buffer& VBO;
-        Buffer& EBO;
+        Buffer VBO;
+        Buffer EBO;
     };
 }

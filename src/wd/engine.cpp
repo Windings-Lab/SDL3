@@ -29,9 +29,7 @@ namespace
         //GL_ELEMENT_ARRAY_BUFFER
 
         // Creating Vertex Array Object
-        auto VBO = objectFactory.CreateBuffer(GL_ARRAY_BUFFER);
-        auto EBO = objectFactory.CreateBuffer(GL_ELEMENT_ARRAY_BUFFER);
-        auto VAO = objectFactory.CreateVertexArray(*VBO, *EBO);
+        auto VAO = objectFactory.CreateVertexArray();
 
         // ====== Buffering Vertex Buffer Object ======
         constexpr GLdouble vertices[] =

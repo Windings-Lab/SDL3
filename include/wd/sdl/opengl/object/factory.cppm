@@ -17,7 +17,7 @@ export namespace wd::sdl::opengl::object
         auto CreateShader(const GLchar* path, const GLenum type) -> Shader*;
         auto CreateProgram() -> shader::Program*;
         auto CreateBuffer(GLenum type) -> Buffer*;
-        auto CreateVertexArray(Buffer& vbo, Buffer& ebo) -> vertex::Array*;
+        auto CreateVertexArray() -> vertex::Array*;
 
     private:
         Storage mStorage;

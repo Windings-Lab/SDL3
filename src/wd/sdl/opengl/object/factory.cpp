@@ -40,9 +40,9 @@ namespace wd::sdl::opengl::object
         return bufferPtr;
     }
 
-    auto Factory::CreateVertexArray(Buffer& vbo, Buffer& ebo) -> vertex::Array*
+    auto Factory::CreateVertexArray() -> vertex::Array*
     {
-        auto vertexArray = std::make_unique<vertex::Array>(vbo, ebo);
+        auto vertexArray = std::make_unique<vertex::Array>();
         const auto vertexArrayPtr = vertexArray.get();
         mStorage.VertexArrays.emplace_back(std::move(vertexArray));
 
