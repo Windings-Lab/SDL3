@@ -12,17 +12,15 @@ export namespace wd::sdl
     public:
         Window(int width, int height);
 
-        auto Get() const -> SDL_Window*;
-
         int Width() const;
         int Height() const;
-
-        void SetWidth(int width);
-        void SetHeight(int height);
 
         void Update();
 
         ~Window();
+
+        SDL_Window* operator->() const noexcept;
+        SDL_Window* operator*() const noexcept;
 
     private:
         SDL_Window* mValue = nullptr;

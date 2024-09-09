@@ -12,7 +12,7 @@ export namespace wd::sdl::opengl::object
 {
     struct Factory : utility::NonMovable
     {
-        auto GetStorage() -> const Storage&;
+        auto GetStorage() const -> const Storage&;
 
         auto CreateShader(const GLchar* path, const GLenum type) -> Shader*;
         auto CreateProgram() -> shader::Program*;

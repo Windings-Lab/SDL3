@@ -40,7 +40,7 @@ namespace wd::sdl::opengl
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 #endif
 
-        SDL_GLContext context = SDL_GL_CreateContext(mWindow.Get());
+        SDL_GLContext context = SDL_GL_CreateContext(*mWindow);
         if (!context)
         {
             LogError(std::format("OpenGL Context failed to create!"), true);
@@ -66,7 +66,12 @@ namespace wd::sdl::opengl
         return mWindow;
     }
 
-    auto Context::GetStorage() -> const object::Storage&
+    auto Context::GetObjectFactory() -> object::Factory&
+    {
+        return mObjectFactory;
+    }
+
+    auto Context::GetStorage() const -> const object::Storage&
     {
         return mObjectFactory.GetStorage();
     }
@@ -80,56 +85,6 @@ namespace wd::sdl::opengl
         //glBindVertexArray(Engine->Shader[0]->VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         //glBindVertexArray(0);
-
-        SDL_GL_SwapWindow(mWindow.Get());
-    }
-
-    void Context::CreateProgram()
-    {
-        const auto program = mObjectFactory.CreateProgram();
-        auto vertShader = mObjectFactory.CreateShader("assets/shaders/vertex.vert", GL_VERTEX_SHADER);
-        auto fragShader = mObjectFactory.CreateShader("assets/shaders/fragment.frag", GL_FRAGMENT_SHADER);
-
-        program->Attach(vertShader);
-        program->Attach(fragShader);
-
-        //GL_ARRAY_BUFFER
-        //GL_ELEMENT_ARRAY_BUFFER
-
-        // Creating Vertex Array Object
-        auto VBO = mObjectFactory.CreateBuffer(GL_ARRAY_BUFFER);
-        auto EBO = mObjectFactory.CreateBuffer(GL_ELEMENT_ARRAY_BUFFER);
-        auto VAO = mObjectFactory.CreateVertexArray(*VBO, *EBO);
-
-        // ====== Buffering Vertex Buffer Object ======
-        constexpr GLdouble vertices[] =
-        {
-            0.5, 0.5, 0.0, // top right
-            0.5, -0.5, 0.0, // bottom right
-            -0.5, -0.5, 0.0, // bottom left
-            -0.5, 0.5, 0.0 // top left
-        };
-        VAO->VBO.Bind();
-        VAO->VBO.BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
-        // ====== Buffering Vertex Buffer Object ======
-
-        // ====== Buffering Element Buffer Object ======
-        constexpr GLuint vertexIndices[] =
-        {
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
-        };
-        VAO->EBO.Bind();
-        VAO->EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
-        // ====== Buffering Element Buffer Object ======
-
-        VAO->ReadVBO();
-        VAO->Enable();
-
-        // After using glVertexAttribPointer
-        VAO->VBO.Unbind();
-
-        program->Use();
     }
 
     void Context::UpdateViewport(const int width, const int height)
@@ -140,5 +95,15 @@ namespace wd::sdl::opengl
     Context::~Context()
     {
 
+    }
+
+    SDL_GLContext Context::operator->() const noexcept
+    {
+        return *mValue.get();
+    }
+
+    SDL_GLContext Context::operator*() const noexcept
+    {
+        return *mValue.get();
     }
 }

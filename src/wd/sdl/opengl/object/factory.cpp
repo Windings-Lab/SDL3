@@ -7,7 +7,7 @@ module wd.sdl.opengl.object.Factory;
 
 namespace wd::sdl::opengl::object
 {
-    auto Factory::GetStorage() -> const Storage&
+    auto Factory::GetStorage() const -> const Storage&
     {
         return mStorage;
     }

@@ -23,11 +23,6 @@ namespace wd::sdl
         mValue = window;
     }
 
-    auto Window::Get() const -> SDL_Window*
-    {
-        return mValue;
-    }
-
     int Window::Width() const
     {
         return mWidth;
@@ -38,16 +33,6 @@ namespace wd::sdl
         return mHeight;
     }
 
-    void Window::SetWidth(const int width)
-    {
-        mWidth = width;
-    }
-
-    void Window::SetHeight(const int height)
-    {
-        mHeight = height;
-    }
-
     void Window::Update()
     {
         SDL_GetWindowSize(mValue, &mWidth, &mHeight);
@@ -56,5 +41,15 @@ namespace wd::sdl
     Window::~Window()
     {
         SDL_DestroyWindow(mValue);
+    }
+
+    SDL_Window* Window::operator->() const noexcept
+    {
+        return mValue;
+    }
+
+    SDL_Window* Window::operator*() const noexcept
+    {
+        return mValue;
     }
 }
