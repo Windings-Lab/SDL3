@@ -1,8 +1,8 @@
 module;
 
 #include <format>
-#include <SDL_filesystem.h>
-#include <SDL_iostream.h>
+#include <SDL3/SDL_filesystem.h>
+#include <SDL3/SDL_iostream.h>
 
 #include "wd/sdl/opengl/gl.h"
 
@@ -40,9 +40,9 @@ namespace wd::sdl::opengl::object
 
     void Shader::Compile()
     {
-        if(SDL_GetPathInfo(Path, nullptr) == -1)
+        if(!SDL_GetPathInfo(Path, nullptr))
         {
-            sdl::LogError(SDL_GetError(), true);
+            LogError(SDL_GetError(), true);
         }
 
         const char* code = static_cast<const char*>(SDL_LoadFile(Path, nullptr));
@@ -51,7 +51,7 @@ namespace wd::sdl::opengl::object
 
         if(!CompileSuccess(*this))
         {
-            sdl::LogError(std::format("Failed to compile shader"), true);
+            LogError(std::format("Failed to compile shader"), true);
         }
     }
 

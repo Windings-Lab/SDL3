@@ -1,7 +1,7 @@
 module;
 
-#include <SDL_init.h>
-#include <SDL_events.h>
+#include <SDL3/SDL_init.h>
+#include <SDL3/SDL_events.h>
 
 export module wd.Engine;
 

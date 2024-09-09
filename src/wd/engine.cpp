@@ -1,8 +1,8 @@
 module;
 
-#include <SDL_init.h>
+#include <SDL3/SDL_init.h>
 #include <format>
-#include <SDL_log.h>
+#include <SDL3/SDL_log.h>
 
 #include "wd/sdl/opengl/gl.h"
 
@@ -79,7 +79,7 @@ namespace wd
 
     auto Engine::OnInit() -> SDL_AppResult
     {
-        if(SDL_Init(SDL_INIT_VIDEO) != 0)
+        if(!SDL_Init(SDL_INIT_VIDEO))
         {
             sdl::LogError(std::format("SDL failed to initialize!"));
             return SDL_APP_FAILURE;

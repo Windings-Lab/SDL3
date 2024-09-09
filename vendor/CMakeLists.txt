@@ -1,14 +1,17 @@
-add_subdirectory(SDL)
-add_subdirectory(SDL_image)
-
-add_library(vendor INTERFACE)
-target_link_libraries(vendor INTERFACE
-	SDL3::SDL3
-	SDL3_image::SDL3_image
+target_compile_definitions(WD_SDL PUBLIC
+    SDL_MAIN_USE_CALLBACKS
 )
-target_link_libraries(WD_SDL PUBLIC vendor)
 
-target_include_directories(WD_SDL
-	PUBLIC
-	$<BUILD_INTERFACE:${SDL3_SOURCE_DIR}/include/SDL3>
+add_subdirectory(SDL EXCLUDE_FROM_ALL)
+add_subdirectory(SDL_image EXCLUDE_FROM_ALL)
+
+target_compile_options(SDL3-static PUBLIC
+    $<$<CXX_COMPILER_ID:Clang>:
+        -Wno-float-conversion
+        -Wno-undef
+        -Wno-unused-parameter
+        -Wno-unneeded-internal-declaration
+    >
 )
+
+target_link_libraries(WD_SDL PUBLIC SDL3-static)

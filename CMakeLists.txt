@@ -41,6 +41,7 @@ target_compile_options(WD_SDL PRIVATE
 	 >
 
     $<$<CXX_COMPILER_ID:Clang>:
+		-Wno-unused-parameter
         $<$<CONFIG:Debug>:
             -march=native
             -O0
@@ -53,8 +54,8 @@ target_compile_options(WD_SDL PRIVATE
 
 target_link_options(WD_SDL PRIVATE
 	$<$<CXX_COMPILER_ID:Clang>:
-		-static-libgcc
-		-static-libstdc++
+		-std=c++23
+		-stdlib=libstdc++
 	>
 )
 
@@ -66,7 +67,6 @@ target_include_directories(WD_SDL
 )
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++23")
 	find_package(Boost)
 else()
 	find_package(Boost COMPONENTS multi_index REQUIRED)

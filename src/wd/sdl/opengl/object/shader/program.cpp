@@ -26,7 +26,7 @@ namespace wd::sdl::opengl::object::shader
 
         const auto error = glGetError();
         if(error != GL_NO_ERROR)
-            sdl::LogError(std::format("Program was not deleted"));
+            LogError(std::format("Program was not deleted"));
     }
 
     void Program::Use() const noexcept
@@ -39,7 +39,7 @@ namespace wd::sdl::opengl::object::shader
         glAttachShader(ID, shader->ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            sdl::LogError(std::format("Failed to attach shader"), true);
+            LogError(std::format("Failed to attach shader"), true);
         }
 
         glLinkProgram(ID);
@@ -68,7 +68,7 @@ namespace wd::sdl::opengl::object::shader
         glDetachShader(ID, shader.ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            sdl::LogError(std::format("Failed to detach shader"), true);
+            LogError(std::format("Failed to detach shader"), true);
         }
     }
 }

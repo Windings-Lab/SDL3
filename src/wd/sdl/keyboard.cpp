@@ -1,8 +1,8 @@
 module;
 
-#include <SDL_init.h>
-#include <SDL_keycode.h>
-#include <SDL_log.h>
+#include <SDL3/SDL_init.h>
+#include <SDL3/SDL_keycode.h>
+#include <SDL3/SDL_log.h>
 
 module wd.sdl.Keyboard;
 
