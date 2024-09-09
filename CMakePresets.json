@@ -72,7 +72,7 @@
         "SDL_AVX2": "OFF",
         "SDL_AUDIO": "OFF",
         "SDL_AVX512F": "OFF",
-        "SDL_LIBC": "OFF",
+        "SDL_LIBC": "ON",
         "SDL_RENDER_METAL": "OFF",
         "SDL_RENDER": "OFF",
         "SDL_DIALOG": "OFF"
