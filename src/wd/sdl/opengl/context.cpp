@@ -13,7 +13,7 @@ namespace
     void GLAD_API_PTR opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
     {
         if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
-        wd::sdl::LogError(std::format("OpenGL error Message: {0}", message));
+        wd::sdl::Assert(std::format("OpenGL error Message: {0}", message));
     }
 }
 #endif
@@ -43,13 +43,13 @@ namespace wd::sdl::opengl
         SDL_GLContext context = SDL_GL_CreateContext(*mWindow);
         if (!context)
         {
-            LogError(std::format("OpenGL Context failed to create!"), true);
+            Assert(std::format("OpenGL Context failed to create!"));
         }
         mValue.reset(&context);
 
         if (!gladLoadGL(SDL_GL_GetProcAddress))
         {
-            LogError(std::format("GLAD failed to initialize"), true);
+            Assert(std::format("GLAD failed to initialize"));
         }
 
         UpdateViewport(mWindow.Width(), mWindow.Height());

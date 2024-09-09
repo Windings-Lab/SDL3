@@ -26,7 +26,7 @@ namespace wd::sdl::opengl::object::shader
 
         const auto error = glGetError();
         if(error != GL_NO_ERROR)
-            LogError(std::format("Program was not deleted"));
+            Assert(std::format("Program was not deleted"));
     }
 
     void Program::Use() const noexcept
@@ -34,41 +34,45 @@ namespace wd::sdl::opengl::object::shader
         glUseProgram(ID);
     }
 
+    void Program::Link() const noexcept
+    {
+        glLinkProgram(ID);
+    }
+
     void Program::Attach(Shader* shader)
     {
+        if(!shader) return;
+
         glAttachShader(ID, shader->ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            LogError(std::format("Failed to attach shader"), true);
+            Assert(std::format("Failed to attach shader"));
         }
-
-        glLinkProgram(ID);
 
         mShaders.emplace_back(shader);
     }
 
     auto Program::DetachBy(GLuint id) -> Shader*
     {
-        const auto [first, last] = std::ranges::remove_if(mShaders, [id](Shader* shader)
+        const auto pte = std::ranges::remove_if(mShaders, [id](Shader* shader)
         {
             return shader->ID == id;
         });
+        if(pte.size() == 0)
+        {
+            Assert(std::format("Failed to find shader to detach by ID"));
+        }
 #if defined(__clang__)
-        const auto shader = *mShaders.erase(first, last).base();
+        const auto shader = *mShaders.erase(pte.begin(), pte.end()).base();
 #elif defined(_MSC_VER)
-        const auto shader = *mShaders.erase(first, last);
+        const auto shader = *mShaders.erase(pte.begin(), pte.end());
 #endif
-        Detach(*shader);
-
-        return shader;
-    }
-
-    void Program::Detach(const Shader& shader)
-    {
-        glDetachShader(ID, shader.ID);
+        glDetachShader(ID, shader->ID);
         if(glGetError() != GL_NO_ERROR)
         {
-            LogError(std::format("Failed to detach shader"), true);
+            Assert(std::format("Failed to detach shader"));
         }
+
+        return shader;
     }
 }

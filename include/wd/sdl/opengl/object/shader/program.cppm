@@ -16,6 +16,7 @@ export namespace wd::sdl::opengl::object::shader
     {
     public:
         void Use() const noexcept;
+        void Link() const noexcept;
         void Attach(Shader* shader);
         auto DetachBy(GLuint id) -> Shader*;
 
@@ -24,7 +25,6 @@ export namespace wd::sdl::opengl::object::shader
         virtual ~Program() override;
 
     private:
-        auto Detach(const Shader& shader) -> void;
         shader_container_ptr mShaders;
     };
 }

@@ -24,6 +24,7 @@ namespace
 
         program->Attach(vertShader);
         program->Attach(fragShader);
+        program->Link();
 
         //GL_ARRAY_BUFFER
         //GL_ELEMENT_ARRAY_BUFFER
@@ -79,11 +80,12 @@ namespace wd
     {
         if(!SDL_Init(SDL_INIT_VIDEO))
         {
-            sdl::LogError(std::format("SDL failed to initialize!"));
+            sdl::Assert(std::format("SDL failed to initialize!"));
             return SDL_APP_FAILURE;
         }
 
         CreateShaderProgram(mGLContext);
+        DoSomething();
 
         return SDL_APP_CONTINUE;
     }

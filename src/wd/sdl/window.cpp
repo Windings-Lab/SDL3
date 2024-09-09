@@ -17,7 +17,7 @@ namespace wd::sdl
             , SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
         if (!window)
         {
-            LogError(std::format("Failed to create window!"), true);
+            Assert(std::format("Failed to create window!"));
         }
 
         mValue = window;

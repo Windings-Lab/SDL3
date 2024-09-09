@@ -23,7 +23,7 @@ namespace wd::sdl::opengl
         const auto error = glGetError();
         if(error || ID == 0)
         {
-            LogError(std::format("{0} is not created!", typeid(*this).name()), true);
+            Assert(std::format("{0} is not created!", typeid(*this).name()));
         }
     }
 }

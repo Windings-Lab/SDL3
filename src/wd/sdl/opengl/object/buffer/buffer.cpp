@@ -21,7 +21,7 @@ namespace wd::sdl::opengl::object
         glNamedBufferData(ID, size, data, usage);
         if (const auto error = glGetError())
         {
-            LogError(std::format("Failed to buffer data"), true);
+            Assert(std::format("Failed to buffer data"));
         }
     }
 
@@ -30,7 +30,7 @@ namespace wd::sdl::opengl::object
         glBindBuffer(mType, ID);
         if (const auto error = glGetError())
         {
-            LogError(std::format("Failed to bind buffer"), true);
+            Assert(std::format("Failed to bind buffer"));
         }
     }
 
@@ -39,7 +39,7 @@ namespace wd::sdl::opengl::object
         glBindBuffer(mType, 0);
         if (const auto error = glGetError())
         {
-            LogError(std::format("Failed to unbind buffer"), true);
+            Assert(std::format("Failed to unbind buffer"));
         }
     }
 

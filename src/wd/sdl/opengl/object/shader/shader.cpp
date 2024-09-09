@@ -20,7 +20,7 @@ namespace
             constexpr int bufSize = 512;
             char infolog[bufSize];
             glGetShaderInfoLog(shader.ID, bufSize, nullptr, infolog);
-            wd::sdl::LogError(std::format("Shader compilation failed:\n"
+            wd::sdl::Assert(std::format("Shader compilation failed:\n"
                                      "Info: %s\n", infolog,
                                      "Path: %s\n", shader.Path,
                                      "Type: %s", shader.Type()));
@@ -42,7 +42,7 @@ namespace wd::sdl::opengl::object
     {
         if(!SDL_GetPathInfo(Path, nullptr))
         {
-            LogError(SDL_GetError(), true);
+            Assert(SDL_GetError());
         }
 
         const char* code = static_cast<const char*>(SDL_LoadFile(Path, nullptr));
@@ -51,7 +51,7 @@ namespace wd::sdl::opengl::object
 
         if(!CompileSuccess(*this))
         {
-            LogError(std::format("Failed to compile shader"), true);
+            Assert(std::format("Failed to compile shader"));
         }
     }
 
