@@ -1,0 +1,53 @@
+@startuml
+
+package "wd" {
+    package math
+    package utility {
+        [Constructors] #Yellow
+    }
+    package sdl {
+        [Keyboard]
+        [Log] #Yellow
+        [Window]
+        package opengl {
+            package "object" {
+                [Object]
+                [Buffer]
+                [Factory]
+                [Storage]
+                package vertex {
+                    [Array]
+                    [Array] ..> [Object]
+                    vertex .left.> [Buffer]
+                }
+                package shader {
+                    [Shader]
+                    [Program]
+                    [Shader] ..> [Object]
+                    [Program] ..> [Object]
+                    [Program] .left.> [Shader]
+                }
+                [Factory] -right-> [Storage]
+                [Factory] ..> creator_node
+                [Storage] ..> creator_node
+                [Buffer] ..> [Object]
+                creator_node --> [Buffer]
+                creator_node --> shader
+                creator_node --> vertex
+                m_object --> creator_node
+                m_object --> [Factory]
+                m_object --> [Storage]
+            }
+            [Context] --> m_object
+            [Context] --> [Window]
+            m_opengl --> [Context]
+        }
+        m_sdl --> [Keyboard]
+        m_sdl --> m_opengl
+    }
+    m_wd --> [Engine]
+    m_wd --> math
+    [Engine] --> m_sdl
+}
+
+@enduml

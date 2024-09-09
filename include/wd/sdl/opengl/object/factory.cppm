@@ -4,7 +4,8 @@ module;
 
 export module wd.sdl.opengl.object.Factory;
 
-export import wd.sdl.opengl.object.Storage;
+import wd.sdl.opengl.object.creator_node;
+import wd.sdl.opengl.object.Storage;
 import wd.utility.Constructors;
 
 export namespace wd::sdl::opengl::object
