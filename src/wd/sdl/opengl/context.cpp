@@ -1,8 +1,11 @@
 module;
 
 #include <SDL3/SDL_video.h>
-#include <format>
 #include <memory>
+
+#include <SDL3/SDL_assert.h>
+#include <SDL3/SDL_log.h>
+
 #include "wd/sdl/opengl/gl.h"
 
 module wd.sdl.opengl.Context;
@@ -13,7 +16,7 @@ namespace
     void GLAD_API_PTR opengl_debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user)
     {
         if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
-        wd::sdl::Assert(std::format("OpenGL error Message: {0}", message));
+        SDL_LogDebug(SDL_LOG_PRIORITY_DEBUG, "OpenGL error Message: %s", message);
     }
 }
 #endif
@@ -41,16 +44,11 @@ namespace wd::sdl::opengl
 #endif
 
         SDL_GLContext context = SDL_GL_CreateContext(*mWindow);
-        if (!context)
-        {
-            Assert(std::format("OpenGL Context failed to create!"));
-        }
+        SDL_assert(context);
+
         mValue.reset(&context);
 
-        if (!gladLoadGL(SDL_GL_GetProcAddress))
-        {
-            Assert(std::format("GLAD failed to initialize"));
-        }
+        SDL_assert(gladLoadGL(SDL_GL_GetProcAddress));
 
         UpdateViewport(mWindow.Width(), mWindow.Height());
 #ifndef NDEBUG

@@ -1,7 +1,8 @@
 module;
 
-#include <format>
 #include <SDL3/SDL_video.h>
+
+#include <SDL3/SDL_assert.h>
 
 module wd.sdl.Window;
 
@@ -15,10 +16,7 @@ namespace wd::sdl
             , width
             , height
             , SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
-        if (!window)
-        {
-            Assert(std::format("Failed to create window!"));
-        }
+        SDL_assert(window);
 
         mValue = window;
     }

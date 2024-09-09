@@ -7,7 +7,6 @@ export module wd.sdl.opengl.Context;
 
 export import wd.sdl.Window;
 import wd.sdl.opengl.object;
-import wd.sdl.Log;
 import wd.utility.Constructors;
 
 export typedef struct SDL_GLContextState* SDL_GLContext;

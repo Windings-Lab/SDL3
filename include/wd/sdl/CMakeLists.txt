@@ -4,7 +4,6 @@ target_sources(WD_SDL
     FILES
     m_sdl.cppm
     keyboard.cppm
-    log.cppm
     window.cppm
 )
 

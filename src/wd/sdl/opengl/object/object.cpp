@@ -1,6 +1,7 @@
 module;
 
-#include <format>
+#include <SDL3/SDL_assert.h>
+
 #include "wd/sdl/opengl/gl.h"
 
 module wd.sdl.opengl.object.Object;
@@ -20,10 +21,6 @@ namespace wd::sdl::opengl
         : ID(id)
         , mType(type)
     {
-        const auto error = glGetError();
-        if(error || ID == 0)
-        {
-            Assert(std::format("{0} is not created!", typeid(*this).name()));
-        }
+        SDL_assert(!(glGetError() || ID == 0));
     }
 }

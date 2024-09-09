@@ -6,7 +6,6 @@ module;
 export module wd.Engine;
 
 export import wd.sdl;
-import wd.sdl.Log;
 import wd.utility.Constructors;
 
 export namespace wd

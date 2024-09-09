@@ -3,6 +3,8 @@ module;
 #include <format>
 #include <SDL3/SDL_filesystem.h>
 #include <SDL3/SDL_iostream.h>
+#include <SDL3/SDL_log.h>
+#include <SDL3/SDL_assert.h>
 
 #include "wd/sdl/opengl/gl.h"
 
@@ -10,7 +12,7 @@ module wd.sdl.opengl.object.shader.Shader;
 
 namespace
 {
-    auto CompileSuccess(const wd::sdl::opengl::object::Shader& shader) -> bool
+    bool CompileSuccess(const wd::sdl::opengl::object::Shader& shader)
     {
         // Check for successful compilation
         int success;
@@ -20,10 +22,11 @@ namespace
             constexpr int bufSize = 512;
             char infolog[bufSize];
             glGetShaderInfoLog(shader.ID, bufSize, nullptr, infolog);
-            wd::sdl::Assert(std::format("Shader compilation failed:\n"
-                                     "Info: %s\n", infolog,
-                                     "Path: %s\n", shader.Path,
-                                     "Type: %s", shader.Type()));
+            const auto log = std::format("Shader compilation failed:\n"
+                                         "Info: %s\n", infolog,
+                                         "Path: %s\n", shader.Path,
+                                         "Type: %s", shader.Type());
+            SDL_LogDebug(SDL_LOG_PRIORITY_DEBUG, "%s", log.c_str());
         }
 
         return success;
@@ -40,19 +43,13 @@ namespace wd::sdl::opengl::object
 
     void Shader::Compile()
     {
-        if(!SDL_GetPathInfo(Path, nullptr))
-        {
-            Assert(SDL_GetError());
-        }
+        SDL_assert(SDL_GetPathInfo(Path, nullptr));
 
         const char* code = static_cast<const char*>(SDL_LoadFile(Path, nullptr));
         glShaderSource(ID, 1, &code, nullptr);
         glCompileShader(ID);
 
-        if(!CompileSuccess(*this))
-        {
-            Assert(std::format("Failed to compile shader"));
-        }
+        SDL_assert(CompileSuccess(*this));
     }
 
     Shader::~Shader()

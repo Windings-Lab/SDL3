@@ -4,7 +4,6 @@ module;
 
 export module wd.sdl.opengl.object.Object;
 
-export import wd.sdl.Log;
 import wd.utility.Constructors;
 
 export namespace wd::sdl::opengl
