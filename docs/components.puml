@@ -7,7 +7,6 @@ package "wd" {
     }
     package sdl {
         [Keyboard]
-        [Log] #Yellow
         [Window]
         package opengl {
             package "object" {
