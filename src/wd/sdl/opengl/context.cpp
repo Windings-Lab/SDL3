@@ -59,17 +59,17 @@ namespace wd::sdl::opengl
 #endif
     }
 
-    auto Context::GetWindow() -> Window&
+    auto Context::GetWindow() noexcept -> Window&
     {
         return mWindow;
     }
 
-    auto Context::GetObjectFactory() -> object::Factory&
+    auto Context::GetObjectFactory() noexcept -> object::Factory&
     {
         return mObjectFactory;
     }
 
-    auto Context::GetStorage() const -> const object::Storage&
+    auto Context::GetStorage() const noexcept -> const object::Storage&
     {
         return mObjectFactory.GetStorage();
     }
@@ -85,7 +85,7 @@ namespace wd::sdl::opengl
         //glBindVertexArray(0);
     }
 
-    void Context::UpdateViewport(const int width, const int height)
+    void Context::UpdateViewport(const int width, const int height) noexcept
     {
         glViewport(0, 0, width, height);
     }

@@ -9,10 +9,10 @@ export namespace wd::sdl::opengl::object::vertex
     {
         Array();
 
-        void ReadVBO();
+        void ReadVBO() noexcept;
 
-        void Enable();
-        void Disable();
+        void Enable() noexcept;
+        void Disable() noexcept;
 
         Buffer VBO;
         Buffer EBO;

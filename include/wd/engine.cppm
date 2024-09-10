@@ -17,8 +17,8 @@ export namespace wd
         auto OnEvent(const SDL_Event* event) -> SDL_AppResult;
         auto OnIterate() -> SDL_AppResult;
 
-        auto GetWindow() -> sdl::Window&;
-        auto GetGLContext() -> sdl::opengl::Context&;
+        auto GetWindow() noexcept -> sdl::Window&;
+        auto GetGLContext() noexcept -> sdl::opengl::Context&;
 
         Engine(const int width, const int height);
         ~Engine() = default;

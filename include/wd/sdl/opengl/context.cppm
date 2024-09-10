@@ -18,13 +18,13 @@ export namespace wd::sdl::opengl
     public:
         explicit Context(const int width, const int height);
 
-        auto GetWindow() -> Window&;
-        auto GetObjectFactory() -> object::Factory&;
-        auto GetStorage() const -> const object::Storage&;
+        auto GetWindow() noexcept -> Window&;
+        auto GetObjectFactory() noexcept -> object::Factory&;
+        auto GetStorage() const noexcept -> const object::Storage&;
 
         void Iterate();
 
-        void UpdateViewport(int width, int height);
+        void UpdateViewport(int width, int height) noexcept;
 
         ~Context() = default;
 

@@ -8,7 +8,7 @@ module wd.sdl.Keyboard;
 
 namespace wd::sdl
 {
-    SDL_AppResult Handle_Input(const SDL_Keycode keycode)
+    SDL_AppResult Handle_Input(const SDL_Keycode keycode) noexcept
     {
         if(keycode == SDLK_ESCAPE)
         {

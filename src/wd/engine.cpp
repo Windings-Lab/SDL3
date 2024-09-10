@@ -126,12 +126,12 @@ namespace wd
         return SDL_APP_CONTINUE;
     }
 
-    auto Engine::GetWindow() -> sdl::Window&
+    auto Engine::GetWindow() noexcept -> sdl::Window&
     {
         return mGLContext.GetWindow();
     }
 
-    auto Engine::GetGLContext() -> sdl::opengl::Context&
+    auto Engine::GetGLContext() noexcept -> sdl::opengl::Context&
     {
         return mGLContext;
     }

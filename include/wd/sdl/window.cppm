@@ -11,10 +11,10 @@ export namespace wd::sdl
     public:
         Window(int width, int height);
 
-        int Width() const;
-        int Height() const;
+        int Width() const noexcept;
+        int Height() const noexcept;
 
-        void Update();
+        void Update() noexcept;
 
         ~Window();
 

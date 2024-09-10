@@ -21,17 +21,17 @@ namespace wd::sdl
         mValue = window;
     }
 
-    int Window::Width() const
+    int Window::Width() const noexcept
     {
         return mWidth;
     }
 
-    int Window::Height() const
+    int Window::Height() const noexcept
     {
         return mHeight;
     }
 
-    void Window::Update()
+    void Window::Update() noexcept
     {
         SDL_GetWindowSize(mValue, &mWidth, &mHeight);
     }

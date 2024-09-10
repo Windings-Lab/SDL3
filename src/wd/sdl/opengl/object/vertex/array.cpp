@@ -19,18 +19,18 @@ namespace wd::sdl::opengl::object::vertex
         glBindVertexArray(ID);
     }
 
-    void Array::ReadVBO()
+    void Array::ReadVBO() noexcept
     {
         constexpr auto axes = 3;
         glVertexAttribPointer(0, axes, GL_DOUBLE, GL_FALSE, axes * sizeof(double), nullptr);
     }
 
-    void Array::Enable()
+    void Array::Enable() noexcept
     {
         glEnableVertexArrayAttrib(ID, 0);
     }
 
-    void Array::Disable()
+    void Array::Disable() noexcept
     {
         glDisableVertexArrayAttrib(ID, 0);
     }
