@@ -87,7 +87,6 @@
       },
       "cacheVariables": {
         "CMAKE_COMMAND": "$env{GNU_PATH}/cmake.exe",
-        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "$env{GNU_PATH}/clang.exe",
         "CMAKE_CXX_COMPILER": "$env{GNU_PATH}/clang++.exe"
       },
@@ -140,6 +139,30 @@
     {
       "name": "msvc-release",
       "inherits": "msvc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "wsl-clang",
+      "inherits": "default",
+      "hidden": true,
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "WSL-Clang-Perf-Profiler"
+        }
+      }
+    },
+    {
+      "name": "wsl-clang-debug",
+      "inherits": "wsl-clang",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "wsl-clang-release",
+      "inherits": "wsl-clang",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }

@@ -41,7 +41,8 @@ target_compile_options(WD_SDL PRIVATE
 	 >
 
     $<$<CXX_COMPILER_ID:Clang>:
-		-Wno-unused-parameter
+		-fno-omit-frame-pointer
+		-mno-omit-leaf-frame-pointer
         $<$<CONFIG:Debug>:
             -march=native
             -O0
@@ -77,4 +78,5 @@ target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES} ${Boost_HEADERS_LIBRARY})
 add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(vendor)
-add_subdirectory(assets)
+
+file(COPY assets/ DESTINATION ${CMAKE_OUTPUT_DIRECTORY}/assets)

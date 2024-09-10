@@ -1,5 +1,7 @@
 # SDL3 Development
 
+WSL CLang not fully supported
+
 ## Dependencies
 
 * Use `conan` package manager
