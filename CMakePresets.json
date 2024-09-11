@@ -1,193 +1,104 @@
 {
-  "version": 6,
-  "configurePresets": [
-    {
-      "name": "default",
-      "hidden": true,
-      "generator": "Ninja",
-      "installDir": "${sourceDir}/install/${presetName}",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "toolset": {
-        "value": "host=x64",
-        "strategy": "external"
-      },
-      "environment": {
-        "NINJA_STATUS": "%p [%es] (%f/%t)  -"
-      },
-      "cacheVariables": {
-        "BUILD_SHARED_LIBS": "OFF",
+	"version": 6,
+	"configurePresets":
+	[
+		{
+			"name": "default",
+			"hidden": true,
+			"generator": "Ninja",
+			"installDir": "${sourceDir}/install/${presetName}",
+			"binaryDir": "${sourceDir}/build/${presetName}",
+			"architecture":
+			{
+				"value": "x64",
+				"strategy": "external"
+			},
+			"toolset":
+			{
+				"value": "host=x64",
+				"strategy": "external"
+			},
+			"environment":
+			{
+				"NINJA_STATUS": "%p [%es] (%f/%t)  -"
+			},
+			"cacheVariables":
+			{
+				"BUILD_SHARED_LIBS": "OFF",
 
-        "SDLIMAGE_AVIF_SHARED": "OFF",
-        "SDLIMAGE_WEBP": "OFF",
-        "SDLIMAGE_XCF": "OFF",
-        "SDLIMAGE_TGA": "OFF",
-        "SDLIMAGE_TIF": "OFF",
-        "SDLIMAGE_JPG_SAVE": "OFF",
-        "SDLIMAGE_BACKEND_STB": "OFF",
-        "SDLIMAGE_BMP": "OFF",
-        "SDLIMAGE_JPG": "OFF",
-        "SDLIMAGE_AVIF_SAVE": "OFF",
-        "SDLIMAGE_AVIF": "OFF",
-        "SDLIMAGE_SVG": "OFF",
-        "SDLIMAGE_LBM": "OFF",
-        "SDLIMAGE_PCX": "OFF",
-        "SDLIMAGE_DEPS_SHARED": "OFF",
-        "SDLIMAGE_PNM": "OFF",
-        "SDLIMAGE_QOI": "OFF",
-        "SDLIMAGE_WEBP_SHARED": "OFF",
-        "SDLIMAGE_TIF_SHARED": "OFF",
-        "SDLIMAGE_GIF": "OFF",
-        "SDLIMAGE_XPM": "OFF",
-        "SDLIMAGE_XV": "OFF",
-        "SDLIMAGE_VENDORED": "OFF",
+				"SDLIMAGE_AVIF_SHARED": "OFF",
+				"SDLIMAGE_WEBP": "OFF",
+				"SDLIMAGE_XCF": "OFF",
+				"SDLIMAGE_TGA": "OFF",
+				"SDLIMAGE_TIF": "OFF",
+				"SDLIMAGE_JPG_SAVE": "OFF",
+				"SDLIMAGE_BACKEND_STB": "OFF",
+				"SDLIMAGE_BMP": "OFF",
+				"SDLIMAGE_JPG": "OFF",
+				"SDLIMAGE_AVIF_SAVE": "OFF",
+				"SDLIMAGE_AVIF": "OFF",
+				"SDLIMAGE_SVG": "OFF",
+				"SDLIMAGE_LBM": "OFF",
+				"SDLIMAGE_PCX": "OFF",
+				"SDLIMAGE_DEPS_SHARED": "OFF",
+				"SDLIMAGE_PNM": "OFF",
+				"SDLIMAGE_QOI": "OFF",
+				"SDLIMAGE_WEBP_SHARED": "OFF",
+				"SDLIMAGE_TIF_SHARED": "OFF",
+				"SDLIMAGE_GIF": "OFF",
+				"SDLIMAGE_XPM": "OFF",
+				"SDLIMAGE_XV": "OFF",
+				"SDLIMAGE_VENDORED": "OFF",
 
-        "SDL_STATIC": "ON",
-        "SDL_SHARED": "OFF",
-        "SDL_HIDAPI_LIBUSB": "OFF",
-        "SDL_DUMMYVIDEO": "OFF",
-        "SDL_HIDAPI_LIBUSB_SHARED": "OFF",
-        "SDL_DIRECTX": "OFF",
-        "SDL_VULKAN": "OFF",
-        "SDL_HIDAPI": "OFF",
-        "SDL_AVX": "OFF",
-        "SDL_ASSEMBLY": "OFF",
-        "SDL_POWER": "OFF",
-        "SDL_LIBUDEV": "OFF",
-        "SDL_VIRTUAL_JOYSTICK": "OFF",
-        "SDL_OFFSCREEN": "OFF",
-        "SDL_XINPUT": "OFF",
-        "SDL_VIDEO": "ON",
-        "SDL_GCC_ATOMICS": "OFF",
-        "SDL_CAMERA": "OFF",
-        "SDL_HAPTIC": "OFF",
-        "SDL_JOYSTICK": "OFF",
-        "SDL_TEST_LIBRARY": "OFF",
-        "SDL_HIDAPI_JOYSTICK": "OFF",
-        "SDL_SENSOR": "OFF",
-        "SDL_DISABLE_INSTALL": "ON",
-        "SDL_AVX2": "OFF",
-        "SDL_AUDIO": "OFF",
-        "SDL_AVX512F": "OFF",
-        "SDL_LIBC": "ON",
-        "SDL_RENDER_METAL": "OFF",
-        "SDL_RENDER": "OFF",
-        "SDL_DIALOG": "OFF"
-      }
-    },
-    {
-      "name": "mingw-clang",
-      "inherits": "default",
-      "hidden": true,
-      "environment": {
-        "GNU_PATH": "D:/ImpPrograms/msys64/mingw64/bin"
-      },
-      "cacheVariables": {
-        "CMAKE_COMMAND": "$env{GNU_PATH}/cmake.exe",
-        "CMAKE_C_COMPILER": "$env{GNU_PATH}/clang.exe",
-        "CMAKE_CXX_COMPILER": "$env{GNU_PATH}/clang++.exe"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "MinGW"
-        }
-      }
-    },
-    {
-      "name": "mingw-clang-debug",
-      "inherits": "mingw-clang",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "mingw-clang-release",
-      "inherits": "mingw-clang",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "msvc",
-      "inherits": "default",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "cmake/wd_conan_provider.cmake",
-        "CMAKE_C_COMPILER": "cl",
-        "CMAKE_CXX_COMPILER": "cl"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "enableMicrosoftCodeAnalysis": true,
-          "intelliSenseMode": "windows-msvc-x64"
-        },
-        "jetbrains.com/clion": {
-          "toolchain": "Visual Studio"
-        }
-      }
-    },
-    {
-      "name": "msvc-debug",
-      "inherits": "msvc",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "msvc-release",
-      "inherits": "msvc",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "wsl-clang",
-      "inherits": "default",
-      "hidden": true,
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "WSL-Clang-Perf-Profiler"
-        }
-      }
-    },
-    {
-      "name": "wsl-clang-debug",
-      "inherits": "wsl-clang",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "wsl-clang-release",
-      "inherits": "wsl-clang",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "mingw-clang-debug-verbose",
-      "configurePreset": "mingw-clang-debug",
-      "verbose": true
-    },
-    {
-      "name": "mingw-clang-release-verbose",
-      "configurePreset": "mingw-clang-release",
-      "verbose": true
-    },
-    {
-      "name": "msvc-debug-verbose",
-      "configurePreset": "msvc-debug",
-      "verbose": true
-    },
-    {
-      "name": "msvc-release-verbose",
-      "configurePreset": "msvc-release",
-      "verbose": true
-    }
-  ]
+				"SDL_STATIC": "ON",
+				"SDL_SHARED": "OFF",
+				"SDL_HIDAPI_LIBUSB": "OFF",
+				"SDL_DUMMYVIDEO": "OFF",
+				"SDL_HIDAPI_LIBUSB_SHARED": "OFF",
+				"SDL_DIRECTX": "OFF",
+				"SDL_VULKAN": "OFF",
+				"SDL_HIDAPI": "OFF",
+				"SDL_AVX": "OFF",
+				"SDL_ASSEMBLY": "OFF",
+				"SDL_POWER": "OFF",
+				"SDL_LIBUDEV": "OFF",
+				"SDL_VIRTUAL_JOYSTICK": "OFF",
+				"SDL_OFFSCREEN": "OFF",
+				"SDL_XINPUT": "OFF",
+				"SDL_VIDEO": "ON",
+				"SDL_GCC_ATOMICS": "OFF",
+				"SDL_CAMERA": "OFF",
+				"SDL_HAPTIC": "OFF",
+				"SDL_JOYSTICK": "OFF",
+				"SDL_TEST_LIBRARY": "OFF",
+				"SDL_HIDAPI_JOYSTICK": "OFF",
+				"SDL_SENSOR": "OFF",
+				"SDL_DISABLE_INSTALL": "ON",
+				"SDL_AVX2": "OFF",
+				"SDL_AUDIO": "OFF",
+				"SDL_AVX512F": "OFF",
+				"SDL_LIBC": "ON",
+				"SDL_RENDER_METAL": "OFF",
+				"SDL_RENDER": "OFF",
+				"SDL_DIALOG": "OFF"
+			}
+		},
+		{
+			"name": "msvc",
+			"inherits": "default",
+			"hidden": true,
+			"cacheVariables":
+			{
+				"CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "cmake/wd_conan_provider.cmake"
+			},
+			"vendor":
+			{
+				"microsoft.com/VisualStudioSettings/CMake/1.0":
+				{
+					"enableMicrosoftCodeAnalysis": true,
+					"intelliSenseMode": "windows-msvc-x64"
+				}
+			}
+		}
+	]
 }

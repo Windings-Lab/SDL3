@@ -56,7 +56,7 @@ target_compile_options(WD_SDL PRIVATE
 target_link_options(WD_SDL PRIVATE
 	$<$<CXX_COMPILER_ID:Clang>:
 		-std=c++23
-		-stdlib=libstdc++
+		-stdlib=libc++
 	>
 )
 
@@ -67,16 +67,11 @@ target_include_directories(WD_SDL
     $<BUILD_INTERFACE:${WD_SDL_SOURCE_DIR}/src>
 )
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	find_package(Boost)
-else()
-	find_package(Boost COMPONENTS multi_index REQUIRED)
-endif()
-
-target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES} ${Boost_HEADERS_LIBRARY})
-
 add_subdirectory(include)
 add_subdirectory(src)
 add_subdirectory(vendor)
+
+find_package(Boost)
+target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES} ${Boost_HEADERS_LIBRARY})
 
 file(COPY assets/ DESTINATION ${CMAKE_OUTPUT_DIRECTORY}/assets)

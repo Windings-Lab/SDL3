@@ -1,0 +1,39 @@
+{
+    "version": 6,
+    "configurePresets":
+    [
+        {
+            "name": "clang",
+            "inherits": "default", <---------------------- ALWAYS INHERIT FROM DEFAULT unless you know what you are doing
+            "hidden": true,
+            "cacheVariables":
+            {
+                "CMAKE_C_COMPILER": <path>,
+                "CMAKE_CXX_COMPILER": <path>
+            }
+			"vendor":
+			{
+				"jetbrains.com/clion":
+				{
+					"toolchain": "MinGW"
+				}
+			}
+        },
+        {
+            "name": "clang-debug",
+            "inherits": "clang",
+            "cacheVariables":
+            {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "clang-release",
+            "inherits": "clang",
+            "cacheVariables":
+            {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}
