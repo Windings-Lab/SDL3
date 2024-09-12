@@ -45,10 +45,7 @@ namespace wd::sdl::opengl::object::shader
 
     auto Program::DetachBy(GLuint id) -> Shader*
     {
-        const auto pte = std::ranges::find_if(mShaders, [id](const Shader* shader)
-        {
-            return shader->ID == id;
-        });
+        const auto pte = std::ranges::find(mShaders, id, &Shader::ID);
         SDL_assert(pte != mShaders.end());
 
         const auto shader = *pte;
