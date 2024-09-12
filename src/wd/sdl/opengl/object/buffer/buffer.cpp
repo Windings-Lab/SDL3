@@ -16,12 +16,6 @@ namespace wd::sdl::opengl::object
     {
     }
 
-    void Buffer::BufferData(const void* data, const size_t size, const GLenum usage)
-    {
-        glNamedBufferData(ID, size, data, usage);
-        SDL_assert(!glGetError());
-    }
-
     void Buffer::Bind()
     {
         glBindBuffer(mType, ID);

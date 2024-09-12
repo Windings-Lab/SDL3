@@ -41,7 +41,7 @@ namespace
             -0.5, 0.5, 0.0 // top left
         };
         VAO->VBO.Bind();
-        VAO->VBO.BufferData(vertices, sizeof(vertices), GL_STATIC_DRAW);
+        VAO->VBO.BufferData<const GLdouble>(vertices, GL_STATIC_DRAW);
         // ====== Buffering Vertex Buffer Object ======
 
         // ====== Buffering Element Buffer Object ======
@@ -51,7 +51,7 @@ namespace
             1, 2, 3 // second triangle
         };
         VAO->EBO.Bind();
-        VAO->EBO.BufferData(vertexIndices, sizeof(vertexIndices), GL_STATIC_DRAW);
+        VAO->EBO.BufferData<const GLuint>(vertexIndices, GL_STATIC_DRAW);
         // ====== Buffering Element Buffer Object ======
 
         VAO->ReadVBO();
