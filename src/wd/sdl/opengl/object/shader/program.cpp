@@ -1,6 +1,7 @@
 module;
 
 #include <SDL3/SDL_assert.h>
+#include <vector>
 #include <algorithm>
 #include "wd/sdl/opengl/gl.h"
 
@@ -44,16 +45,15 @@ namespace wd::sdl::opengl::object::shader
 
     auto Program::DetachBy(GLuint id) -> Shader*
     {
-        const auto pte = std::ranges::remove_if(mShaders, [id](Shader* shader)
+        const auto pte = std::ranges::find_if(mShaders, [id](const Shader* shader)
         {
             return shader->ID == id;
-        }).begin();
+        });
         SDL_assert(pte != mShaders.end());
-#if defined(__clang__)
-        const auto shader = *mShaders.erase(pte, mShaders.end()).base();
-#elif defined(_MSC_VER)
-        const auto shader = *mShaders.erase(pte, mShaders.end());
-#endif
+
+        const auto shader = *pte;
+
+        std::erase(mShaders, shader);
         glDetachShader(ID, shader->ID);
         SDL_assert(!glGetError());
 
