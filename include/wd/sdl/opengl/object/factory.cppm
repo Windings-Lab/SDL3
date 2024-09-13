@@ -10,18 +10,18 @@ import wd.utility.Constructors;
 
 export namespace wd::sdl::opengl::object
 {
-    struct Factory : utility::NonMovable
-    {
-        auto GetStorage() const noexcept -> const Storage&;
+	struct Factory : utility::NonMovable
+	{
+		auto GetStorage() const noexcept -> const Storage&;
 
-        auto CreateShader(const GLchar* path, const GLenum type) noexcept -> Shader*;
-        auto CreateProgram() noexcept -> shader::Program*;
-        auto CreateBuffer(GLenum type) noexcept -> Buffer*;
-        auto CreateVertexArray() noexcept -> vertex::Array*;
+		auto CreateShader(const GLchar* path, const GLenum type) noexcept -> Shader*;
+		auto CreateProgram() noexcept -> shader::Program*;
+		auto CreateBuffer(GLenum type) noexcept -> Buffer*;
+		auto CreateVertexArray() noexcept -> vertex::Array*;
 
-        ~Factory() = default;
+		~Factory() = default;
 
-    private:
-        Storage mStorage;
-    };
+	private:
+		Storage mStorage;
+	};
 }

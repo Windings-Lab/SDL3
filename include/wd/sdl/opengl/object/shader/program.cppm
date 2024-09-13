@@ -10,21 +10,21 @@ import wd.sdl.opengl.object.shader.Shader;
 
 export namespace wd::sdl::opengl::object::shader
 {
-    using shader_container_ptr = std::vector<Shader*>;
+	using shader_container_ptr = std::vector<Shader*>;
 
-    class Program : public Object
-    {
-    public:
-        void Use() const noexcept;
-        void Link() const noexcept;
-        void Attach(Shader* shader);
-        auto DetachBy(GLuint id) -> Shader*;
+	class Program : public Object
+	{
+	public:
+		void Use() const noexcept;
+		void Link() const noexcept;
+		void Attach(Shader* shader);
+		auto DetachBy(GLuint id) -> Shader*;
 
-    public:
-        Program();
-        virtual ~Program() override;
+	public:
+		Program();
+		virtual ~Program() override;
 
-    private:
-        shader_container_ptr mShaders;
-    };
+	private:
+		shader_container_ptr mShaders;
+	};
 }

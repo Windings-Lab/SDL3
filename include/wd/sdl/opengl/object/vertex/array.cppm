@@ -5,16 +5,16 @@ import wd.sdl.opengl.object.Buffer;
 
 export namespace wd::sdl::opengl::object::vertex
 {
-    struct Array : public Object
-    {
-        Array();
+	struct Array : public Object
+	{
+		Array();
 
-        void ReadVBO() noexcept;
+		void ReadVBO() noexcept;
 
-        void Enable() noexcept;
-        void Disable() noexcept;
+		void Enable() noexcept;
+		void Disable() noexcept;
 
-        Buffer VBO;
-        Buffer EBO;
-    };
+		Buffer VBO;
+		Buffer EBO;
+	};
 }

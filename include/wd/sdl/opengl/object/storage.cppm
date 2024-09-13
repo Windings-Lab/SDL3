@@ -12,10 +12,12 @@ export namespace wd::sdl::opengl::object
 {
     using shader_container = std::vector<std::unique_ptr<Shader>>;
     using buffer_container = std::vector<std::unique_ptr<Buffer>>;
+
     namespace shader
     {
         using program_container = std::vector<std::unique_ptr<Program>>;
     }
+
     namespace vertex
     {
         using array_container = std::vector<std::unique_ptr<Array>>;

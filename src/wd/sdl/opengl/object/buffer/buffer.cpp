@@ -7,29 +7,31 @@ module wd.sdl.opengl.object.Buffer;
 
 namespace wd::sdl::opengl::object
 {
-    Buffer::Buffer(const GLenum type) : Object([]
-    {
-        GLuint id;
-        glGenBuffers(1, &id);
-        return id;
-    }(), type)
-    {
-    }
+	Buffer::Buffer(const GLenum type)
+		: Object([]
+				{
+					GLuint id;
+					glGenBuffers(1, &id);
+					return id;
+				}()
+				, type)
+	{
+	}
 
-    void Buffer::Bind()
-    {
-        glBindBuffer(mType, ID);
-        SDL_assert(!glGetError());
-    }
+	void Buffer::Bind()
+	{
+		glBindBuffer(mType, ID);
+		SDL_assert(!glGetError());
+	}
 
-    void Buffer::Unbind()
-    {
-        glBindBuffer(mType, 0);
-        SDL_assert(!glGetError());
-    }
+	void Buffer::Unbind()
+	{
+		glBindBuffer(mType, 0);
+		SDL_assert(!glGetError());
+	}
 
-    Buffer::~Buffer()
-    {
-        glDeleteBuffers(1, &ID);
-    }
+	Buffer::~Buffer()
+	{
+		glDeleteBuffers(1, &ID);
+	}
 }

@@ -8,14 +8,14 @@ import wd.sdl.opengl.object.Object;
 
 export namespace wd::sdl::opengl::object
 {
-    struct Shader : public Object
-    {
-        const GLchar* const Path;
+	struct Shader : public Object
+	{
+		const GLchar* const Path;
 
-        void Compile();
+		void Compile();
 
-        Shader() = delete;
-        Shader(const GLchar* path, GLenum type);
-        virtual ~Shader() override;
-    };
+		Shader() = delete;
+		Shader(const GLchar* path, GLenum type);
+		virtual ~Shader() override;
+	};
 }

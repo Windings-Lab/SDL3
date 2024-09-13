@@ -13,27 +13,27 @@ export typedef struct SDL_GLContextState* SDL_GLContext;
 
 export namespace wd::sdl::opengl
 {
-    class Context : utility::NonMovable
-    {
-    public:
-        explicit Context(const int width, const int height);
+	class Context : utility::NonMovable
+	{
+	public:
+		explicit Context(const int width, const int height);
 
-        auto GetWindow() noexcept -> Window&;
-        auto GetObjectFactory() noexcept -> object::Factory&;
-        auto GetStorage() const noexcept -> const object::Storage&;
+		auto GetWindow() noexcept -> Window&;
+		auto GetObjectFactory() noexcept -> object::Factory&;
+		auto GetStorage() const noexcept -> const object::Storage&;
 
-        void Iterate();
+		void Iterate();
 
-        void UpdateViewport(int width, int height) noexcept;
+		void UpdateViewport(int width, int height) noexcept;
 
-        ~Context() = default;
+		~Context() = default;
 
-        SDL_GLContext operator->() const noexcept;
-        SDL_GLContext operator*() const noexcept;
+		SDL_GLContext operator->() const noexcept;
+		SDL_GLContext operator*() const noexcept;
 
-    private:
-        Window mWindow;
-        std::unique_ptr<SDL_GLContext, std::function<void(SDL_GLContext*)>> mValue;
-        object::Factory mObjectFactory;
-    };
+	private:
+		Window mWindow;
+		std::unique_ptr<SDL_GLContext, std::function<void(SDL_GLContext*)>> mValue;
+		object::Factory mObjectFactory;
+	};
 }

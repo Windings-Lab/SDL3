@@ -8,14 +8,14 @@ module wd.sdl.Keyboard;
 
 namespace wd::sdl
 {
-    SDL_AppResult Handle_Input(const SDL_Keycode keycode) noexcept
-    {
-        if(keycode == SDLK_ESCAPE)
-        {
-            SDL_Log("Quiting!");
-            return SDL_APP_SUCCESS;
-        }
+	SDL_AppResult Handle_Input(const SDL_Keycode keycode) noexcept
+	{
+		if(keycode == SDLK_ESCAPE)
+		{
+			SDL_Log("Quiting!");
+			return SDL_APP_SUCCESS;
+		}
 
-        return SDL_APP_CONTINUE;
-    }
+		return SDL_APP_CONTINUE;
+	}
 }

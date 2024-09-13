@@ -8,19 +8,19 @@ module wd.sdl.opengl.object.Object;
 
 namespace wd::sdl::opengl
 {
-    Object::~Object()
-    {
-    }
+	Object::~Object()
+	{
+	}
 
-    GLenum Object::Type() const noexcept
-    {
-        return mType;
-    }
+	GLenum Object::Type() const noexcept
+	{
+		return mType;
+	}
 
-    Object::Object(const GLuint id, const GLenum type)
-        : ID(id)
-        , mType(type)
-    {
-        SDL_assert(!(glGetError() || ID == 0));
-    }
+	Object::Object(const GLuint id, const GLenum type)
+		: ID(id)
+		, mType(type)
+	{
+		SDL_assert(!(glGetError() || ID == 0));
+	}
 }

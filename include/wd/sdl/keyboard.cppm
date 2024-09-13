@@ -7,5 +7,5 @@ export module wd.sdl.Keyboard;
 
 export namespace wd::sdl
 {
-    SDL_AppResult Handle_Input(const SDL_Keycode keycode) noexcept;
+	SDL_AppResult Handle_Input(const SDL_Keycode keycode) noexcept;
 }
