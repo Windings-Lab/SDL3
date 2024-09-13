@@ -45,11 +45,13 @@ namespace wd::sdl::opengl::object
     {
         SDL_assert(SDL_GetPathInfo(Path, nullptr));
 
-        const char* code = static_cast<const char*>(SDL_LoadFile(Path, nullptr));
+        auto data = SDL_LoadFile(Path, nullptr);
+        auto code = static_cast<const char*>(data);
         glShaderSource(ID, 1, &code, nullptr);
         glCompileShader(ID);
 
         SDL_assert(CompileSuccess(*this));
+        SDL_free(data); // TODO: make RAII if needed
     }
 
     Shader::~Shader()
