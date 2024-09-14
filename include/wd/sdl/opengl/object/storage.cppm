@@ -10,7 +10,7 @@ import wd.utility.Constructors;
 
 export namespace wd::sdl::opengl::object
 {
-    using shader_container = std::vector<std::unique_ptr<Shader>>;
+    using shader_container = std::vector<std::shared_ptr<Shader>>;
     using buffer_container = std::vector<std::unique_ptr<Buffer>>;
 
     namespace shader

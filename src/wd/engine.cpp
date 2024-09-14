@@ -17,7 +17,7 @@ namespace
 	void CreateShaderProgram(wd::sdl::opengl::Context& glContext)
 	{
 		auto& objectFactory = glContext.GetObjectFactory();
-		const auto program  = objectFactory.CreateProgram();
+		auto& program  = objectFactory.CreateProgram();
 		auto vertShader     = objectFactory.CreateShader(
 				"assets/shaders/vertex.vert"
 				, GL_VERTEX_SHADER);
@@ -25,15 +25,15 @@ namespace
 				"assets/shaders/fragment.frag"
 				, GL_FRAGMENT_SHADER);
 
-		program->Attach(vertShader);
-		program->Attach(fragShader);
-		program->Link();
+		program.Attach(vertShader);
+		program.Attach(fragShader);
+		program.Link();
 
 		//GL_ARRAY_BUFFER
 		//GL_ELEMENT_ARRAY_BUFFER
 
 		// Creating Vertex Array Object
-		auto VAO = objectFactory.CreateVertexArray();
+		auto& VAO = objectFactory.CreateVertexArray();
 
 		// ====== Buffering Vertex Buffer Object ======
 		constexpr GLdouble vertices[] = {
@@ -42,8 +42,8 @@ namespace
 				, -0.5, -0.5, 0.0 // bottom left
 				, -0.5, 0.5, 0.0  // top left
 		};
-		VAO->VBO.Bind();
-		VAO->VBO.BufferData<const GLdouble>(vertices, GL_STATIC_DRAW);
+		VAO.VBO.Bind();
+		VAO.VBO.BufferData<const GLdouble>(vertices, GL_STATIC_DRAW);
 		// ====== Buffering Vertex Buffer Object ======
 
 		// ====== Buffering Element Buffer Object ======
@@ -51,20 +51,20 @@ namespace
 				0, 1, 3   // first triangle
 				, 1, 2, 3 // second triangle
 		};
-		VAO->EBO.Bind();
-		VAO->EBO.BufferData<const GLuint>(vertexIndices, GL_STATIC_DRAW);
+		VAO.EBO.Bind();
+		VAO.EBO.BufferData<const GLuint>(vertexIndices, GL_STATIC_DRAW);
 		// ====== Buffering Element Buffer Object ======
 
-		VAO->ReadVBO();
-		VAO->Enable();
+		VAO.ReadVBO();
+		VAO.Enable();
 
 		// After using glVertexAttribPointer
-		VAO->VBO.Unbind();
+		VAO.VBO.Unbind();
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 		glPointSize(5.f);
 
-		program->Use();
+		program.Use();
 	}
 }
 

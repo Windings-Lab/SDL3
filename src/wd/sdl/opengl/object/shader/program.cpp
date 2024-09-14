@@ -16,8 +16,6 @@ namespace wd::sdl::opengl::object::shader
 
 	Program::~Program()
 	{
-		if(ID == 0) return;
-
 		glDeleteProgram(ID);
 
 		SDL_assert(!glGetError());
@@ -33,24 +31,26 @@ namespace wd::sdl::opengl::object::shader
 		glLinkProgram(ID);
 	}
 
-	void Program::Attach(Shader* shader)
+	void Program::Attach(const std::weak_ptr<Shader>& shader)
 	{
-		if(!shader) return;
+		if(shader.expired()) return;
 
-		glAttachShader(ID, shader->ID);
+		auto shaderPtr = shader.lock();
+		glAttachShader(ID, shaderPtr->ID);
 		SDL_assert(!glGetError());
 
-		mShaders.emplace_back(shader);
+		mShaders.emplace_back(std::move(shaderPtr));
 	}
 
-	auto Program::DetachBy(GLuint id) -> Shader*
+	auto Program::DetachBy(GLuint id) -> shader_ptr
 	{
-		const auto pte = std::ranges::find(mShaders, id, &Shader::ID);
+		auto pte = std::ranges::find(mShaders, id, &Shader::ID);
 		SDL_assert(pte != mShaders.end());
 
 		const auto shader = *pte;
 
-		std::erase(mShaders, shader);
+		std::ranges::rotate(pte, pte + 1, mShaders.end());
+		mShaders.pop_back();
 		glDetachShader(ID, shader->ID);
 		SDL_assert(!glGetError());
 
