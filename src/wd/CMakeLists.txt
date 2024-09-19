@@ -4,5 +4,4 @@ target_sources(WD_SDL
 )
 
 add_subdirectory(sdl)
-add_subdirectory(math)
 add_subdirectory(asm)

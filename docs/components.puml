@@ -1,11 +1,6 @@
 @startuml
 
 package "wd" {
-    package math {
-        package 2D
-        m_math --> [Math]
-        m_math --> 2D
-    }
     package utility {
         [Constructors] #Yellow
     }
@@ -49,7 +44,6 @@ package "wd" {
         m_sdl --> m_opengl
     }
     m_wd --> [Engine]
-    m_wd --> math
     [Engine] --> m_sdl
 }
 

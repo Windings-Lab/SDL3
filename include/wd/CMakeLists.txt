@@ -8,4 +8,3 @@ target_sources(WD_SDL
 
 add_subdirectory(sdl)
 add_subdirectory(utility)
-add_subdirectory(math)
