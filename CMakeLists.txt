@@ -74,4 +74,10 @@ add_subdirectory(vendor)
 find_package(Boost)
 target_link_libraries(WD_SDL PUBLIC ${Boost_LIBRARIES} ${Boost_HEADERS_LIBRARY})
 
+find_package(glm)
+target_link_libraries(WD_SDL PUBLIC glm::glm)
+target_compile_definitions(WD_SDL PUBLIC
+						   GLM_FORCE_CXX20
+)
+
 file(COPY assets/ DESTINATION ${CMAKE_OUTPUT_DIRECTORY}/assets)
