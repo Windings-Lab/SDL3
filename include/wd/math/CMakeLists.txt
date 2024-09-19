@@ -4,5 +4,6 @@ target_sources(WD_SDL
         FILES
     m_math.cppm
     math.cppm
-    point.cppm
 )
+
+add_subdirectory(2D)

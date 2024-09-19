@@ -1,7 +1,11 @@
 @startuml
 
 package "wd" {
-    package math
+    package math {
+        package 2D
+        m_math --> [Math]
+        m_math --> 2D
+    }
     package utility {
         [Constructors] #Yellow
     }
